@@ -38,7 +38,7 @@ export function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], [reduce ? 0 : 60, 0]);
 
   return (
-    <section className="relative isolate overflow-x-clip pt-24 md:pt-32">
+    <section className="relative isolate overflow-x-clip pt-32 md:pt-40">
       <div className="hairlines absolute inset-0 -z-10" />
       <div className="toplight absolute -top-[480px] left-1/2 -z-10 h-[1000px] w-[1400px] -translate-x-1/2" />
 
@@ -55,7 +55,7 @@ export function Hero() {
           <ArrowRight className="size-3.5" />
         </motion.a>
 
-        <h1 className="display mx-auto max-w-6xl text-[clamp(3rem,7.2vw,6.75rem)]">
+        <h1 className="display mx-auto max-w-6xl text-[clamp(3.6rem,8.8vw,8.25rem)]">
           <Words text="Take back your disk." delay={0.1} />
           <Words text="Keep what matters." delay={0.3} className="text-fd-muted-foreground" />
         </h1>
@@ -76,11 +76,11 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.7, ease }}
           className="mt-10 flex flex-wrap justify-center gap-3"
         >
-          <a href={downloadUrl} className="inline-flex h-12 items-center gap-2 rounded-full bg-fd-foreground px-6 text-[15px] font-medium text-fd-background transition-opacity hover:opacity-85">
+          <a href={downloadUrl} className="inline-flex h-12 items-center gap-2 rounded-full bg-fd-foreground px-6 font-display text-lg font-semibold text-fd-background transition-opacity hover:opacity-85">
             <Download className="size-4" />
             Download for Mac
           </a>
-          <Link href="/docs" className="group inline-flex h-12 items-center gap-2 rounded-full border border-fd-border px-6 text-[15px] font-medium transition-colors hover:bg-fd-accent">
+          <Link href="/docs" className="group inline-flex h-12 items-center gap-2 rounded-full border border-fd-border px-6 font-display text-lg font-semibold transition-colors hover:bg-fd-accent">
             Read the docs
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>

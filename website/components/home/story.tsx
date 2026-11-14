@@ -63,7 +63,7 @@ export function Story() {
                 aria-hidden={active !== i}
               >
                 <p className="eyebrow mb-5">{c.kicker}</p>
-                <h2 className="display text-[clamp(2.5rem,5.5vw,4.5rem)]">{c.title}</h2>
+                <h2 className="display text-[clamp(3rem,6.4vw,5.5rem)]">{c.title}</h2>
                 <p className="mt-6 max-w-md text-lg leading-relaxed text-fd-muted-foreground">{c.body}</p>
               </motion.div>
             ))}
@@ -90,7 +90,7 @@ export function Story() {
               <Label className="bottom-[2%] right-[14%]" dot="bg-personal" text="Personal · 3.4 GB" />
             </motion.div>
             <motion.div style={{ opacity: freed }} className="absolute inset-x-0 top-full mt-2 text-center">
-              <p className="display text-5xl tabular-nums md:text-6xl">12.1 GB</p>
+              <p className="display text-6xl tabular-nums md:text-7xl">12.1 GB</p>
               <p className="eyebrow mt-2">freed</p>
             </motion.div>
           </div>

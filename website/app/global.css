@@ -5,6 +5,7 @@
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-display: var(--font-khand), var(--font-inter), ui-sans-serif, sans-serif;
   --color-brand: #5856d6;
   --color-brand-2: #7c7af0;
   --color-safe: #16a34a;
@@ -49,11 +50,22 @@ html > body[data-scroll-locked] {
 /* ------------------------------------------------------------------ Landing helpers */
 
 .display {
+  font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: -0.045em;
-  line-height: 0.95;
+  letter-spacing: -0.01em;
+  line-height: 0.92;
   text-wrap: balance;
 }
+
+/* Khand for every heading and the docs' titles and navigation. */
+h1, h2, h3, h4, .font-display,
+#nd-docs-layout h1, #nd-page h1, #nd-page h2, #nd-page h3, #nd-page h4 {
+  font-family: var(--font-display);
+  letter-spacing: 0;
+}
+#nd-page h1 { font-size: 2.6rem; font-weight: 600; line-height: 1.05; }
+#nd-page h2 { font-size: 1.85rem; font-weight: 600; }
+#nd-page h3 { font-size: 1.35rem; font-weight: 600; }
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 13px;

@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono, Khand } from 'next/font/google';
 import { Provider } from '@/components/provider';
 import { appName, author, siteUrl, tagline } from '@/lib/shared';
 import './global.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
+// Headings, display type and interface text; long-form reading stays in Inter.
+const khand = Khand({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-khand', display: 'swap' });
 
 const description =
   'Reclaim finds build caches, node_modules, app caches, Docker leftovers and duplicate files on your Mac, explains what is safe to delete, and frees the space in one click.';
@@ -32,7 +34,7 @@ export const viewport: Viewport = {
 
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${mono.variable} ${khand.variable}`} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col font-sans antialiased">
         <Provider>{children}</Provider>
       </body>

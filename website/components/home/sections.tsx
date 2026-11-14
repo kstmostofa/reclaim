@@ -17,6 +17,7 @@ import {
   Wrench,
   BarChart3,
   Clock,
+  Plus,
 } from 'lucide-react';
 import { Reveal } from './reveal';
 import { GitHubIcon, LogoMark } from "@/components/logo";
@@ -67,7 +68,7 @@ export function Figures() {
       <Reveal className="grid grid-cols-2 border-y border-fd-border md:grid-cols-4">
         {items.map((it, i) => (
           <div key={it.label} className={cn('px-5 py-10 md:px-8 md:py-12', i % 2 === 0 && 'border-r border-fd-border', i === 1 && 'md:border-r', i < 2 && 'max-md:border-b')}>
-            <p className="display text-5xl md:text-6xl">
+            <p className="display text-6xl md:text-7xl">
               <CountUp to={it.to} suffix={it.suffix} />
             </p>
             <p className="mt-3 text-[15px] text-fd-muted-foreground">{it.label}</p>
@@ -121,7 +122,7 @@ function Card({ className, icon: Icon, title, children, visual, href, linkText, 
         <span className="mb-7 grid size-11 place-items-center rounded-xl border border-fd-border bg-fd-background">
           <Icon className="size-5" strokeWidth={1.7} />
         </span>
-        <h3 className="text-[22px] font-semibold tracking-tight">{title}</h3>
+        <h3 className="text-[27px] leading-tight font-semibold">{title}</h3>
         <p className="mt-2.5 max-w-md text-[15.5px] leading-relaxed text-fd-muted-foreground">{children}</p>
         {visual && <div className="mt-8">{visual}</div>}
         {href && (
@@ -191,7 +192,7 @@ export function Features() {
     <section id="features" className="mx-auto max-w-6xl px-6 py-24 md:py-36">
       <Reveal className="mb-16 max-w-3xl">
         <Kicker>Features</Kicker>
-        <h2 className="display text-[clamp(2.5rem,5.5vw,4.5rem)]">
+        <h2 className="display text-[clamp(3rem,6.4vw,5.5rem)]">
           Built for the way developer Macs fill up.
         </h2>
       </Reveal>
@@ -275,7 +276,7 @@ export function Tour() {
       <div className="mx-auto max-w-6xl px-6 text-center">
         <Reveal className="mx-auto mb-12 max-w-3xl">
           <Kicker>Tour</Kicker>
-          <h2 className="display text-[clamp(2.5rem,5.5vw,4.5rem)]">A native Mac app.</h2>
+          <h2 className="display text-[clamp(3rem,6.4vw,5.5rem)]">A native Mac app.</h2>
           <p className="mx-auto mt-6 max-w-xl text-lg text-fd-muted-foreground">SwiftUI, light and dark, your own accent colour. Not a web page in a box.</p>
         </Reveal>
         <Reveal>
@@ -286,7 +287,7 @@ export function Tour() {
                 role="tab"
                 aria-selected={active === i}
                 onClick={() => { touched.current = true; setActive(i); }}
-                className={cn('relative inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-medium transition-colors', active === i ? 'text-fd-background' : 'text-fd-muted-foreground hover:text-fd-foreground')}
+                className={cn('font-display relative inline-flex h-10 items-center gap-2 rounded-full px-4 text-[17px] font-medium transition-colors', active === i ? 'text-fd-background' : 'text-fd-muted-foreground hover:text-fd-foreground')}
               >
                 {active === i && <motion.span layoutId="tour-pill" className="absolute inset-0 rounded-full bg-fd-foreground" transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }} />}
                 <s.icon className="relative size-4" />
@@ -326,7 +327,7 @@ export function Faq() {
     <section className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-[0.9fr_1.1fr] md:gap-20 md:py-36">
       <Reveal>
         <Kicker>Questions</Kicker>
-        <h2 className="display text-[clamp(2.5rem,5.5vw,4.5rem)]">Good to know.</h2>
+        <h2 className="display text-[clamp(3rem,6.4vw,5.5rem)]">Good to know.</h2>
         <p className="mt-6 text-lg text-fd-muted-foreground">
           More in the{' '}
           <Link href="/docs/faq" className="text-fd-foreground underline underline-offset-4">
@@ -338,9 +339,11 @@ export function Faq() {
       <Reveal delay={0.1}>
         {faqs.map((f) => (
           <details key={f.q} className="group border-b border-fd-border">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-[17px] font-medium [&::-webkit-details-marker]:hidden">
+            <summary className="font-display flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-[22px] leading-tight font-medium [&::-webkit-details-marker]:hidden">
               {f.q}
-              <span className="grid size-7 flex-none place-items-center rounded-full border border-fd-border text-fd-muted-foreground transition-transform duration-300 group-open:rotate-45">+</span>
+              <span className="grid size-8 flex-none place-items-center rounded-full border border-fd-border text-fd-muted-foreground transition-transform duration-300 group-open:rotate-45">
+                <Plus className="size-4" strokeWidth={2} />
+              </span>
             </summary>
             <p className="pb-6 text-[15.5px] leading-relaxed text-fd-muted-foreground">{f.a}</p>
           </details>
@@ -358,14 +361,14 @@ export function Cta() {
         <motion.div className="mx-auto mb-10 w-fit" animate={{ rotate: [0, -6, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}>
           <LogoMark className="size-20" />
         </motion.div>
-        <h2 className="display text-[clamp(3rem,8vw,7rem)]">Your disk, back.</h2>
+        <h2 className="display text-[clamp(3.5rem,9.5vw,8.5rem)]">Your disk, back.</h2>
         <p className="mx-auto mt-6 max-w-lg text-lg text-fd-muted-foreground">One download, one scan, and you'll see what your Mac has been hoarding.</p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <a href={downloadUrl} className="inline-flex h-12 items-center gap-2 rounded-full bg-fd-foreground px-6 text-[15px] font-medium text-fd-background transition-opacity hover:opacity-85">
+          <a href={downloadUrl} className="inline-flex h-12 items-center gap-2 rounded-full bg-fd-foreground px-6 font-display text-lg font-semibold text-fd-background transition-opacity hover:opacity-85">
             <Download className="size-4" />
             Download for Mac
           </a>
-          <a href={repoUrl} className="inline-flex h-12 items-center gap-2 rounded-full border border-fd-border px-6 text-[15px] font-medium transition-colors hover:bg-fd-accent">
+          <a href={repoUrl} className="inline-flex h-12 items-center gap-2 rounded-full border border-fd-border px-6 font-display text-lg font-semibold transition-colors hover:bg-fd-accent">
             <GitHubIcon className="size-4" />
             Star on GitHub
           </a>
@@ -382,21 +385,29 @@ export function Footer() {
     { title: 'Project', links: [['Source code', repoUrl], ['Report a problem', `${repoUrl}/issues`], ['License', `${repoUrl}/blob/main/LICENSE`]] },
   ];
   return (
-    <footer className="border-t border-fd-border">
-      <div className="mx-auto grid max-w-6xl gap-12 px-6 pt-16 pb-10 md:grid-cols-[1.2fr_2fr]">
+    <footer className="relative overflow-hidden border-t border-fd-border">
+      <div className="mx-auto grid max-w-6xl gap-14 px-6 pt-20 pb-12 md:grid-cols-[1.3fr_2fr]">
         <div>
-          <p className="flex items-center gap-2.5 font-semibold tracking-tight">
-            <LogoMark className="size-6" />
-            {appName}
+          <Link href="/" className="inline-flex items-center gap-3">
+            <span className="grid size-12 place-items-center rounded-[14px] bg-[#17171c] ring-1 ring-white/10">
+              <LogoMark className="size-7 text-white" />
+            </span>
+            <span className="font-display text-[34px] leading-none font-semibold">{appName}</span>
+          </Link>
+          <p className="mt-5 max-w-xs text-[15px] leading-relaxed text-fd-muted-foreground">
+            Free, open-source Mac storage cleaner for developers. MIT licensed.
           </p>
-          <p className="mt-4 max-w-xs text-[14.5px] text-fd-muted-foreground">Free, open-source Mac storage cleaner for developers. MIT licensed.</p>
+          <a href={downloadUrl} className="font-display mt-7 inline-flex h-11 items-center gap-2 rounded-full bg-fd-foreground px-5 text-lg font-semibold text-fd-background transition-opacity hover:opacity-85">
+            <Download className="size-4" />
+            Download for Mac
+          </a>
         </div>
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
           {cols.map((c) => (
             <div key={c.title}>
-              <p className="eyebrow mb-4">{c.title}</p>
+              <p className="font-display mb-4 text-[19px] font-semibold">{c.title}</p>
               {c.links.map(([label, href]) => (
-                <Link key={label} href={href} className="block py-1 text-[14.5px] text-fd-muted-foreground transition-colors hover:text-fd-foreground">
+                <Link key={label} href={href} className="block py-1.5 text-[15px] text-fd-muted-foreground transition-colors hover:text-fd-foreground">
                   {label}
                 </Link>
               ))}
@@ -404,12 +415,15 @@ export function Footer() {
           ))}
         </div>
       </div>
-      <div className="mx-auto flex max-w-6xl flex-wrap justify-between gap-3 border-t border-fd-border px-6 py-6 text-[13.5px] text-fd-muted-foreground">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 border-t border-fd-border px-6 py-6 text-sm text-fd-muted-foreground">
         <span>© {new Date().getFullYear()} {author}</span>
         <span>Made for developers who keep running out of disk.</span>
       </div>
-      <div className="mx-auto max-w-6xl overflow-hidden px-6" aria-hidden="true">
-        <p className="display translate-y-[14%] text-[clamp(5rem,19vw,16rem)] text-transparent select-none [-webkit-text-stroke:1px_var(--color-fd-border)]">{appName}</p>
+      <div className="pointer-events-none mx-auto flex max-w-6xl items-end gap-[3vw] px-6 select-none" aria-hidden="true">
+        <LogoMark className="mb-[2.2vw] size-[13vw] max-h-48 max-w-48 flex-none text-fd-foreground/[0.07]" sliceClassName="opacity-60" />
+        <p className="font-display translate-y-[22%] text-[clamp(6rem,22vw,19rem)] leading-[0.8] font-bold tracking-tight text-fd-foreground/[0.07] uppercase">
+          {appName}
+        </p>
       </div>
     </footer>
   );

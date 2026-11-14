@@ -36,12 +36,20 @@ happens if you delete it, and removes what you tick in one click.
 
 ## Install
 
-Requires macOS 14 or later, on Apple silicon or Intel.
+Requires macOS 14 or later, on Apple silicon or Intel. The quickest way is Terminal:
+
+```sh
+curl -fsSL https://reclaim.mostofa.me/install.sh | sh
+```
+
+It downloads the latest release, checks its checksum, copies Reclaim into Applications and opens it, with no
+Gatekeeper warning because curl downloads are not quarantined. Run it again to update. Or by hand:
 
 1. [Download Reclaim.dmg](https://github.com/kstmostofa/reclaim/releases/latest/download/Reclaim.dmg), open it and
    drag **Reclaim** onto Applications. No need to build anything. Optionally check it with
    `shasum -a 256 -c Reclaim.dmg.sha256` (from the [release page](https://github.com/kstmostofa/reclaim/releases/latest)).
-2. Reclaim is not notarized, so macOS blocks it the first time. Open it once, then go to
+2. Reclaim is not notarized, so macOS blocks the download the first time ("Apple could not verify…"). Either run
+   `xattr -d com.apple.quarantine ~/Downloads/Reclaim.dmg` before opening it, or click **Done**, then go to
    **System Settings › Privacy & Security** and click **Open Anyway**.
 3. Give it **Full Disk Access** in **System Settings › Privacy & Security › Full Disk Access** so it can see the
    whole disk.

@@ -1,12 +1,36 @@
 'use client';
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
-import { ArrowRight, Download } from 'lucide-react';
+import { ArrowRight, Check, Copy, Download } from 'lucide-react';
 import { AppWindow } from './app-window';
-import { downloadUrl, releasesUrl, version } from '@/lib/shared';
+import { downloadUrl, installCommand, releasesUrl, version } from '@/lib/shared';
 
 const ease = [0.16, 1, 0.3, 1] as const;
+
+/** The Terminal install command, copied with one click. */
+function InstallCommand() {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    await navigator.clipboard.writeText(installCommand);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1600);
+  };
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      aria-label="Copy the install command"
+      className="glass group mx-auto mt-5 flex max-w-full items-center gap-3 rounded-full py-2 pr-3 pl-5 font-mono text-[13px] text-fd-muted-foreground transition-colors hover:text-fd-foreground"
+    >
+      <span className="truncate">
+        <span className="text-brand select-none">$ </span>
+        {installCommand}
+      </span>
+      {copied ? <Check className="size-4 shrink-0 text-brand" /> : <Copy className="size-4 shrink-0" />}
+    </button>
+  );
+}
 
 function Words({ text, delay, className }: { text: string; delay: number; className?: string }) {
   const reduce = useReducedMotion();
@@ -84,6 +108,9 @@ export function Hero() {
             Read the docs
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
+        </motion.div>
+        <motion.div initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.8 }}>
+          <InstallCommand />
         </motion.div>
         <motion.p
           initial={reduce ? false : { opacity: 0 }}

@@ -10,6 +10,8 @@ export const repoUrl = `https://github.com/${gitConfig.user}/${gitConfig.repo}`;
 /** The latest release's disk image, downloaded directly; the release page lists every file. */
 export const downloadUrl = `${repoUrl}/releases/latest/download/Reclaim.dmg`;
 export const releasesUrl = `${repoUrl}/releases/latest`;
+/** Installs from Terminal; curl downloads are not quarantined, so macOS opens the app without a warning. */
+export const installCommand = 'curl -fsSL https://reclaim.mostofa.me/install.sh | sh';
 
 /** The site is served at the root of its own domain; set NEXT_PUBLIC_BASE_PATH to host it under a folder. */
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';

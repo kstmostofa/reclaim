@@ -308,7 +308,21 @@ macOS 14 Sonoma or later, on Apple silicon or Intel.
 
 # Install (/docs/install)
 
-## Download [#download]
+## Install from Terminal [#install-from-terminal]
+
+The quickest way, and macOS opens Reclaim straight away with no warning. Paste this into Terminal:
+
+```sh
+curl -fsSL https://reclaim.mostofa.me/install.sh | sh
+```
+
+It downloads the latest `Reclaim.dmg`, checks it against its published checksum, copies Reclaim into Applications and opens it. Run it again any time to update. You can [read the script](https://reclaim.mostofa.me/install.sh) first.
+
+<Callout>
+Apps downloaded in a browser are marked as quarantined, and macOS checks them with Apple before they open. Files downloaded with `curl` are not marked, so there is nothing to allow.
+</Callout>
+
+## Or download the disk image [#or-download-the-disk-image]
 
 <Steps>
 <Step>
@@ -338,13 +352,21 @@ Double-click `Reclaim.dmg` and drag **Reclaim** onto the **Applications** folder
 
 ## Open it the first time [#open-it-the-first-time]
 
-Reclaim is not notarized by Apple, because notarization needs a paid developer membership, so macOS blocks it the first time. You do this once per version.
+If you used the disk image: Reclaim is not notarized by Apple, because notarization needs a paid developer membership, so macOS blocks it the first time with *"Apple could not verify… is free of malware"*. You do this once per version.
+
+The quickest fix is one Terminal command, run before you open the disk image, that removes the quarantine mark macOS put on the download:
+
+```sh
+xattr -d com.apple.quarantine ~/Downloads/Reclaim.dmg
+```
+
+Or allow it in System Settings:
 
 <Steps>
 <Step>
 ### Try to open it [#try-to-open-it]
 
-Double-click Reclaim in Applications. macOS says it cannot verify the app. Click **Done**.
+Double-click `Reclaim.dmg` (or Reclaim in Applications). macOS says it cannot verify it. Click **Done**, not Move to Trash.
 </Step>
 
 <Step>
@@ -356,7 +378,7 @@ Go to **System Settings › Privacy & Security** and scroll to the Security sect
 <Step>
 ### Allow it [#allow-it]
 
-Next to the message about Reclaim, click **Open Anyway** and confirm with your password or Touch ID.
+Next to the message about Reclaim, click **Open Anyway** and confirm with your password or Touch ID. If you allowed the disk image, macOS asks once more for the app itself the first time you open it from Applications: repeat these steps.
 </Step>
 </Steps>
 

@@ -52,7 +52,11 @@
     </details>
     <details>
       <summary>Why was something not deleted?</summary>
-      <p>The summary after deleting gives the reason for each item. Most often the files belong to another user or to the system, for example ones created with <code>sudo npm install</code>, or macOS protects them. A helper that can remove root-owned files is planned.</p>
+      <p>The summary after deleting gives the reason for each item. Most often the files belong to root, for example ones created with <code>sudo npm install</code>. Install the <a href="guide.html#system">helper</a> to delete those. Files macOS itself protects cannot be deleted by any app.</p>
+    </details>
+    <details>
+      <summary>Is a helper that runs as root safe?</summary>
+      <p>It deletes only inside system cache and log folders and your own home folder, never a protected folder, and refuses tricks with <code>..</code> and symlinks. It only answers the exact copy of Reclaim that installed it. The source is public, and you can remove it any time from System.</p>
     </details>
 
     <h2 id="protected">Protected folders</h2>

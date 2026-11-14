@@ -35,6 +35,7 @@
       <li><a href="#large-files">Large Files</a></li>
       <li><a href="#duplicates">Duplicates</a></li>
       <li><a href="#containers">Containers</a></li>
+      <li><a href="#system">System and the helper</a></li>
       <li><a href="#settings">Settings</a></li>
       <li><a href="#history">History</a></li>
       <li><a href="#shortcuts">Keyboard shortcuts</a></li>
@@ -149,6 +150,24 @@
       </tbody>
     </table></div>
     <p>Images, containers and volumes that are in use are never listed. Ticked items are removed with Docker's own commands (<code>docker image rm</code>, <code>container rm</code>, <code>volume rm</code> and <code>builder prune</code>), never forced, so Docker itself refuses anything in use. Reclaim never touches the engine's disk image directly. Docker items share the Delete bar and the history with everything else.</p>
+
+    <h2 id="system">System and the helper</h2>
+    <p>Some caches, logs and leftovers belong to <em>root</em>, the system's administrator account: system caches in <code>/Library/Caches</code>, logs in <code>/Library/Logs</code> and <code>/private/var/log</code>, and files left in your home folder by commands run with <code>sudo</code>. Reclaim cannot delete those on its own. The optional <strong>helper</strong> can.</p>
+    <h3>Installing</h3>
+    <ol class="steps">
+      <li>Open <strong>System</strong> in the sidebar and click <strong>Install Helper…</strong>.</li>
+      <li>macOS asks for your Mac password in its own dialog. Reclaim never sees it.</li>
+    </ol>
+    <p>The helper is copied to <code>/Library/PrivilegedHelperTools</code> and started by macOS when Reclaim needs it. Items that need it show a lock until it is installed. With the helper, deleting works as usual: anything Reclaim may not delete is passed to the helper automatically. This applies when deleting permanently; in <em>Move to Trash</em> mode such items are left alone.</p>
+    <h3>What keeps it safe</h3>
+    <ul>
+      <li><strong>It deletes only</strong> inside <code>/Library/Caches</code>, <code>/Library/Logs</code>, <code>/private/var/log</code> and your own home folder, after resolving symlinks, and never a protected folder. Paths with <code>..</code> are refused, and so is a folder swapped for a link at the last moment.</li>
+      <li><strong>It obeys only this copy of Reclaim.</strong> It is paired with the exact build that installed it, so no other program can use it.</li>
+      <li><strong>After updating Reclaim,</strong> the pairing no longer matches and the helper refuses the new version. System shows <strong>Pair Again…</strong>, which asks for your password once more. (A paid Apple developer certificate would remove this step.)</li>
+      <li><strong>It is optional.</strong> Everything else in Reclaim works without it. To remove it, click <strong>Remove Helper…</strong> in System.</li>
+    </ul>
+    <h3>Local Time Machine snapshots</h3>
+    <p>Time Machine keeps snapshots on your Mac's disk between backups, and they hold on to the space of files you have deleted since. System lists them; with the helper installed you can tick and delete them. Backups on your backup disk are not affected, and macOS also removes local snapshots on its own when space runs low.</p>
 
     <h2 id="settings">Settings</h2>
     <p>Open with <strong>Reclaim › Settings…</strong> or <kbd>⌘</kbd><kbd>,</kbd>.</p>

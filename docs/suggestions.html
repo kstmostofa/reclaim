@@ -35,6 +35,7 @@
       <li><a href="#trash-downloads">Trash and Old Downloads</a></li>
       <li><a href="#large-files">Large Files</a></li>
       <li><a href="#docker">Docker</a></li>
+      <li><a href="#system-junk">System Junk</a></li>
       <li><a href="#never">Never suggested</a></li>
     </ul>
   </aside>
@@ -147,6 +148,17 @@
         <tr><td>Unused volumes</td><td><code>docker volume rm</code></td><td><span class="badge personal">Personal</span></td></tr>
       </tbody>
     </table></div>
+
+    <h2 id="system-junk">System Junk</h2>
+    <p>Most of these belong to root, so deleting them needs the <a href="guide.html#system">helper</a>. Items macOS protects are skipped even then.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>What</th><th>Location</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>System cache</td><td>each folder in <code>/Library/Caches</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>System logs</td><td>each item in <code>/Library/Logs</code> and <code>/private/var/log</code></td><td><span class="badge safe">Safe</span></td></tr>
+      </tbody>
+    </table></div>
+    <p>Safe items that need the helper are only ticked for you once it is installed.</p>
 
     <h2 id="never">Never suggested or deleted</h2>
     <ul>

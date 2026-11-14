@@ -13,3 +13,6 @@ PLAN.md
 # Release builds
 build/
 dist/
+
+# Launch posts and images, kept local
+launch/

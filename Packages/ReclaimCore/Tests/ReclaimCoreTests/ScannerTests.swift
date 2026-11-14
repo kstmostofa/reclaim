@@ -127,3 +127,36 @@ extension DiskScanner {
         return result.root.children.map(\.path)
     }
 }
+
+@Suite struct TreeTests {
+    @Test func removingShrinksAncestorsAndSharesTheRest() async throws {
+        let fx = try Fixture()
+        try fx.file("a/b/big.bin", size: 2_000_000)
+        try fx.file("a/b/c/x.txt", size: 50_000)
+        try fx.file("other/y.txt", size: 50_000)
+        let tree = try await DiskScanner.fixture(home: fx.path("home")).scan(root: fx.root).root
+        let b = try #require(tree.node(at: fx.path("a/b")))
+        let c = try #require(tree.node(at: fx.path("a/b/c")))
+        let big = try #require(tree.node(at: fx.path("a/b/big.bin")))
+
+        let pruned = try #require(tree.removing([big.path, c.path]))
+        #expect(pruned.size == tree.size - big.size - c.size)
+        #expect(pruned.fileCount == tree.fileCount - 2)
+        #expect(pruned.node(at: fx.path("a/b"))?.size == b.size - big.size - c.size)
+        #expect(pruned.node(at: c.path) == nil)
+        #expect(pruned.node(at: fx.path("other")) === tree.node(at: fx.path("other")))
+        #expect(tree.removing([]) === tree)
+        #expect(tree.removing([tree.path]) == nil)
+    }
+
+    @Test func downloadsAgeIsConfigurable() async throws {
+        let fx = try Fixture()
+        try fx.file("home/Downloads/month-old.zip", modified: Date().addingTimeInterval(-40 * 24 * 3600))
+        let scan = { (days: Int) in
+            try await DiskScanner(rules: .defaults(home: fx.path("home"), appLocator: FakeApps(), downloadsAgeDays: days))
+                .scan(root: fx.root).suggestions().count
+        }
+        #expect(try await scan(90) == 0)
+        #expect(try await scan(30) == 1)
+    }
+}

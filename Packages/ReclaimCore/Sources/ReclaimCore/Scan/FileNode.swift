@@ -43,6 +43,31 @@ public final class FileNode: Sendable, Identifiable {
         isDirectory && !children.isEmpty ? children : nil
     }
 
+    /// A copy of this tree without the nodes at `paths`, with every folder above them made smaller by what
+    /// was removed. Returns nil when this node itself is removed. Untouched subtrees are shared, not copied.
+    public func removing(_ paths: Set<String>) -> FileNode? {
+        if paths.contains(path) { return nil }
+        let prefix = path == "/" ? "/" : path + "/"
+        guard isDirectory, paths.contains(where: { $0.hasPrefix(prefix) }) else { return self }
+        var removedSize: Int64 = 0
+        var removedFiles = 0
+        var kept: [FileNode] = []
+        for child in children {
+            if let updated = child.removing(paths) {
+                removedSize += child.size - updated.size
+                removedFiles += child.fileCount - updated.fileCount
+                kept.append(updated)
+            } else {
+                removedSize += child.size
+                removedFiles += child.fileCount
+            }
+        }
+        guard removedSize != 0 || removedFiles != 0 || kept.count != children.count else { return self }
+        return FileNode(name: name, path: path, isDirectory: true, size: size - removedSize,
+                        fileCount: fileCount - removedFiles, modified: modified,
+                        children: kept.sorted { $0.size > $1.size }, match: match, isUnreadable: isUnreadable)
+    }
+
     /// Finds the node at `path` by walking down from this one.
     public func node(at path: String) -> FileNode? {
         if path == self.path { return self }

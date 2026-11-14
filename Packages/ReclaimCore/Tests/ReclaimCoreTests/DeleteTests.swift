@@ -11,6 +11,8 @@ import Testing
         "/tmp", "/private/tmp", "/var/folders", "/opt/homebrew", "/usr/local", "/Library/Caches", "/Users/Shared",
         "/Users/someoneelse", "/Volumes/External", "/System/Volumes/Data", "/System/Volumes/Data/Users",
         "/System/Volumes/Data/Applications", "/system", "/USERS", "/Users/", "//Users//",
+        "/.Spotlight-V100", "/System/Volumes/Data/.fseventsd", "/System/Volumes/Data/MobileSoftwareUpdate",
+        "/private/db", "/System/Volumes/Data/private/var",
     ])
     func refusesSystemTargets(_ path: String) {
         #expect(guardrail.isProtected(path))

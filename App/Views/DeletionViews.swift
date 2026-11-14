@@ -4,11 +4,12 @@ import SwiftUI
 /// The bar under every list: what is ticked, and the one button that deletes it.
 struct ActionBar: View {
     @Environment(AppModel.self) private var model
+    @Environment(AppSettings.self) private var settings
 
     var body: some View {
-        let count = model.tickedSuggestions.count
+        let count = model.tickedItems.count
         HStack {
-            Text(model.moveToTrash ? "Ticked items move to the Trash." : "Ticked items are deleted permanently.")
+            Text(settings.moveToTrash ? "Ticked items move to the Trash." : "Ticked items are deleted permanently.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
             Spacer()
@@ -16,11 +17,11 @@ struct ActionBar: View {
             Button {
                 model.deleteTicked()
             } label: {
-                Text("\(model.moveToTrash ? "Move" : "Delete") \(count) \(count == 1 ? "item" : "items") · \(Format.size(model.tickedSize))")
+                Text("\(settings.moveToTrash ? "Move" : "Delete") \(count) \(count == 1 ? "item" : "items") · \(Format.size(model.tickedSize))")
                     .monospacedDigit()
             }
             .buttonStyle(.borderedProminent)
-            .tint(model.moveToTrash ? .accentColor : .red)
+            .tint(settings.moveToTrash ? settings.accentColor : .red)
             .keyboardShortcut(.delete, modifiers: .command)
             .disabled(count == 0 || model.deletion != nil)
         }
@@ -34,6 +35,7 @@ struct ActionBar: View {
 /// Live progress while deleting, then the summary.
 struct DeletionSheet: View {
     @Environment(AppModel.self) private var model
+    @Environment(AppSettings.self) private var settings
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -41,7 +43,7 @@ struct DeletionSheet: View {
                 if let report = run.report {
                     summary(report)
                 } else {
-                    Text(model.moveToTrash ? "Moving to Trash…" : "Deleting…").font(.headline)
+                    Text(settings.moveToTrash ? "Moving to Trash…" : "Deleting…").font(.headline)
                     ProgressView(value: Double(run.done), total: Double(max(run.total, 1)))
                     Text("\(run.done) of \(run.total) · \(abbreviated(run.current))")
                         .font(.caption)
@@ -80,22 +82,5 @@ struct DeletionSheet: View {
             Button("Done") { model.dismissDeletion() }
                 .keyboardShortcut(.defaultAction)
         }
-    }
-}
-
-struct SettingsView: View {
-    @Environment(AppModel.self) private var model
-
-    var body: some View {
-        @Bindable var model = model
-        Form {
-            Toggle("Move to Trash instead of deleting permanently", isOn: $model.moveToTrash)
-            Text("Permanent deletion frees space at once and cannot be undone. Moving to the Trash lets you change your mind, but frees nothing until the Trash is emptied.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        .formStyle(.grouped)
-        .frame(width: 460)
-        .padding()
     }
 }

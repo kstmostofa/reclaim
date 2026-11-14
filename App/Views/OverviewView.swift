@@ -34,7 +34,7 @@ struct OverviewView: View {
                 StorageBar(volume: volume, reclaimable: model.reclaimable)
                 HStack(spacing: 18) {
                     legend(.primary.opacity(0.55), "Used", volume.used - min(model.reclaimable, volume.used))
-                    legend(Color.accentColor, "Reclaimable", model.reclaimable)
+                    legend(TintShapeStyle(), "Reclaimable", model.reclaimable)
                     legend(.secondary.opacity(0.18), "Free", volume.available)
                 }
                 .font(.callout)
@@ -140,7 +140,7 @@ struct StorageBar: View {
             let used = Double(volume.used) - reclaim
             HStack(spacing: 0) {
                 Rectangle().fill(.primary.opacity(0.55)).frame(width: geo.size.width * used / total)
-                Rectangle().fill(Color.accentColor).frame(width: geo.size.width * reclaim / total)
+                Rectangle().fill(.tint).frame(width: geo.size.width * reclaim / total)
                 Rectangle().fill(.secondary.opacity(0.18))
             }
             .clipShape(RoundedRectangle(cornerRadius: 6))

@@ -69,6 +69,7 @@ public struct RuleSet: Sendable {
         home: String = NSHomeDirectory(),
         custom: [CustomRule] = [],
         appLocator: any AppLocating = InstalledApps(),
+        downloadsAgeDays: Int = OldDownloadsRule.defaultDays,
         now: Date = Date()
     ) -> RuleSet {
         var rules: [any Rule] = custom
@@ -79,7 +80,7 @@ public struct RuleSet: Sendable {
         rules.append(LeftoverAppDataRule(home: home, apps: appLocator))
         rules += AppCacheRules.all(home: home)
         rules.append(TrashRule(home: home))
-        rules.append(OldDownloadsRule(home: home, now: now))
+        rules.append(OldDownloadsRule(home: home, days: downloadsAgeDays, now: now))
         return RuleSet(rules)
     }
 }

@@ -18,26 +18,29 @@ final class AppModel {
         var report: DeletionReport?
     }
 
+    let settings: AppSettings
     private(set) var phase = Phase.idle
     private(set) var progress = ScanProgress.Snapshot()
     private(set) var volume = VolumeInfo.forPath()
     private(set) var result: ScanResult?
+    /// The scanned tree, kept up to date as things are deleted.
+    private(set) var tree: FileNode?
     private(set) var suggestions: [Suggestion] = []
+    private(set) var largeFiles: [Suggestion] = []
     private(set) var scanError: String?
     private(set) var runningBundleIDs: Set<String> = []
     /// Paths ticked for deletion.
     var ticked: Set<String> = []
     var deletion: DeletionRun?
 
+    /// What each tickable path is, whichever screen it was ticked on.
+    @ObservationIgnored private var tickable: [String: DeletionItem] = [:]
     @ObservationIgnored private var scanTask: Task<Void, Never>?
     @ObservationIgnored private let history = HistoryLog()
+    @ObservationIgnored private let protectedPaths = ProtectedPaths()
 
-    /// The whole data volume; paths are still reported as /Users/… and so on.
-    static let scanRoot = DiskScanner.dataVolumePath
-
-    var moveToTrash: Bool {
-        get { access(keyPath: \.moveToTrash); return UserDefaults.standard.bool(forKey: "moveToTrash") }
-        set { withMutation(keyPath: \.moveToTrash) { UserDefaults.standard.set(newValue, forKey: "moveToTrash") } }
+    init(settings: AppSettings) {
+        self.settings = settings
     }
 
     // MARK: Scanning
@@ -49,7 +52,10 @@ final class AppModel {
         scanError = nil
         progress = ScanProgress.Snapshot()
         let tracker = ScanProgress()
-        let scanner = DiskScanner(rules: .defaults())
+        var options = ScanOptions()
+        options.excludedPaths = Set(settings.excludedFolders)
+        let scanner = DiskScanner(rules: .defaults(downloadsAgeDays: settings.downloadsAgeDays), options: options)
+        let root = settings.scanScope.root
         scanTask = Task {
             let poller = Task {
                 while !Task.isCancelled {
@@ -60,7 +66,7 @@ final class AppModel {
             defer { poller.cancel() }
             do {
                 let scan = try await Task.detached(priority: .userInitiated) {
-                    try await scanner.scan(root: Self.scanRoot, progress: tracker)
+                    try await scanner.scan(root: root, progress: tracker)
                 }.value
                 progress = tracker.snapshot
                 apply(scan)
@@ -79,11 +85,24 @@ final class AppModel {
 
     private func apply(_ scan: ScanResult) {
         result = scan
+        tree = scan.root
         suggestions = scan.suggestions()
-        ticked = Set(suggestions.filter(\.level.isPreselected).map(\.path))
+        tickable = [:]
+        for s in suggestions { tickable[s.path] = s.deletionItem }
+        recomputeLargeFiles()
+        ticked = settings.preselectSafe ? Set(suggestions.filter(\.level.isPreselected).map(\.path)) : []
         refreshRunningApps()
         volume = VolumeInfo.forPath()
         phase = .scanned
+    }
+
+    /// Rebuilds Large Files from the tree, for example after the threshold changes.
+    func recomputeLargeFiles() {
+        guard let result, let tree else { return }
+        largeFiles = ScanResult(root: tree, startedAt: result.startedAt, duration: result.duration,
+                                unreadableFolders: result.unreadableFolders)
+            .largeFiles(threshold: settings.largeFileThreshold)
+        for s in largeFiles { tickable[s.path] = s.deletionItem }
     }
 
     // MARK: Queries
@@ -106,8 +125,18 @@ final class AppModel {
     var reclaimable: Int64 { total(of: suggestions) }
     var safeReclaimable: Int64 { total(of: suggestions.filter { $0.level == .safe }) }
 
-    var tickedSuggestions: [Suggestion] { suggestions.filter { ticked.contains($0.path) } }
-    var tickedSize: Int64 { total(of: tickedSuggestions) }
+    /// Everything ticked, leaving out anything inside another ticked folder so nothing is counted twice.
+    var tickedItems: [DeletionItem] {
+        let items = ticked.compactMap { tickable[$0] }.sorted { $0.path < $1.path }
+        var out: [DeletionItem] = []
+        for item in items {
+            if let last = out.last, item.path.hasPrefix(last.path + "/") { continue }
+            out.append(item)
+        }
+        return out
+    }
+
+    var tickedSize: Int64 { tickedItems.reduce(0) { $0 + $1.size } }
 
     /// True when the item is an app's cache or data and that app is running now.
     func belongsToRunningApp(_ suggestion: Suggestion) -> Bool {
@@ -120,30 +149,46 @@ final class AppModel {
         runningBundleIDs = Set(NSWorkspace.shared.runningApplications.compactMap { $0.bundleIdentifier?.lowercased() })
     }
 
-    // MARK: Selection
-
-    func tickAllSafe(in category: SuggestionCategory? = nil) {
-        for s in suggestions where s.level == .safe && (category == nil || s.category == category) {
-            ticked.insert(s.path)
-        }
+    func canDelete(_ path: String) -> Bool {
+        !protectedPaths.isProtected(path)
     }
 
-    func untickAll(in category: SuggestionCategory? = nil) {
-        if let category {
-            ticked.subtract(suggestions(in: category).map(\.path))
-        } else {
-            ticked.removeAll()
+    // MARK: Selection
+
+    func tickAllSafe(in items: [Suggestion]) {
+        ticked.formUnion(items.filter { $0.level == .safe }.map(\.path))
+    }
+
+    func untick(_ items: [Suggestion]) {
+        ticked.subtract(items.map(\.path))
+    }
+
+    func untickAll() {
+        ticked.removeAll()
+    }
+
+    /// Ticks or unticks anything in the disk map.
+    func setTicked(_ node: FileNode, _ on: Bool) {
+        guard on else {
+            ticked.remove(node.path)
+            return
         }
+        guard canDelete(node.path) else { return }
+        if tickable[node.path] == nil {
+            tickable[node.path] = DeletionItem(path: node.path, size: node.size, title: node.match?.title ?? node.name,
+                                               category: node.match?.category, level: node.match?.level)
+        }
+        ticked.insert(node.path)
     }
 
     // MARK: Deleting
 
     /// Deletes every ticked item at once; no confirmation, by design.
     func deleteTicked() {
-        let items = tickedSuggestions.map(\.deletionItem)
+        let items = tickedItems
         guard !items.isEmpty, deletion == nil else { return }
         deletion = DeletionRun(total: items.count, current: items[0].path)
-        let deleter = Deleter(mode: moveToTrash ? .trash : .permanent)
+        let deleter = Deleter(mode: settings.moveToTrash ? .trash : .permanent)
         let history = history
         Task {
             let report = await Task.detached(priority: .userInitiated) {
@@ -162,8 +207,13 @@ final class AppModel {
     private func finish(_ report: DeletionReport) {
         let gone = Set(report.outcomes.filter { $0.succeeded || !FileManager.default.fileExists(atPath: $0.item.path) }
             .map(\.item.path))
-        suggestions.removeAll { gone.contains($0.path) }
-        ticked.subtract(gone)
+        func isGone(_ path: String) -> Bool {
+            gone.contains(path) || gone.contains { path.hasPrefix($0 + "/") }
+        }
+        suggestions.removeAll { isGone($0.path) }
+        largeFiles.removeAll { isGone($0.path) }
+        ticked = ticked.filter { !isGone($0) }
+        tree = tree?.removing(gone)
         volume = VolumeInfo.forPath()
         deletion?.done = report.outcomes.count
         deletion?.report = report

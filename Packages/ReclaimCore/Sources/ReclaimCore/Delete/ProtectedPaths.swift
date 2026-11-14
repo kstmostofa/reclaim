@@ -62,8 +62,12 @@ public struct ProtectedPaths: Sendable {
         for candidate in Set([trimmed.lowercased(), canonical.lowercased()]) {
             if exact.contains(candidate) { throw .protected(path) }
             let parts = candidate.split(separator: "/")
-            // Any user's home folder, and any mounted volume's root.
-            if parts.count == 2 && (parts[0] == "users" || parts[0] == "volumes") { throw .protected(path) }
+            // Every top-level folder of the disk, such as /Applications or /.Spotlight-V100.
+            if parts.count == 1 { throw .protected(path) }
+            // Any user's home folder, any mounted volume's root, and the system folders in /private.
+            if parts.count == 2 && (parts[0] == "users" || parts[0] == "volumes" || parts[0] == "private") {
+                throw .protected(path)
+            }
             for tree in Self.systemTrees where candidate == tree || candidate.hasPrefix(tree + "/") {
                 if !Self.systemTreeExceptions.contains(where: { candidate.hasPrefix($0) }) { throw .protected(path) }
             }

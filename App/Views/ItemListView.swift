@@ -1,9 +1,12 @@
 import ReclaimCore
 import SwiftUI
 
-struct SuggestionsView: View {
+/// A tickable table of suggestions: one category, or Large Files.
+struct ItemListView: View {
     @Environment(AppModel.self) private var model
-    let category: SuggestionCategory
+    let title: String
+    let items: [Suggestion]
+    var emptyMessage = "Nothing here."
 
     @State private var sortOrder = [KeyPathComparator(\Suggestion.size, order: .reverse)]
     @State private var search = ""
@@ -11,7 +14,7 @@ struct SuggestionsView: View {
     @State private var showInspector = true
 
     private var rows: [Suggestion] {
-        let all = model.suggestions(in: category)
+        let all = items
         let filtered = search.isEmpty ? all : all.filter {
             $0.path.localizedCaseInsensitiveContains(search) || $0.match.title.localizedCaseInsensitiveContains(search)
         }
@@ -79,13 +82,13 @@ struct SuggestionsView: View {
             }
         }
         .searchable(text: $search, placement: .toolbar, prompt: "Filter by name or path")
-        .navigationTitle(category.title)
+        .navigationTitle(title)
         .navigationSubtitle("\(rows.count) items · \(Format.size(model.total(of: rows)))")
         .toolbar {
             ToolbarItemGroup {
-                Button("Select All Safe") { model.tickAllSafe(in: category) }
+                Button("Select All Safe") { model.tickAllSafe(in: rows) }
                     .disabled(!rows.contains { $0.level == .safe })
-                Button("Deselect All") { model.untickAll(in: category) }
+                Button("Deselect All") { model.untick(rows) }
                 Button {
                     showInspector.toggle()
                 } label: {
@@ -97,7 +100,12 @@ struct SuggestionsView: View {
             InspectorView(item: rows.first { selection.contains($0.id) })
                 .inspectorColumnWidth(min: 240, ideal: 280, max: 400)
         }
-        .onChange(of: category) { selection = [] }
+        .overlay {
+            if items.isEmpty {
+                ContentUnavailableView(model.phase == .scanning ? "Scanning…" : "Nothing to Show",
+                                       systemImage: "checkmark.circle", description: Text(emptyMessage))
+            }
+        }
     }
 
     private func tickBinding(_ path: String) -> Binding<Bool> {

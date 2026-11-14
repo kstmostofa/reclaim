@@ -70,7 +70,7 @@
   }
 
   // ------------------------------------------------------------------ Spotlight that follows the pointer on cards
-  document.querySelectorAll(".tile, .card-link").forEach((card) =>
+  document.querySelectorAll(".tile, .card-link, .card").forEach((card) =>
     card.addEventListener("pointermove", (event) => {
       const box = card.getBoundingClientRect();
       card.style.setProperty("--mx", `${event.clientX - box.left}px`);
@@ -104,107 +104,130 @@
     auto();
   });
 
-  // ------------------------------------------------------------------ The live scan demo in the hero
-  const scan = document.querySelector("[data-scan]");
-  if (scan) {
-    const items = [
-      { name: "node_modules", where: "~/Projects/shop", size: 1.42, level: "rebuild" },
-      { name: ".next", where: "~/Projects/shop", size: 0.86, level: "safe" },
-      { name: "DerivedData", where: "~/Library/Developer/Xcode", size: 6.8, level: "safe" },
-      { name: "Build cache", where: "Docker · OrbStack", size: 0.89, level: "safe" },
-      { name: "caches", where: "~/.gradle", size: 1.16, level: "safe" },
-      { name: "vendor", where: "~/Projects/api", size: 0.31, level: "rebuild" },
-      { name: "Installer.dmg", where: "~/Downloads · 7 months old", size: 2.3, level: "personal" },
+  // ------------------------------------------------------------------ The app replica in the hero
+  const app = document.querySelector("[data-app]");
+  if (app) {
+    const rows = [
+      { name: "DerivedData/Storefront-ghxqv", where: "~/Library/Developer/Xcode", size: 6.89, when: "3 Nov 2026" },
+      { name: ".next", where: "~/Projects/storefront", size: 2.14, when: "11 Nov 2026" },
+      { name: "target", where: "~/Projects/engine", size: 1.92, when: "28 Oct 2026" },
+      { name: ".turbo", where: "~/Projects/monorepo", size: 0.64, when: "9 Nov 2026" },
+      { name: "build/intermediates", where: "~/Projects/android/app", size: 0.41, when: "30 Oct 2026" },
+      { name: "__pycache__", where: "~/Projects/ml-tools", size: 0.096, when: "12 Nov 2026" },
     ];
-    const list = scan.querySelector("[data-list]");
-    const total = scan.querySelector("[data-total]");
-    const label = scan.querySelector("[data-total-label]");
-    const status = scan.querySelector("[data-status]");
-    const del = scan.querySelector("[data-delete]");
-    const bar = scan.querySelector(".scan-progress");
-    const check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-    const levels = { safe: "Safe", rebuild: "Rebuild", personal: "Personal" };
+    const total = rows.reduce((s, r) => s + r.size, 0);
+    const $ = (sel) => app.querySelector(sel);
+    const list = $("[data-rows]"), sub = $("[data-sub]"), bar = $("[data-bar]"), del = $("[data-del]");
+    const toast = $("[data-toast]"), cursor = $("[data-cursor]"), selSafe = $("[data-selectsafe]"), build = $("[data-build]");
+    const sizes = [...app.querySelectorAll("[data-to]")];
+    const tick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    const folder = '<svg class="folder" viewBox="0 0 22 18"><path d="M1 3.2C1 2 2 1 3.2 1h5l2 2.2h8.6C20 3.2 21 4.2 21 5.4v9.4c0 1.2-1 2.2-2.2 2.2H3.2C2 17 1 16 1 14.8z" fill="#4aa3f2"/><path d="M1 6h20v8.8c0 1.2-1 2.2-2.2 2.2H3.2C2 17 1 16 1 14.8z" fill="#6bb8f7"/></svg>';
+    const gb = (v) => (v >= 1 ? v.toFixed(2) + " GB" : Math.round(v * 1000) + " MB");
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-    const fmt = (gb) => gb.toFixed(1) + " GB";
-
-    const tween = (from, to, ms, fn) => new Promise((resolve) => {
-      const start = performance.now();
-      const step = (now) => {
-        const t = Math.min(1, (now - start) / ms);
-        fn(from + (to - from) * (1 - Math.pow(1 - t, 3)));
-        t < 1 ? requestAnimationFrame(step) : resolve();
-      };
+    const tween = (ms, fn) => new Promise((done) => {
+      const t0 = performance.now();
+      const step = (now) => { const t = Math.min(1, (now - t0) / ms); fn(1 - Math.pow(1 - t, 3)); t < 1 ? requestAnimationFrame(step) : done(); };
       requestAnimationFrame(step);
     });
 
-    const render = () => {
-      list.innerHTML = items.map((it) =>
-        `<li data-level="${it.level}" title="${it.where}"><span class="chk">${check}</span><span><code>${it.name}</code></span>` +
-        `<span class="badge ${it.level}">${levels[it.level]}</span><span class="size">${fmt(it.size)}</span></li>`).join("");
+    // Positions inside the window, unaffected by its tilt.
+    const at = (el) => { let x = 0, y = 0; for (let n = el; n && n !== app; n = n.offsetParent) { x += n.offsetLeft; y += n.offsetTop; } return { x, y, w: el.offsetWidth, h: el.offsetHeight }; };
+    const moveTo = async (el) => {
+      const b = at(el);
+      cursor.style.transform = `translate(${b.x + b.w * 0.6}px, ${b.y + b.h * 0.55}px)`;
+      await sleep(1000);
+    };
+    const click = async (el) => {
+      cursor.classList.add("click"); el.classList.add("press");
+      await sleep(160);
+      cursor.classList.remove("click"); el.classList.remove("press");
+    };
+
+    const draw = () => {
+      list.innerHTML = rows.map((r) =>
+        `<div class="row"><span class="box">${tick}</span><span class="nm">${folder}<div><strong>${r.name}</strong><small>${r.where}</small></div></span>` +
+        `<span class="size">${gb(r.size)}</span><span class="badge safe">Safe</span><span class="when">${r.when}</span></div>`).join("");
+      const els = [...list.children];
+      list.insertAdjacentHTML("beforeend", '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><strong>Nothing to Show</strong><span>Build Caches is clean.</span></div>');
+      list.classList.remove("cleared");
+      return els;
     };
 
     const finalState = () => {
-      render();
-      const rows = [...list.children];
-      rows.forEach((li) => li.classList.add("on"));
-      rows.filter((li) => li.dataset.level === "safe").forEach((li) => li.classList.add("ticked"));
-      scan.classList.add("found");
-      const sum = items.reduce((s, it) => s + it.size, 0);
-      total.textContent = fmt(sum);
-      status.textContent = `Found ${items.length} items`;
-      const safe = items.filter((it) => it.level === "safe");
-      del.textContent = `Delete ${safe.length} items · ${fmt(safe.reduce((s, it) => s + it.size, 0))}`;
+      const els = draw();
+      els.forEach((el) => el.classList.add("on", "ticked"));
+      sizes.forEach((s) => (s.textContent = s.dataset.to));
+      sub.textContent = `${rows.length} items · ${total.toFixed(1)} GB`;
+      del.classList.remove("off");
+      del.textContent = `Delete ${rows.length} items · ${total.toFixed(1)} GB`;
     };
 
-    const run = async () => {
+    const loop = async () => {
+      // Start just off the window's top-right, out of the way.
+      cursor.style.transform = `translate(${app.offsetWidth - 120}px, ${app.offsetHeight - 160}px)`;
       while (true) {
-        render();
-        scan.classList.remove("found");
-        total.textContent = "0.0 GB";
-        label.textContent = "reclaimable";
-        status.textContent = "Scanning Macintosh HD…";
+        const els = draw();
+        toast.classList.remove("on");
+        del.classList.add("off");
         del.textContent = "Delete 0 items";
-        bar.style.transition = "none"; bar.style.width = "0";
-        await sleep(400);
-        bar.style.transition = `width ${items.length * 0.55 + 0.4}s linear`; bar.style.width = "100%";
-        let sum = 0;
-        for (const [i, li] of [...list.children].entries()) {
-          await sleep(550);
-          li.classList.add("on");
-          const before = sum; sum += items[i].size;
-          tween(before, sum, 450, (v) => (total.textContent = fmt(v)));
-        }
+        sizes.forEach((s) => (s.textContent = "—"));
+        sub.textContent = "Scanning…";
+        bar.style.transition = "none"; bar.style.width = "0"; bar.style.opacity = "1";
         await sleep(500);
-        scan.classList.add("found");
-        status.textContent = `Found ${items.length} items`;
-        const safeRows = [...list.children].filter((li) => li.dataset.level === "safe");
-        const safeSum = items.filter((it) => it.level === "safe").reduce((s, it) => s + it.size, 0);
-        for (const [i, li] of safeRows.entries()) {
-          await sleep(260);
-          li.classList.add("ticked");
-          del.textContent = `Delete ${i + 1} items · ${fmt(items.filter((it) => it.level === "safe").slice(0, i + 1).reduce((s, it) => s + it.size, 0))}`;
+
+        // Scan: progress, file counter, sidebar sizes and rows.
+        bar.style.transition = "width 3.4s cubic-bezier(.4,.1,.3,1)"; bar.style.width = "100%";
+        tween(3400, (t) => (sub.textContent = `Scanning · ${Math.round(t * 2717258).toLocaleString("en-US")} files`));
+        sizes.forEach((s, i) => setTimeout(() => (s.textContent = s.dataset.to), 500 + i * 300));
+        for (const el of els) { await sleep(480); el.classList.add("on"); }
+        await sleep(700);
+        bar.style.transition = "opacity .5s"; bar.style.opacity = "0";
+        sub.textContent = `${rows.length} items · ${total.toFixed(1)} GB`;
+
+        // Select All Safe.
+        cursor.classList.add("on");
+        await moveTo(selSafe);
+        await click(selSafe);
+        del.classList.remove("off");
+        for (const [i, el] of els.entries()) {
+          await sleep(110);
+          el.classList.add("ticked");
+          const sum = rows.slice(0, i + 1).reduce((s, r) => s + r.size, 0);
+          del.textContent = `Delete ${i + 1} ${i ? "items" : "item"} · ${sum.toFixed(1)} GB`;
         }
-        await sleep(1400);
-        del.classList.add("press");
-        await sleep(160);
-        del.classList.remove("press");
-        safeRows.forEach((li) => li.classList.add("gone"));
-        status.textContent = "Deleting…";
-        label.textContent = "freed";
-        await tween(0, safeSum, 900, (v) => (total.textContent = fmt(v)));
-        status.textContent = `Freed ${fmt(safeSum)} · no confirmation needed`;
-        await sleep(3600);
+        await sleep(700);
+
+        // Delete.
+        await moveTo(del);
+        await click(del);
+        for (const el of els) { el.classList.add("out"); await sleep(90); }
+        tween(700, (t) => (build.textContent = t < 1 ? gb(total * (1 - t)) : "—"));
+        del.classList.add("off");
+        del.textContent = "Delete 0 items";
+        sub.textContent = "No items";
+        list.classList.add("cleared");
+        await sleep(300);
+        toast.classList.add("on");
+        cursor.style.transform = `translate(${app.offsetWidth - 120}px, ${app.offsetHeight - 160}px)`;
+        await sleep(3800);
+        cursor.classList.remove("on");
+        toast.classList.remove("on");
+        await sleep(600);
       }
     };
 
     if (reduced) {
       finalState();
     } else {
-      // Start when visible; the hero is usually visible at once.
-      const io = new IntersectionObserver((entries) => {
-        if (entries.some((e) => e.isIntersecting)) { io.disconnect(); run(); }
-      });
-      io.observe(scan);
+      // Tilted back at first, the window straightens as the page scrolls.
+      const tilt = () => {
+        const p = Math.min(1, Math.max(0, scrollY / 520));
+        app.style.setProperty("--tilt", `${18 * (1 - p)}deg`);
+        app.style.setProperty("--sc", `${0.94 + 0.06 * p}`);
+      };
+      addEventListener("scroll", tilt, { passive: true });
+      tilt();
+      setTimeout(loop, 1400);
     }
   }
 

@@ -201,6 +201,7 @@ def faq_page(body: str) -> dict | None:
 
 
 def head(page: Page, extra_ld: list[dict]) -> str:
+    home_css = '\n<link rel="stylesheet" href="assets/home.css">' if page.slug == "index" else ""
     title = f"{APP} — {TAGLINE}" if page.slug == "index" else f"{page.title} · {APP}"
     image = f"{SITE}/assets/og-image.png"
     ld = "".join(json_ld(d) for d in extra_ld)
@@ -238,7 +239,7 @@ def head(page: Page, extra_ld: list[dict]) -> str:
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css">{home_css}
 <script>document.documentElement.classList.add("js");try{{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}}catch(e){{}}</script>
 {ld}
 </head>"""

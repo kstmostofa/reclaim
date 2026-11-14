@@ -33,6 +33,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/home.css">
 <script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Reclaim", "description": "Reclaim scans your whole Mac, explains what is safe to delete — build caches, node_modules, app caches, Docker leftovers, duplicates — and removes what you tick in one click.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS 14 or later", "softwareVersion": "0.1.0", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "license": "https://opensource.org/licenses/MIT", "downloadUrl": "https://github.com/kstmostofa/reclaim/releases/latest", "codeRepository": "https://github.com/kstmostofa/reclaim", "screenshot": "https://kstmostofa.github.io/reclaim/screenshots/overview.png", "url": "https://kstmostofa.github.io/reclaim/", "author": {"@type": "Person", "name": "Md. Mostafijur Rahman"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Reclaim", "url": "https://kstmostofa.github.io/reclaim/", "description": "Free, open-source Mac app that finds build caches, node_modules, app caches, Docker leftovers and duplicates, and frees the space in one click."}</script>
 </head>
@@ -63,257 +64,211 @@
   
 </header>
 <main id="content">
-<section class="hero">
-  <div class="grid-bg"></div>
-  <div class="wrap hero-grid">
-    <div>
-      <a class="pill fade-in" style="--d:.05s" href="https://github.com/kstmostofa/reclaim/releases/latest"><b>v0.1.0</b> Free and open source for macOS 14+ <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-      <h1>
-        <span class="line"><span style="--d:.1s">Your Mac is full</span></span>
-        <span class="line"><span style="--d:.2s">of things you</span></span>
-        <span class="line"><span style="--d:.3s" class="accent">don't need.</span></span>
-      </h1>
-      <p class="lead fade-in" style="--d:.5s">Reclaim scans the whole disk, explains what is safe to delete, and frees the space in one click. Built for developer Macs that fill up with build caches, <code>node_modules</code>, simulators and Docker leftovers.</p>
-      <div class="hero-actions fade-in" style="--d:.65s">
-        <a class="button button-primary button-large" href="https://github.com/kstmostofa/reclaim/releases/latest"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download for Mac</a>
-        <a class="button button-large" href="guide.html">Read the docs <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-      </div>
-      <ul class="hero-meta fade-in" style="--d:.8s">
-        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>MIT licensed</li>
-        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Apple silicon and Intel</li>
-        <li><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>No account or tracking</li>
-      </ul>
+<section class="hx">
+  <div class="hx-light"></div>
+  <div class="hx-lines"></div>
+  <div class="w">
+    <a class="hx-tag rise" style="--d:.05s" href="https://github.com/kstmostofa/reclaim/releases/latest"><b>v0.1.0</b>Free and open source for macOS <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    <h1>
+      <span class="ln"><span style="--d:.12s">Take back your disk.</span></span>
+      <span class="ln"><span style="--d:.24s">Keep what matters.</span></span>
+    </h1>
+    <p class="hx-lead rise" style="--d:.45s">Reclaim finds the build caches, dependencies, simulators and Docker leftovers filling your Mac, tells you what's safe to delete, and frees the space in one click.</p>
+    <div class="hx-cta rise" style="--d:.6s">
+      <a class="button button-primary" href="https://github.com/kstmostofa/reclaim/releases/latest"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download for Mac</a>
+      <a class="button ghost" href="guide.html">Read the docs <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
     </div>
+    <p class="hx-meta rise" style="--d:.75s"><span>macOS 14+</span><span>Apple silicon &amp; Intel</span><span>MIT license</span></p>
+  </div>
 
-    <div class="scan fade-in" style="--d:.35s" data-scan aria-label="An animated example of a Reclaim scan finding and deleting caches" role="img">
-      <div class="scan-progress"></div>
-      <div class="scan-bar"><i></i><i></i><i></i><span>Reclaim</span></div>
-      <div class="scan-body">
-        <div class="scan-pie">
-          <svg viewBox="232 232 560 560" aria-hidden="true"><path class="pie" d="M495.7 528.3H745.7A250 250 0 1 1 495.7 278.3Z"/><path class="slice" d="M528.3 495.7V245.7A250 250 0 0 1 778.3 495.7Z"/></svg>
-          <div class="scan-total"><strong data-total>0.0 GB</strong><small data-total-label>reclaimable</small></div>
+  <div class="stage">
+    <div class="stage-glow"></div>
+    <div class="app" data-app role="img" aria-label="Reclaim scanning a Mac, ticking six build caches and deleting them to free 12.1 GB.">
+      <aside class="app-side">
+        <span class="lights"><i></i><i></i><i></i></span>
+        <div class="side-i"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" x2="2" y1="12" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" x2="6.01" y1="16" y2="16"/><line x1="10" x2="10.01" y1="16" y2="16"/></svg><span>Overview</span><em></em></div>
+        <div class="side-h">Suggestions</div>
+        <div class="side-i"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Dependencies</span><em data-to="17.3 GB">—</em></div>
+        <div class="side-i on"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span>Build Caches</span><em data-to="12.1 GB" data-build>—</em></div>
+        <div class="side-i"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span>Package Caches</span><em data-to="3.6 GB">—</em></div>
+        <div class="side-i"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg><span>Mobile Tooling</span><em data-to="2.9 GB">—</em></div>
+        <div class="side-i"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>App Caches</span><em data-to="1.2 GB">—</em></div>
+        <div class="side-i"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg><span>System Junk</span><em data-to="94 MB">—</em></div>
+        <div class="side-h">Explore</div>
+        <div class="side-i"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span>Disk Map</span><em></em></div>
+        <div class="side-i"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>Duplicates</span><em data-to="774 MB">—</em></div>
+        <div class="side-i"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Containers</span><em data-to="1.4 GB">—</em></div>
+      </aside>
+      <div class="app-main">
+        <div class="app-tool">
+          <span class="lights m"><i></i><i></i><i></i></span>
+          <div class="t"><strong>Build Caches</strong><small data-sub>Scanning…</small></div>
+          <span class="sp"></span>
+          <span class="tb sel-safe" data-selectsafe>Select All Safe</span>
+          <span class="tb">Deselect All</span>
+          <span class="tb tb-search"><svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>Filter by name or path</span>
+          <i class="app-bar" data-bar></i>
         </div>
-        <ul class="scan-list" data-list></ul>
+        <div class="cols"><span></span><span>Name</span><span class="r">Size</span><span>Safety</span><span>Modified</span></div>
+        <div class="rows" data-rows></div>
+        <div class="app-act">
+          <span>Ticked items are deleted permanently.</span>
+          <div class="act-btns"><b>Untick All</b><b class="del off" data-del>Delete 0 items</b></div>
+        </div>
+        <div class="toast" data-toast><i><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></i><div><strong data-freed>Freed 12.1 GB</strong><small>6 items deleted · no confirmation needed</small></div></div>
       </div>
-      <div class="scan-foot"><span class="status" data-status>Scanning…</span><span class="delete" data-delete>Delete 0 items</span></div>
+      <svg class="cursor" data-cursor viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5v17.2l4.7-4.6 3 6.6 2.9-1.3-3-6.5h6.6z" fill="#fff" stroke="#000" stroke-width="1.2" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <div class="mq" aria-label="Some of what Reclaim knows">
+    <p class="mq-label">Knows where developer tools leave things</p>
+    <div class="mq-track">
+      <span>Next.js</span><span>Nuxt</span><span>Turborepo</span><span>SvelteKit</span><span>Xcode</span><span>Gradle</span><span>Android Studio</span><span>Flutter</span><span>Rust</span><span>Python</span><span>npm</span><span>pnpm</span><span>Yarn</span><span>Composer</span><span>CocoaPods</span><span>Homebrew</span><span>Docker</span><span>OrbStack</span><span>Playwright</span><span>Go</span>
+      <span aria-hidden="true">Next.js</span><span aria-hidden="true">Nuxt</span><span aria-hidden="true">Turborepo</span><span aria-hidden="true">SvelteKit</span><span aria-hidden="true">Xcode</span><span aria-hidden="true">Gradle</span><span aria-hidden="true">Android Studio</span><span aria-hidden="true">Flutter</span><span aria-hidden="true">Rust</span><span aria-hidden="true">Python</span><span aria-hidden="true">npm</span><span aria-hidden="true">pnpm</span><span aria-hidden="true">Yarn</span><span aria-hidden="true">Composer</span><span aria-hidden="true">CocoaPods</span><span aria-hidden="true">Homebrew</span><span aria-hidden="true">Docker</span><span aria-hidden="true">OrbStack</span><span aria-hidden="true">Playwright</span><span aria-hidden="true">Go</span>
     </div>
   </div>
 </section>
 
-<div class="marquee" aria-label="Some of what Reclaim knows">
-  <div class="marquee-track">
-    <span>.next</span><span>.nuxt</span><span>.turbo</span><span>.svelte-kit</span><span>.parcel-cache</span><span>__pycache__</span><span>Rust target</span><span>DerivedData</span><span>build/intermediates</span><span>~/.npm</span><span>pnpm store</span><span>Yarn cache</span><span>~/.gradle/caches</span><span>Homebrew</span><span>CocoaPods cache</span><span>Cargo registry</span><span>~/Library/Caches</span><span>emulator snapshots</span><span>Docker build cache</span><span class="r">node_modules</span><span class="r">vendor</span><span class="r">Pods</span><span class="r">.venv</span><span class="r">~/.pub-cache</span><span class="r">Playwright browsers</span><span class="p">old downloads</span><span class="p">large files</span><span class="p">duplicates</span>
-    <span aria-hidden="true">.next</span><span aria-hidden="true">.nuxt</span><span aria-hidden="true">.turbo</span><span aria-hidden="true">.svelte-kit</span><span aria-hidden="true">.parcel-cache</span><span aria-hidden="true">__pycache__</span><span aria-hidden="true">Rust target</span><span aria-hidden="true">DerivedData</span><span aria-hidden="true">build/intermediates</span><span aria-hidden="true">~/.npm</span><span aria-hidden="true">pnpm store</span><span aria-hidden="true">Yarn cache</span><span aria-hidden="true">~/.gradle/caches</span><span aria-hidden="true">Homebrew</span><span aria-hidden="true">CocoaPods cache</span><span aria-hidden="true">Cargo registry</span><span aria-hidden="true">~/Library/Caches</span><span aria-hidden="true">emulator snapshots</span><span aria-hidden="true">Docker build cache</span><span class="r" aria-hidden="true">node_modules</span><span class="r" aria-hidden="true">vendor</span><span class="r" aria-hidden="true">Pods</span><span class="r" aria-hidden="true">.venv</span><span class="r" aria-hidden="true">~/.pub-cache</span><span class="r" aria-hidden="true">Playwright browsers</span><span class="p" aria-hidden="true">old downloads</span><span class="p" aria-hidden="true">large files</span><span class="p" aria-hidden="true">duplicates</span>
-  </div>
-</div>
-
-<section class="section">
-  <div class="wrap">
-    <div class="stats reveal">
-      <div class="stat"><strong data-count="42">0</strong><span>places it knows to look</span></div>
-      <div class="stat"><strong data-count="1" data-suffix=" min">0</strong><span>to scan a whole Mac</span></div>
-      <div class="stat"><strong data-count="3">0</strong><span>safety levels, only Safe pre-ticked</span></div>
-      <div class="stat"><strong data-count="0">0</strong><span>network requests, ever</span></div>
+<section class="sec" id="features">
+  <div class="w">
+    <div class="head reveal">
+      <p class="kicker"><i></i>Features</p>
+      <h2 class="h2">Built for the way developer Macs fill up. <span>Every suggestion explained.</span></h2>
     </div>
-  </div>
-</section>
-
-<section class="section" id="features" style="padding-top:0">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">Features</p>
-      <h2 class="title">Everything that quietly fills a developer's Mac. <span class="dim">In one place.</span></h2>
-      <p class="subtitle">Every suggestion says what it is, why it is listed, and what happens after you delete it.</p>
-    </div>
-
-    <div class="bento">
-      <article class="tile span-4 reveal">
-        <span class="tile-icon"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
-        <h3>Knows where developer junk hides</h3>
-        <p>Build output, installed dependencies and package-manager caches, matched by rules written from real Macs, never by guesswork.</p>
-        <div class="visual bars">
-          <div><span>node_modules</span><i style="--w:92%;--c:var(--rebuild)"></i><b>14.2 GB</b></div>
-          <div><span>DerivedData</span><i style="--w:48%;--d:.1s"></i><b>6.8 GB</b></div>
-          <div><span>vendor</span><i style="--w:22%;--d:.2s;--c:var(--rebuild)"></i><b>3.1 GB</b></div>
-          <div><span>~/.gradle</span><i style="--w:15%;--d:.3s"></i><b>2.1 GB</b></div>
+    <div class="grid6">
+      <article class="card c4 reveal">
+        <span class="ic"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+        <h3>Knows where junk hides</h3>
+        <p>Build output, installed dependencies and package-manager caches, found by rules written from real developer Macs.</p>
+        <div class="vis bars2">
+          <div><span>node_modules</span><i style="--w:94%;--c:var(--rebuild)"></i><b>14.2 GB</b></div>
+          <div><span>DerivedData</span><i style="--w:46%;--d:.1s"></i><b>6.9 GB</b></div>
+          <div><span>vendor</span><i style="--w:21%;--d:.2s;--c:var(--rebuild)"></i><b>3.1 GB</b></div>
+          <div><span>.gradle</span><i style="--w:14%;--d:.3s"></i><b>2.1 GB</b></div>
           <div><span>.next</span><i style="--w:9%;--d:.4s"></i><b>1.3 GB</b></div>
         </div>
-        <a class="more" href="what-it-finds.html">See every rule <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a class="lnk" href="what-it-finds.html">See every rule <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </article>
+      <article class="card c2 reveal" style="--d:.08s">
+        <span class="ic"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg></span>
+        <h3>One click</h3>
+        <p>Tick, click, done. No confirmation for every file, and a summary of anything that couldn't go.</p>
+        <svg class="pie-anim vis" viewBox="232 232 560 560" aria-hidden="true"><path class="pie" d="M495.7 528.3H745.7A250 250 0 1 1 495.7 278.3Z" fill="currentColor"/><path class="slice" d="M528.3 495.7V245.7A250 250 0 0 1 778.3 495.7Z" fill="#6d6bf0"/></svg>
       </article>
 
-      <article class="tile span-2 dark reveal" style="--d:.08s">
-        <span class="tile-icon"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <article class="card c2 reveal">
+        <span class="ic"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
         <h3>Three safety levels</h3>
-        <p>Safe rebuilds itself and is ticked for you. Rebuild and Personal wait for your call.</p>
-        <div class="visual levels-mini"><span class="badge safe">Safe</span><span class="badge rebuild">Rebuild</span><span class="badge personal">Personal</span></div>
-      </article>
-
-      <article class="tile span-2 reveal">
-        <span class="tile-icon"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg></span>
-        <h3>One click, no nagging</h3>
-        <p>Tick, click, done, with a summary of what was freed and why anything wasn't. Prefer a net? Turn on Move to Trash.</p>
-      </article>
-
-      <article class="tile span-2 dark reveal" style="--d:.08s">
-        <span class="tile-icon"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></span>
-        <h3>Real duplicates only</h3>
-        <p>Byte-for-byte matches. APFS copies that share storage are spotted, so the space is real.</p>
-        <div class="visual dupes"><span>photo.heic</span><span>photo copy.heic</span><span>photo 2.heic</span></div>
-      </article>
-
-      <article class="tile span-2 reveal" style="--d:.16s">
-        <span class="tile-icon"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
-        <h3>Docker and OrbStack</h3>
-        <p>Build cache, unused images, stopped containers and volumes, removed with Docker's own commands.</p>
-        <a class="more" href="docker.html">Docker clean-up <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-      </article>
-
-      <article class="tile span-3 reveal">
-        <span class="tile-icon"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg></span>
-        <h3>Lives in your menu bar</h3>
-        <p>Free space at a glance, a warning before the disk fills, and daily or weekly scans that can tidy untouched caches on their own.</p>
-        <div class="visual mini-menu">
-          <strong>62.3 GB</strong> <span style="color:var(--muted)">free of 245 GB</span>
-          <div class="meter"><i></i><b></b></div>
-          <div class="btn">Clean Safe Items · 4.4 GB</div>
+        <p>Only Safe items are ever ticked for you.</p>
+        <div class="vis lv">
+          <div>Rebuilds itself <span class="badge safe">Safe</span></div>
+          <div>Needs a reinstall <span class="badge rebuild">Rebuild</span></div>
+          <div>Your data <span class="badge personal">Personal</span></div>
         </div>
       </article>
-
-      <article class="tile span-3 reveal" style="--d:.08s">
-        <span class="tile-icon"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
-        <h3>Hard limits, however you spell it</h3>
-        <p>The disk root, system folders, your home folder and folders like Documents are never deleted as a whole, even through symlinks or <code>..</code> tricks.</p>
-        <div class="visual shield"><code>/System</code><code>/Users/you</code><code>~/Documents</code><code>/tmp/../etc</code></div>
+      <article class="card c2 reveal" style="--d:.08s">
+        <span class="ic"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></span>
+        <h3>Real duplicates</h3>
+        <p>Byte-for-byte matches only. Shared-storage APFS copies don't inflate the total.</p>
+        <div class="vis dup"><span>photo.heic<em>keep</em></span><span style="--d:.5s">photo copy.heic</span><span style="--d:.7s">photo 2.heic</span></div>
+      </article>
+      <article class="card c2 reveal" style="--d:.16s">
+        <span class="ic"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
+        <h3>Docker and OrbStack</h3>
+        <p>Removed with Docker's own commands, never by touching its disk image.</p>
+        <div class="vis terminal"><b>$ docker builder prune</b><br><em>✓</em> 889 MB build cache<br><em>✓</em> 3 unused images</div>
       </article>
 
-      <article class="tile span-2 reveal">
-        <span class="tile-icon"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
-        <h3>Disk Map</h3>
-        <p>Every folder by size. Drill in and tick anything that isn't protected.</p>
-        <a class="more" href="explore.html">Explore <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      <article class="card c3 reveal">
+        <span class="ic"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+        <h3>Hard limits, however it's spelled</h3>
+        <p>System folders, your home folder and folders like Documents are never deleted as a whole, through symlinks or <code>..</code> tricks.</p>
+        <div class="vis lock-list"><code>/System</code><code>~/Documents</code><code>/Users/you</code><code>/tmp/../etc</code></div>
       </article>
-
-      <article class="tile span-2 reveal" style="--d:.08s">
-        <span class="tile-icon"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span>
-        <h3>System junk, optionally</h3>
-        <p>A locked-down helper removes root-owned caches, logs and Time Machine snapshots.</p>
-        <a class="more" href="system.html">How it's secured <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-      </article>
-
-      <article class="tile span-2 dark reveal" style="--d:.16s">
-        <span class="tile-icon"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.53 13.53 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg></span>
+      <article class="card c3 reveal" style="--d:.08s">
+        <span class="ic"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.53 13.53 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg></span>
         <h3>Private by design</h3>
-        <p>No account, no analytics, no network access. Your file list never leaves your Mac.</p>
+        <p>No account, no analytics, no network access. Your file list stays on your Mac, and the source is on GitHub for anyone to read.</p>
+        <a class="lnk" href="https://github.com/kstmostofa/reclaim">Read the source <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
       </article>
     </div>
   </div>
 </section>
 
-<section class="section" style="background:var(--bg-2);border-block:1px solid var(--line)">
-  <div class="wrap">
-    <div class="section-head center reveal">
-      <p class="eyebrow">Tour</p>
-      <h2 class="title">A native Mac app. <span class="dim">Not a web page in a box.</span></h2>
-      <p class="subtitle">SwiftUI, light and dark, your accent colour.</p>
+<section class="sec" style="padding-top:40px">
+  <div class="w">
+    <div class="head c reveal">
+      <p class="kicker"><i></i>Tour</p>
+      <h2 class="h2">A native Mac app. <span>Not a web page in a box.</span></h2>
+      <p class="sub">SwiftUI, light and dark, your own accent colour.</p>
     </div>
     <div class="reveal" data-tour style="text-align:center">
-      <div class="tour-tabs" role="tablist" aria-label="Screens">
-        <button role="tab" aria-selected="true" aria-controls="tour-overview" id="tab-overview"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" x2="2" y1="12" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" x2="6.01" y1="16" y2="16"/><line x1="10" x2="10.01" y1="16" y2="16"/></svg>Overview</button>
-        <button role="tab" aria-selected="false" aria-controls="tour-map" id="tab-map"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Disk Map</button>
-        <button role="tab" aria-selected="false" aria-controls="tour-system" id="tab-system"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>System</button>
-        <button role="tab" aria-selected="false" aria-controls="tour-menu" id="tab-menu"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>Menu bar</button>
+      <div class="tabs" role="tablist" aria-label="Screens">
+        <button role="tab" aria-selected="true" aria-controls="t1" id="tb1"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Disk Map</button>
+        <button role="tab" aria-selected="false" aria-controls="t2" id="tb2"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>Menu bar</button>
+        <button role="tab" aria-selected="false" aria-controls="t3" id="tb3"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Automation</button>
+        <button role="tab" aria-selected="false" aria-controls="t4" id="tb4"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.56-2.5 5.56-5.55C21.97 6.01 17.46 2 12 2z"/></svg>Appearance</button>
       </div>
-      <div class="tour-stage">
-        <figure role="tabpanel" id="tour-overview" aria-labelledby="tab-overview" class="active">
-          <div class="window"><img width="1400" height="952" src="screenshots/overview.png" alt="Overview: storage bar with used, reclaimable and free space, and the top categories by size." loading="eager"></div>
-          <figcaption>The Overview: what you could reclaim, and where.</figcaption>
-        </figure>
-        <figure role="tabpanel" id="tour-map" aria-labelledby="tab-map">
-          <div class="window"><img loading="lazy" decoding="async" width="1400" height="952" src="screenshots/disk-map.png" alt="Disk Map: top-level folders with size bars, share and file counts."></div>
-          <figcaption>The Disk Map: every folder, largest first.</figcaption>
-        </figure>
-        <figure role="tabpanel" id="tour-system" aria-labelledby="tab-system">
-          <div class="window"><img loading="lazy" decoding="async" width="1400" height="874" src="screenshots/system.png" alt="System: the helper's status, system caches and logs, and local Time Machine snapshots."></div>
-          <figcaption>System: the optional helper and Time Machine snapshots.</figcaption>
-        </figure>
-        <figure role="tabpanel" id="tour-menu" aria-labelledby="tab-menu">
-          <div class="narrow"><div class="window"><img loading="lazy" decoding="async" width="600" height="450" src="screenshots/menu-bar.png" alt="The menu-bar window with free space and quick actions."></div></div>
-          <figcaption>The menu bar: free space and one-click clean-up.</figcaption>
-        </figure>
+      <div class="shots">
+        <figure role="tabpanel" id="t1" aria-labelledby="tb1" class="active"><img width="1400" height="874" src="screenshots/dark-disk-map.png" alt="The Disk Map in dark mode: top-level folders with size bars, shares and file counts." loading="eager"><figcaption>Every folder by size, with its share of its parent.</figcaption></figure>
+        <figure role="tabpanel" id="t2" aria-labelledby="tb2" class="sm"><img loading="lazy" decoding="async" width="600" height="450" src="screenshots/dark-menu-bar.png" alt="The menu-bar window in dark mode with free space, Scan Now and Clean Safe Items."><figcaption>Free space at a glance, and clean-up one click away.</figcaption></figure>
+        <figure role="tabpanel" id="t3" aria-labelledby="tb3" class="md"><img loading="lazy" decoding="async" width="1040" height="1152" src="screenshots/dark-settings-automation.png" alt="Automation settings in dark mode: menu bar, open at login, scheduled scans, auto-clean and low-space alerts."><figcaption>Scheduled scans and low-space alerts.</figcaption></figure>
+        <figure role="tabpanel" id="t4" aria-labelledby="tb4" class="md"><img loading="lazy" decoding="async" width="1040" height="780" src="screenshots/dark-settings-appearance.png" alt="Appearance settings in dark mode: light or dark, accent colours and a preview."><figcaption>Indigo by default. Any colour you like.</figcaption></figure>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">How it works</p>
-      <h2 class="title">Scan. Review. Reclaim.</h2>
-      <p class="subtitle">No wizard and no upsell. You stay in control of every file.</p>
-    </div>
-    <div class="steps-row">
-      <div class="step reveal"><span class="num">1</span><h3>Scan</h3><p>Reclaim walks the disk in parallel and measures what files really use, so hard links and sparse disk images are counted correctly.</p></div>
-      <div class="step reveal" style="--d:.1s"><span class="num">2</span><h3>Review</h3><p>Suggestions are grouped by kind and labelled Safe, Rebuild or Personal. Select one to see exactly what it is.</p></div>
-      <div class="step reveal" style="--d:.2s"><span class="num">3</span><h3>Reclaim</h3><p>Click Delete. Space is freed at once, or moved to the Trash if you prefer, and every run goes into a history.</p></div>
+<section class="sec" style="padding-top:40px">
+  <div class="w">
+    <div class="figures reveal">
+      <div><strong data-count="42">0</strong><span>places it knows to look</span></div>
+      <div><strong data-count="1" data-suffix=" min">0</strong><span>to scan an entire Mac</span></div>
+      <div><strong data-count="3">0</strong><span>safety levels</span></div>
+      <div><strong data-count="0">0</strong><span>network requests</span></div>
     </div>
   </div>
 </section>
 
-<section class="section" style="padding-top:0">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">Safety levels</p>
-      <h2 class="title">Know what you're deleting. <span class="dim">Before you delete it.</span></h2>
+<section class="sec" style="padding-top:40px">
+  <div class="w">
+    <div class="head reveal">
+      <p class="kicker"><i></i>How it works</p>
+      <h2 class="h2">Scan. Review. Reclaim. <span>You decide what goes.</span></h2>
     </div>
-    <div class="levels">
-      <div class="level safe reveal"><div class="bar"></div><h3>Safe <span class="badge safe">Ticked for you</span></h3><p>Rebuilds itself. Nothing to do afterwards.</p><ul><li>.next</li><li>DerivedData</li><li>~/Library/Caches</li><li>npm cache</li><li>build cache</li></ul></div>
-      <div class="level rebuild reveal" style="--d:.1s"><div class="bar"></div><h3>Rebuild <span class="badge rebuild">Your call</span></h3><p>Comes back after a reinstall or download.</p><ul><li>node_modules</li><li>vendor</li><li>Pods</li><li>.venv</li><li>unused images</li></ul></div>
-      <div class="level personal reveal" style="--d:.2s"><div class="bar"></div><h3>Personal <span class="badge personal">Your call</span></h3><p>Your data, reported so you can decide.</p><ul><li>old downloads</li><li>large files</li><li>duplicates</li><li>volumes</li></ul></div>
+    <div class="trio">
+      <div class="card reveal"><span class="num">01</span><h3>Scan</h3><p>The whole disk in parallel, measuring what files really use, so hard links and sparse disk images count correctly.</p></div>
+      <div class="card reveal" style="--d:.1s"><span class="num">02</span><h3>Review</h3><p>Grouped by kind and labelled Safe, Rebuild or Personal. Select any item to see what it is and what happens after.</p></div>
+      <div class="card reveal" style="--d:.2s"><span class="num">03</span><h3>Reclaim</h3><p>Click Delete. Space is freed at once, or sent to the Trash if you prefer, and every run is kept in a history.</p></div>
     </div>
   </div>
 </section>
 
-<section class="section" style="padding-top:0">
-  <div class="wrap faq-grid">
+<section class="sec" style="padding-top:40px">
+  <div class="w faq2">
     <div class="reveal">
-      <p class="eyebrow">Questions</p>
-      <h2 class="title">Good to know.</h2>
-      <p class="subtitle">More answers in the <a href="faq.html">FAQ</a>.</p>
+      <p class="kicker"><i></i>Questions</p>
+      <h2 class="h2">Good to know.</h2>
+      <p class="sub">More in the <a href="faq.html">FAQ</a>.</p>
     </div>
-    <div class="prose reveal" style="--d:.1s">
-      <details>
-        <summary>Is it really free?</summary>
-        <p>Yes. Reclaim is open source under the MIT License, with no paid tier, account or tracking.</p>
-      </details>
-      <details>
-        <summary>Why no “Are you sure?” for every file?</summary>
-        <p>Cleaning a developer Mac means deleting hundreds of items, and a confirmation per item gets clicked through without reading. Reclaim explains each item instead, ticks only Safe ones, and can never delete protected folders. Want a safety net? Turn on Move to Trash.</p>
-      </details>
-      <details>
-        <summary>Why does macOS block it the first time?</summary>
-        <p>It isn't notarized by Apple, which needs a paid developer membership. Open it once through System Settings › Privacy &amp; Security › Open Anyway. <a href="install.html#first-open">See the steps</a>.</p>
-      </details>
-      <details>
-        <summary>Does it need Full Disk Access?</summary>
-        <p>To see everything, yes. Without it, Reclaim skips Desktop, Documents, Downloads and other protected folders so macOS doesn't stop the scan to ask about each one.</p>
-      </details>
+    <div class="reveal" style="--d:.1s">
+      <details><summary>Is it really free?</summary><p>Yes. Reclaim is open source under the MIT License, with no paid tier, account or tracking.</p></details>
+      <details><summary>Why no “Are you sure?” for every file?</summary><p>Cleaning a developer Mac means deleting hundreds of items, and a confirmation per item gets clicked through without reading. Reclaim explains each item instead, ticks only Safe ones, and can never delete protected folders. Want a safety net? Turn on Move to Trash.</p></details>
+      <details><summary>Why does macOS block it the first time?</summary><p>It isn't notarized by Apple, which needs a paid developer membership. Open it once through System Settings › Privacy &amp; Security › Open Anyway. <a href="install.html#first-open">See the steps</a>.</p></details>
+      <details><summary>Does it need Full Disk Access?</summary><p>To see everything, yes. Without it, Reclaim skips Desktop, Documents, Downloads and other protected folders so macOS doesn't stop the scan to ask about each one.</p></details>
     </div>
   </div>
 </section>
 
-<section class="cta">
-  <div class="wrap">
-    <div class="cta-card reveal">
-      <div class="grid-bg"></div>
-      <svg class="mark" viewBox="232 232 560 560" aria-hidden="true"><path class="pie" d="M495.7 528.3H745.7A250 250 0 1 1 495.7 278.3Z" fill="currentColor"/><path class="slice" d="M528.3 495.7V245.7A250 250 0 0 1 778.3 495.7Z" fill="#5856D6"/></svg>
-      <h2>Take your disk back.</h2>
-      <p>Download Reclaim, run one scan, and see what your Mac has been hoarding.</p>
-      <div class="hero-actions">
-        <a class="button button-primary button-large" href="https://github.com/kstmostofa/reclaim/releases/latest"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download for Mac</a>
-        <a class="button button-large button-ghost" href="https://github.com/kstmostofa/reclaim"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>Star on GitHub</a>
-      </div>
-    </div>
+<section class="end">
+  <div class="hx-light"></div>
+  <svg class="mark reveal" viewBox="232 232 560 560" aria-hidden="true"><path class="pie" d="M495.7 528.3H745.7A250 250 0 1 1 495.7 278.3Z" fill="currentColor"/><path class="slice" d="M528.3 495.7V245.7A250 250 0 0 1 778.3 495.7Z" fill="#6d6bf0"/></svg>
+  <h2 class="reveal">Your disk, back.</h2>
+  <p class="reveal">One download, one scan, and you'll see what your Mac has been hoarding.</p>
+  <div class="hx-cta reveal">
+    <a class="button button-primary" href="https://github.com/kstmostofa/reclaim/releases/latest"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download for Mac</a>
+    <a class="button ghost" href="https://github.com/kstmostofa/reclaim"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>Star on GitHub</a>
   </div>
 </section>
 

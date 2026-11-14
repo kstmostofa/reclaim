@@ -23,7 +23,7 @@ export function Level({ of }: { of: 'safe' | 'rebuild' | 'personal' }) {
 
 /** An app screenshot in a window frame; with `dark`, the dark-mode capture shows in dark mode. */
 export function Screenshot({ src, dark, alt, narrow }: { src: string; dark?: string; alt: string; narrow?: boolean }) {
-  const frame = 'not-prose overflow-hidden rounded-xl border border-fd-border shadow-[0_24px_60px_-30px_rgb(0_0_0/0.35)]';
+  const frame = 'not-prose shot block';
   return (
     <figure className={cn('my-8', narrow && 'max-w-md')}>
       <img src={asset(`/screenshots/${src}`)} alt={alt} loading="lazy" className={cn(frame, dark && 'dark:hidden')} />

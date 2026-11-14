@@ -71,7 +71,7 @@ export function Figures() {
             <p className="display text-6xl md:text-7xl">
               <CountUp to={it.to} suffix={it.suffix} />
             </p>
-            <p className="mt-3 text-[15px] text-fd-muted-foreground">{it.label}</p>
+            <p className="mt-3 text-[18px] text-fd-muted-foreground">{it.label}</p>
           </div>
         ))}
       </Reveal>
@@ -90,7 +90,7 @@ export function Marquee() {
       <div className="overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_15%,#000_85%,transparent)]">
         <div className="marquee-track flex w-max gap-10">
           {[...tools, ...tools].map((t, i) => (
-            <span key={i} aria-hidden={i >= tools.length} className="font-mono text-[15px] whitespace-nowrap text-fd-muted-foreground">
+            <span key={i} aria-hidden={i >= tools.length} className="text-[20px] font-medium whitespace-nowrap text-fd-muted-foreground">
               {t}
             </span>
           ))}
@@ -123,10 +123,10 @@ function Card({ className, icon: Icon, title, children, visual, href, linkText, 
           <Icon className="size-5" strokeWidth={1.7} />
         </span>
         <h3 className="text-[27px] leading-tight font-semibold">{title}</h3>
-        <p className="mt-2.5 max-w-md text-[15.5px] leading-relaxed text-fd-muted-foreground">{children}</p>
+        <p className="mt-2.5 max-w-md text-[19px] leading-relaxed text-fd-muted-foreground">{children}</p>
         {visual && <div className="mt-8">{visual}</div>}
         {href && (
-          <Link href={href} className="mt-6 inline-flex items-center gap-1.5 text-[14.5px] font-medium">
+          <Link href={href} className="mt-6 inline-flex items-center gap-1.5 text-[17px] font-medium">
             {linkText}
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
@@ -149,7 +149,7 @@ function Bars() {
   return (
     <div ref={ref} className="grid gap-3.5">
       {bars.map((b, i) => (
-        <div key={b.name} className="grid grid-cols-[110px_1fr_64px] items-center gap-4 font-mono text-[13px] text-fd-muted-foreground">
+        <div key={b.name} className="grid grid-cols-[110px_1fr_64px] items-center gap-4 text-[17px] text-fd-muted-foreground">
           <span>{b.name}</span>
           <span className="h-1.5 overflow-hidden rounded-full bg-fd-foreground/[0.07]">
             <motion.span
@@ -171,7 +171,7 @@ function Dupes() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-15%' });
   return (
-    <div ref={ref} className="grid gap-2 font-mono text-[13px]">
+    <div ref={ref} className="grid gap-2 text-[17px]">
       {['photo.heic', 'photo copy.heic', 'photo 2.heic'].map((f, i) => (
         <motion.span
           key={f}
@@ -180,7 +180,7 @@ function Dupes() {
           className={cn('flex justify-between rounded-xl border px-3.5 py-2.5', i === 0 ? 'border-brand/60' : 'border-fd-border', inView && i > 0 && 'line-through')}
         >
           {f}
-          {i === 0 && <span className="text-[11px] text-brand">keep</span>}
+          {i === 0 && <span className="text-[13px] font-semibold tracking-wider text-brand uppercase">keep</span>}
         </motion.span>
       ))}
     </div>
@@ -222,7 +222,7 @@ export function Features() {
         </Card>
         <Card className="md:col-span-2" icon={Box} title="Docker and OrbStack" href="/docs/docker" linkText="Docker clean-up" delay={0.16}
           visual={
-            <pre className="rounded-xl border border-fd-border bg-fd-background p-4 font-mono text-[12.5px] leading-7 text-fd-muted-foreground">
+            <pre className="rounded-xl border border-fd-border bg-fd-background p-4 font-mono text-[14px] leading-7 text-fd-muted-foreground">
               <span className="text-fd-foreground">$ docker builder prune</span>{'\n'}
               <span className="text-safe">✓</span> 889 MB build cache{'\n'}
               <span className="text-safe">✓</span> 3 unused images
@@ -235,7 +235,7 @@ export function Features() {
           visual={
             <div className="flex flex-wrap gap-2">
               {['/System', '~/Documents', '/Users/you', '/tmp/../etc'].map((p) => (
-                <code key={p} className="rounded-lg border border-fd-border px-2.5 py-1.5 font-mono text-[12.5px] text-fd-muted-foreground">
+                <code key={p} className="rounded-lg border border-fd-border px-2.5 py-1.5 font-mono text-[14px] text-fd-muted-foreground">
                   <span className="text-[#e5484d]">✕ </span>{p}
                 </code>
               ))}
@@ -307,9 +307,9 @@ export function Tour() {
                 style={{ pointerEvents: active === i ? 'auto' : 'none' }}
                 aria-hidden={active !== i}
               >
-                <img src={asset(`/screenshots/${s.light}`)} alt={`${appName}: ${s.label}`} className="w-full rounded-xl border border-fd-border shadow-[0_40px_100px_-30px_rgb(0_0_0/0.35)] dark:hidden" loading={i === 0 ? 'eager' : 'lazy'} />
-                <img src={asset(`/screenshots/${s.dark}`)} alt={`${appName}: ${s.label}`} className="hidden w-full rounded-xl border border-fd-border shadow-[0_40px_100px_-30px_rgb(0_0_0/0.9)] dark:block" loading={i === 0 ? 'eager' : 'lazy'} />
-                <figcaption className="mt-7 text-[15px] text-fd-muted-foreground">{s.caption}</figcaption>
+                <img src={asset(`/screenshots/${s.light}`)} alt={`${appName}: ${s.label}`} className="shot block dark:hidden" loading={i === 0 ? 'eager' : 'lazy'} />
+                <img src={asset(`/screenshots/${s.dark}`)} alt={`${appName}: ${s.label}`} className="shot hidden dark:block" loading={i === 0 ? 'eager' : 'lazy'} />
+                <figcaption className="mt-7 text-[18px] text-fd-muted-foreground">{s.caption}</figcaption>
               </motion.figure>
             ))}
           </div>
@@ -345,7 +345,7 @@ export function Faq() {
                 <Plus className="size-4" strokeWidth={2} />
               </span>
             </summary>
-            <p className="pb-6 text-[15.5px] leading-relaxed text-fd-muted-foreground">{f.a}</p>
+            <p className="pb-6 text-[19px] leading-relaxed text-fd-muted-foreground">{f.a}</p>
           </details>
         ))}
       </Reveal>
@@ -394,7 +394,7 @@ export function Footer() {
             </span>
             <span className="font-display text-[34px] leading-none font-semibold">{appName}</span>
           </Link>
-          <p className="mt-5 max-w-xs text-[15px] leading-relaxed text-fd-muted-foreground">
+          <p className="mt-5 max-w-xs text-[18px] leading-relaxed text-fd-muted-foreground">
             Free, open-source Mac storage cleaner for developers. MIT licensed.
           </p>
           <a href={downloadUrl} className="font-display mt-7 inline-flex h-11 items-center gap-2 rounded-full bg-fd-foreground px-5 text-lg font-semibold text-fd-background transition-opacity hover:opacity-85">
@@ -407,7 +407,7 @@ export function Footer() {
             <div key={c.title}>
               <p className="font-display mb-4 text-[19px] font-semibold">{c.title}</p>
               {c.links.map(([label, href]) => (
-                <Link key={label} href={href} className="block py-1.5 text-[15px] text-fd-muted-foreground transition-colors hover:text-fd-foreground">
+                <Link key={label} href={href} className="block py-1.5 text-[18px] text-fd-muted-foreground transition-colors hover:text-fd-foreground">
                   {label}
                 </Link>
               ))}

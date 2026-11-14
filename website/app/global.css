@@ -3,7 +3,18 @@
 @import 'fumadocs-ui/css/preset.css';
 
 @theme {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-khand), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Khand is narrow with a small x-height, so each text step is a little larger than Tailwind's. */
+  --text-xs: 0.875rem;
+  --text-xs--line-height: 1.35;
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.4;
+  --text-base: 1.125rem;
+  --text-base--line-height: 1.55;
+  --text-lg: 1.3rem;
+  --text-lg--line-height: 1.55;
+  --text-xl: 1.45rem;
+  --text-xl--line-height: 1.5;
   --font-mono: var(--font-mono), ui-monospace, 'SF Mono', Menlo, monospace;
   --font-display: var(--font-khand), var(--font-inter), ui-sans-serif, sans-serif;
   --color-brand: #5856d6;
@@ -39,6 +50,17 @@
 html {
   scrollbar-gutter: stable;
 }
+body {
+  font-size: 1.125rem;
+}
+/* Docs reading text, sized for Khand. */
+#nd-page .prose {
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+#nd-page .prose code {
+  font-size: 0.82em;
+}
 html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
@@ -67,9 +89,11 @@ h1, h2, h3, h4, .font-display,
 #nd-page h2 { font-size: 1.85rem; font-weight: 600; }
 #nd-page h3 { font-size: 1.35rem; font-weight: 600; }
 .eyebrow {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.02em;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--color-fd-muted-foreground);
 }
 
@@ -129,4 +153,14 @@ h1, h2, h3, h4, .font-display,
   .marquee-track {
     animation: none;
   }
+}
+
+/* App screenshots carry their own rounded window corners, so the outline and shadow follow the image's
+   shape (drop-shadow) instead of a CSS border with a different radius. */
+.shot {
+  width: 100%;
+  filter: drop-shadow(0 0 0.6px rgb(0 0 0 / 0.45)) drop-shadow(0 22px 40px rgb(0 0 0 / 0.16));
+}
+.dark .shot {
+  filter: drop-shadow(0 0 0.6px rgb(255 255 255 / 0.28)) drop-shadow(0 30px 60px rgb(0 0 0 / 0.75));
 }

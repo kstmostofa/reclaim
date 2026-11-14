@@ -103,14 +103,14 @@ export function Story() {
 function Sweep({ progress, opacity }: { progress: MotionValue<number>; opacity: MotionValue<number> }) {
   return (
     <motion.circle
-      cx={512}
-      cy={512}
-      r={292}
+      cx={cx}
+      cy={cy}
+      r={R + 40}
       fill="none"
       strokeWidth={6}
       strokeLinecap="round"
       className="stroke-brand"
-      style={{ pathLength: progress, opacity, rotate: -90, transformOrigin: '512px 512px' }}
+      style={{ pathLength: progress, opacity, rotate: -90, transformOrigin: `${cx}px ${cy}px` }}
     />
   );
 }

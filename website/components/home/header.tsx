@@ -24,6 +24,9 @@ export function FloatingHeader() {
   const [menu, setMenu] = useState(false);
   const { setOpenSearch } = useSearchContext();
   const { resolvedTheme, setTheme } = useTheme();
+  // The theme is only known after hydration; until then neither half of the switch is marked.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -40,9 +43,9 @@ export function FloatingHeader() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
           'pointer-events-auto w-full max-w-5xl rounded-full border transition-[background-color,box-shadow,border-color,max-width] duration-500',
-          scrolled
-            ? 'max-w-4xl border-fd-border bg-fd-background/75 shadow-[0_10px_40px_-12px_rgb(0_0_0/0.25)] backdrop-blur-xl dark:shadow-[0_10px_40px_-12px_rgb(0_0_0/0.8)]'
-            : 'border-transparent bg-fd-background/40 backdrop-blur-md',
+          'border-fd-border backdrop-blur-xl backdrop-saturate-150',
+          'shadow-[inset_0_1px_0_rgb(255_255_255/0.5),0_8px_30px_-14px_rgb(0_0_0/0.18)] dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.06),0_8px_30px_-14px_rgb(0_0_0/0.7)]',
+          scrolled ? 'max-w-4xl bg-fd-background/80' : 'bg-fd-background/45',
         )}
       >
         <nav className="flex h-14 items-center gap-2 pr-2 pl-5" aria-label="Main">
@@ -65,18 +68,38 @@ export function FloatingHeader() {
 
           <span className="flex-1" />
 
-          <button type="button" onClick={() => setOpenSearch(true)} aria-label="Search the docs" className={iconButton}>
-            <Search className="size-[18px]" />
-          </button>
           <button
             type="button"
-            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-            aria-label="Switch light or dark mode"
-            className={iconButton}
+            onClick={() => setOpenSearch(true)}
+            className="hidden h-9 w-52 items-center gap-2 rounded-full border border-fd-border bg-fd-secondary/50 pr-1.5 pl-3 text-[16px] text-fd-muted-foreground transition-colors hover:bg-fd-accent hover:text-fd-foreground lg:flex"
           >
-            <Sun className="hidden size-[18px] dark:block" />
-            <Moon className="size-[18px] dark:hidden" />
+            <Search className="size-4" />
+            <span className="flex-1 text-left">Search</span>
+            <span className="flex gap-0.5">
+              <kbd className="rounded-md border border-fd-border bg-fd-background px-1.5 font-mono text-[11px] leading-5">⌘</kbd>
+              <kbd className="rounded-md border border-fd-border bg-fd-background px-1.5 font-mono text-[11px] leading-5">K</kbd>
+            </span>
           </button>
+          <button type="button" onClick={() => setOpenSearch(true)} aria-label="Search the docs" className={cn(iconButton, 'lg:hidden')}>
+            <Search className="size-[18px]" />
+          </button>
+          <div className="flex items-center rounded-full border border-fd-border p-0.5" role="group" aria-label="Theme">
+            {([['light', Sun], ['dark', Moon]] as const).map(([mode, Icon]) => (
+              <button
+                key={mode}
+                type="button"
+                onClick={() => setTheme(mode)}
+                aria-label={mode === 'light' ? 'Light mode' : 'Dark mode'}
+                aria-pressed={mounted && resolvedTheme === mode}
+                className={cn(
+                  'grid size-7 place-items-center rounded-full transition-colors',
+                  mounted && resolvedTheme === mode ? 'bg-fd-accent text-fd-foreground' : 'text-fd-muted-foreground hover:text-fd-foreground',
+                )}
+              >
+                <Icon className="size-4" />
+              </button>
+            ))}
+          </div>
           <a href={repoUrl} aria-label={`${appName} on GitHub`} className={cn(iconButton, 'hidden sm:grid')}>
             <GitHubIcon className="size-[18px]" />
           </a>

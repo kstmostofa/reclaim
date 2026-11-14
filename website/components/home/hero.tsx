@@ -50,7 +50,7 @@ export function Hero() {
           transition={{ duration: 0.8, ease }}
           className="mb-10 inline-flex h-9 items-center gap-2.5 rounded-full border border-fd-border bg-fd-card/60 py-1 pr-4 pl-1.5 text-sm text-fd-muted-foreground backdrop-blur transition-colors hover:text-fd-foreground"
         >
-          <span className="rounded-full bg-brand px-2.5 py-0.5 font-mono text-xs font-semibold text-white">v{version}</span>
+          <span className="rounded-full bg-brand px-2.5 py-0.5 text-sm font-semibold text-white">v{version}</span>
           Free and open source for macOS
           <ArrowRight className="size-3.5" />
         </motion.a>
@@ -89,7 +89,7 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.9 }}
-          className="mt-6 font-mono text-[13px] text-fd-muted-foreground"
+          className="mt-6 text-[17px] tracking-wide text-fd-muted-foreground"
         >
           macOS 14+ · Apple silicon &amp; Intel · MIT license
         </motion.p>

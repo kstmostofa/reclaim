@@ -1,0 +1,55 @@
+title: Reclaim settings reference
+nav: Settings
+icon: settings
+description: Every Reclaim setting explained: Trash mode, scan scope, thresholds, excluded folders, menu bar, schedules, auto-clean, low-space alerts and accent colour.
+lead: Open Settings with Reclaim › Settings… or ⌘, . Changes apply at once unless noted.
+---
+<h2 id="general">General</h2>
+<figure class="narrow"><div class="window"><img src="screenshots/settings-general.png" alt="General settings: move to Trash, tick Safe items after each scan, restore defaults."></div></figure>
+<div class="table-wrap"><table>
+  <thead><tr><th>Setting</th><th>What it does</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr><td>Move to Trash instead of deleting permanently</td><td>Ticked items go to the Trash, so you can put them back. Space is freed only when you empty it. Items that need the helper are left alone in this mode.</td><td>Off</td></tr>
+    <tr><td>Tick Safe items after each scan</td><td>Safe items are ticked as soon as a scan finishes. Rebuild and Personal items never are.</td><td>On</td></tr>
+    <tr><td>Restore Default Settings</td><td>Resets every setting on every tab.</td><td>—</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="scanning">Scanning</h2>
+<figure class="narrow"><div class="window"><img src="screenshots/settings-scanning.png" alt="Scanning settings: scan scope, thresholds and excluded folders."></div></figure>
+<div class="table-wrap"><table>
+  <thead><tr><th>Setting</th><th>What it does</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr><td>Scan</td><td>The whole disk, or only your home folder. The whole disk also finds system caches and leftovers outside your home.</td><td>Whole disk</td></tr>
+    <tr><td>Large files from</td><td>The size from which a file appears in Large Files. The list updates as you change it.</td><td>500 MB</td></tr>
+    <tr><td>Old downloads after</td><td>How long a file in Downloads must be unchanged before it is suggested.</td><td>90 days</td></tr>
+    <tr><td>Compare duplicates from</td><td>The smallest file Duplicates compares.</td><td>1 MB</td></tr>
+    <tr><td>Never scan these folders</td><td>Folders skipped completely: nothing in them is measured, suggested or deletable.</td><td>None</td></tr>
+  </tbody>
+</table></div>
+<p>Scope, the downloads age and excluded folders take effect at the next scan.</p>
+
+<h2 id="automation">Automation</h2>
+<figure class="narrow"><div class="window"><img src="screenshots/settings-automation.png" alt="Automation settings: menu bar, open at login, scheduled scans, auto-clean and low-space alerts."></div></figure>
+<div class="table-wrap"><table>
+  <thead><tr><th>Setting</th><th>What it does</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr><td>Show Reclaim in the menu bar</td><td>Free space, the last scan, Scan Now and Clean Safe Items in the menu bar.</td><td>On</td></tr>
+    <tr><td>Open at login</td><td>Starts {{app}} when you log in, so the menu bar and schedules are always on.</td><td>Off</td></tr>
+    <tr><td>Scan automatically</td><td>Never, every day or every week, while {{app}} is open.</td><td>Never</td></tr>
+    <tr><td>Delete Safe items untouched for a day</td><td>After each scheduled scan, deletes Safe items that nothing changed for 24 hours. <a href="automation.html#auto-clean">Details</a>.</td><td>Off</td></tr>
+    <tr><td>Warn when free space is low</td><td>A notification once each time free space drops below the threshold.</td><td>On</td></tr>
+    <tr><td>Warn below</td><td>The free-space threshold for that warning.</td><td>10 GB</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="appearance">Appearance</h2>
+<figure class="narrow"><div class="window"><img src="screenshots/settings-appearance.png" alt="Appearance settings: system, light or dark, accent colour swatches, custom colour and a preview."></div></figure>
+<div class="table-wrap"><table>
+  <thead><tr><th>Setting</th><th>What it does</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr><td>Appearance</td><td>Follow the system, or always light or dark.</td><td>System</td></tr>
+    <tr><td>Accent color</td><td>The colour of buttons, selections and the reclaimable part of the storage bar. Twelve presets.</td><td>Indigo</td></tr>
+    <tr><td>Custom color</td><td>Pick any colour; {{app}} switches to it.</td><td>—</td></tr>
+  </tbody>
+</table></div>

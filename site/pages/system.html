@@ -1,0 +1,40 @@
+title: Delete system caches, logs and Time Machine snapshots on Mac
+nav: System and the helper
+icon: lock
+description: Delete root-owned system caches, logs, sudo leftovers and local Time Machine snapshots on Mac with Reclaim's optional, locked-down helper.
+lead: Some caches, logs and leftovers belong to root, the system's administrator account. Reclaim can't delete them on its own; its optional helper can.
+---
+<figure><div class="window"><img src="screenshots/system.png" alt="The System screen with the helper's status and Install Helper button, system caches and logs, and local Time Machine snapshots."></div></figure>
+
+<h2 id="what-it-handles">What the helper handles</h2>
+<ul>
+  <li><strong>System caches</strong> in <code>/Library/Caches</code>.</li>
+  <li><strong>System logs</strong> in <code>/Library/Logs</code> and <code>/private/var/log</code>.</li>
+  <li><strong>Root-owned files in your home folder</strong>, such as those left by <code>sudo npm install</code>.</li>
+  <li><strong>Local Time Machine snapshots</strong>.</li>
+</ul>
+<p>Items that need the helper show a lock until it is installed, and Safe ones are only ticked for you once it is.</p>
+
+<h2 id="install">Installing</h2>
+<ol class="steps">
+  <li><strong>Open System.</strong> Click <strong>System</strong> in the sidebar, then <strong>Install Helper…</strong>.</li>
+  <li><strong>Enter your password.</strong> macOS asks in its own dialog. {{app}} never sees it.</li>
+</ol>
+<p>The helper is copied to <code>/Library/PrivilegedHelperTools</code> and started by macOS whenever {{app}} needs it. After that, deleting works as usual: anything {{app}} may not delete is passed to the helper automatically when deleting permanently. In Move to Trash mode, such items are left alone.</p>
+
+<h2 id="security">What keeps it safe</h2>
+<div class="cards">
+  <div class="card-link"><span class="icon-tile">{{icon:folder-tree:20}}</span><div><strong>Fixed folders only</strong><span>System cache and log folders and your own home folder, after resolving symlinks. Never a protected folder.</span></div></div>
+  <div class="card-link"><span class="icon-tile">{{icon:link:20}}</span><div><strong>No path tricks</strong><span>Paths with <code>..</code> are refused, and so is a folder swapped for a link at the last moment.</span></div></div>
+  <div class="card-link"><span class="icon-tile">{{icon:lock:20}}</span><div><strong>One app only</strong><span>Paired with the exact build of {{app}} that installed it. Any other program is refused.</span></div></div>
+  <div class="card-link"><span class="icon-tile">{{icon:code:20}}</span><div><strong>Open source</strong><span>The helper is small, and its rules are tested. Read it on GitHub.</span></div></div>
+</div>
+
+<h2 id="pairing">After updating Reclaim</h2>
+<p>The pairing names one exact build, so after an update the helper refuses the new version. <strong>System</strong> then shows <strong>Pair Again…</strong>, which asks for your password once more. A paid Apple developer certificate would remove this step.</p>
+
+<h2 id="snapshots">Local Time Machine snapshots</h2>
+<p>Time Machine keeps snapshots on your Mac's disk between backups, and they hold on to the space of files you deleted since. System lists them; with the helper installed you can tick and delete them. Backups on your backup disk are not affected, and macOS also removes local snapshots on its own when space runs low.</p>
+
+<h2 id="remove">Removing the helper</h2>
+<p>Click <strong>Remove Helper…</strong> in System and enter your password. Everything else in {{app}} keeps working without it.</p>

@@ -1,46 +1,78 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reclaim FAQ</title>
-  <meta name="description" content="Answers about safety, permissions, sizes and privacy in Reclaim.">
-  <link rel="stylesheet" href="assets/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reclaim FAQ: safety, permissions, sizes and privacy · Reclaim</title>
+<meta name="description" content="Answers about Reclaim for Mac: no confirmation by design, protected folders, sizes vs Finder, Full Disk Access, the root helper and privacy.">
+<link rel="canonical" href="https://kstmostofa.github.io/reclaim/faq.html">
+<meta name="author" content="Md. Mostafijur Rahman">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0d14" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Reclaim">
+<meta property="og:title" content="Reclaim FAQ: safety, permissions, sizes and privacy · Reclaim">
+<meta property="og:description" content="Answers about Reclaim for Mac: no confirmation by design, protected folders, sizes vs Finder, Full Disk Access, the root helper and privacy.">
+<meta property="og:url" content="https://kstmostofa.github.io/reclaim/faq.html">
+<meta property="og:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Reclaim: Free, open-source Mac storage cleaner for developers">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reclaim FAQ: safety, permissions, sizes and privacy · Reclaim">
+<meta name="twitter:description" content="Answers about Reclaim for Mac: no confirmation by design, protected folders, sizes vs Finder, Full Disk Access, the root helper and privacy.">
+<meta name="twitter:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Reclaim", "item": "https://kstmostofa.github.io/reclaim/"}, {"@type": "ListItem", "position": 2, "name": "Reference", "item": "https://kstmostofa.github.io/reclaim/settings.html"}, {"@type": "ListItem", "position": 3, "name": "FAQ", "item": "https://kstmostofa.github.io/reclaim/faq.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Reclaim FAQ: safety, permissions, sizes and privacy", "description": "Answers about Reclaim for Mac: no confirmation by design, protected folders, sizes vs Finder, Full Disk Access, the root helper and privacy.", "url": "https://kstmostofa.github.io/reclaim/faq.html", "author": {"@type": "Person", "name": "Md. Mostafijur Rahman"}, "about": {"@type": "SoftwareApplication", "name": "Reclaim", "operatingSystem": "macOS"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why is there no \"Are you sure?\"", "acceptedAnswer": {"@type": "Answer", "text": "Because cleaning a developer Mac means deleting hundreds of items, and a confirmation for each one gets clicked through without reading. Instead, Reclaim explains every item before you tick it, ticks only Safe items for you, and refuses to delete protected folders at all. If you want a safety net, turn on Move to Trash ."}}, {"@type": "Question", "name": "Will Reclaim ever delete things on its own?", "acceptedAnswer": {"@type": "Answer", "text": "Only if you turn on auto-clean for scheduled scans, which is off by default. Even then it deletes only Safe items that nothing changed for 24 hours. How auto-clean works ."}}, {"@type": "Question", "name": "Can I undo a deletion?", "acceptedAnswer": {"@type": "Answer", "text": "Not when deleting permanently, which is the default. With Move to Trash on, items go to the Trash and you can put them back from there until you empty it."}}, {"@type": "Question", "name": "Is it safe to delete Safe items while I am working?", "acceptedAnswer": {"@type": "Answer", "text": "Usually. Quit an app before deleting its cache, and stop a dev server before deleting its project's build cache. Otherwise the app may recreate files mid-way or show errors until restarted."}}, {"@type": "Question", "name": "Why was something not deleted?", "acceptedAnswer": {"@type": "Answer", "text": "The summary after deleting gives the reason for each item. Most often the files belong to root, for example ones created with sudo npm install . Install the helper to delete those. Files macOS itself protects cannot be deleted by any app."}}, {"@type": "Question", "name": "Is a helper that runs as root safe?", "acceptedAnswer": {"@type": "Answer", "text": "It deletes only inside system cache and log folders and your own home folder, never a protected folder, and refuses tricks with .. and symlinks. It only answers the exact copy of Reclaim that installed it. The source is public, and you can remove it any time from System."}}, {"@type": "Question", "name": "Why do Reclaim's sizes differ from Finder's?", "acceptedAnswer": {"@type": "Answer", "text": "Reclaim shows the space files actually take on disk. Finder often shows how long files are. They differ for sparse files such as virtual machine disks, which can claim 64 GB while using a few, and for small files, which still occupy at least one disk block. Hard-linked files are counted once."}}, {"@type": "Question", "name": "Why doesn't free space go up by exactly what I deleted?", "acceptedAnswer": {"@type": "Answer", "text": "Some reasons: files that were APFS copies of each other shared their storage; local Time Machine snapshots still hold the deleted data until macOS removes them; and macOS counts \"purgeable\" space as free. The figure settles within a few minutes."}}, {"@type": "Question", "name": "Why doesn't the scan total match the used space?", "acceptedAnswer": {"@type": "Answer", "text": "Folders Reclaim cannot read are missing from the total (give it Full Disk Access ), and the disk also holds snapshots and file-system data that are not files."}}, {"@type": "Question", "name": "Why does it need Full Disk Access?", "acceptedAnswer": {"@type": "Answer", "text": "macOS hides other apps' data, Mail, Messages and parts of your Library from apps by default. Without access, those folders are not measured or suggested. Reclaim works without it, but sees less."}}, {"@type": "Question", "name": "Why are my Desktop, Documents and Downloads missing from the scan?", "acceptedAnswer": {"@type": "Answer", "text": "Reclaim does not have Full Disk Access yet. Without it, macOS shows a permission dialog for each of those folders and holds the scan until you answer, so Reclaim skips them instead. Turn on Full Disk Access and scan again."}}, {"@type": "Question", "name": "Why isn't it in the Mac App Store?", "acceptedAnswer": {"@type": "Answer", "text": "App Store apps run in a sandbox that cannot read or delete files across the disk, which is the whole point of Reclaim."}}, {"@type": "Question", "name": "Why does macOS block it the first time?", "acceptedAnswer": {"@type": "Answer", "text": "The app is not notarized, which requires a paid Apple developer membership. Follow Open it the first time , or build it from source."}}, {"@type": "Question", "name": "Does Reclaim send anything over the network?", "acceptedAnswer": {"@type": "Answer", "text": "No. It has no account, no analytics and no update check. The scan and your file list stay on your Mac. Its only files are its settings and the deletion history ."}}]}</script>
 </head>
 <body>
+<a class="skip" href="#content">Skip to content</a>
 <header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="index.html"><span class="brand-mark">R</span>Reclaim</a>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="install.html">Install</a>
-      <a href="guide.html">Guide</a>
-      <a href="suggestions.html">What it finds</a>
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+    <nav class="top-nav" aria-label="Main">
+      <a href="guide.html">Docs</a>
+      <a href="what-it-finds.html">What it finds</a>
       <a href="faq.html" aria-current="page">FAQ</a>
-      <a href="https://github.com/kstmostofa/reclaim">GitHub</a>
     </nav>
+    <div class="header-actions">
+      <button class="search-button" type="button" data-search-open aria-label="Search the docs">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Search</span><kbd>⌘K</kbd>
+      </button>
+      <button class="icon-button" type="button" data-theme-toggle aria-label="Switch light or dark mode">
+        <span class="when-light"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><span class="when-dark"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      </button>
+      <a class="icon-button" href="https://github.com/kstmostofa/reclaim" aria-label="Reclaim on GitHub"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+      <a class="button button-primary button-small hide-mobile" href="https://github.com/kstmostofa/reclaim/releases/latest"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download</a>
+      <button class="icon-button show-mobile" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
   </div>
 </header>
-
-<main class="wrap doc">
-  <aside class="toc">
-    <p>Topics</p>
-    <ul>
-      <li><a href="#safety">Safety</a></li>
-      <li><a href="#protected">Protected folders</a></li>
-      <li><a href="#sizes">Sizes</a></li>
-      <li><a href="#permissions">Permissions</a></li>
-      <li><a href="#privacy">Privacy</a></li>
-    </ul>
-  </aside>
-
-  <article class="doc-body">
-    <h1>Questions</h1>
-
-    <h2 id="safety">Safety</h2>
+<div class="doc-layout">
+  <nav class="doc-sidebar" aria-label="Documentation" data-menu><div class="sidebar-group"><h2>Get started</h2><ul><li><a href="install.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Install</a></li><li><a href="guide.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>Scan and clean</a></li></ul></div><div class="sidebar-group"><h2>Features</h2><ul><li><a href="explore.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Disk Map and duplicates</a></li><li><a href="docker.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>Docker and OrbStack</a></li><li><a href="system.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>System and the helper</a></li><li><a href="automation.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Menu bar and schedules</a></li></ul></div><div class="sidebar-group"><h2>Reference</h2><ul><li><a href="settings.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Settings</a></li><li><a href="what-it-finds.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>What it finds</a></li><li><a href="faq.html" aria-current="page"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>FAQ</a></li></ul></div></nav>
+  <main class="doc-main" id="content">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Reclaim</a><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span>Reference</span><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span aria-current="page">FAQ</span></nav>
+    <article class="prose">
+      <h1>Reclaim FAQ: safety, permissions, sizes and privacy</h1>
+      <p class="lead">Short answers to the questions people ask most.</p>
+      <h2 id="safety">Safety<a class="anchor" href="#safety" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
     <details>
       <summary>Why is there no "Are you sure?"</summary>
-      <p>Because cleaning a developer Mac means deleting hundreds of items, and a confirmation for each one gets clicked through without reading. Instead, Reclaim explains every item before you tick it, ticks only Safe items for you, and refuses to delete protected folders at all. If you want a safety net, turn on <a href="guide.html#settings-general">Move to Trash</a>.</p>
+      <p>Because cleaning a developer Mac means deleting hundreds of items, and a confirmation for each one gets clicked through without reading. Instead, Reclaim explains every item before you tick it, ticks only Safe items for you, and refuses to delete protected folders at all. If you want a safety net, turn on <a href="settings.html#general">Move to Trash</a>.</p>
+    </details>
+    <details>
+      <summary>Will Reclaim ever delete things on its own?</summary>
+      <p>Only if you turn on auto-clean for scheduled scans, which is off by default. Even then it deletes only Safe items that nothing changed for 24 hours. <a href="automation.html#auto-clean">How auto-clean works</a>.</p>
     </details>
     <details>
       <summary>Can I undo a deletion?</summary>
@@ -52,14 +84,14 @@
     </details>
     <details>
       <summary>Why was something not deleted?</summary>
-      <p>The summary after deleting gives the reason for each item. Most often the files belong to root, for example ones created with <code>sudo npm install</code>. Install the <a href="guide.html#system">helper</a> to delete those. Files macOS itself protects cannot be deleted by any app.</p>
+      <p>The summary after deleting gives the reason for each item. Most often the files belong to root, for example ones created with <code>sudo npm install</code>. Install the <a href="system.html">helper</a> to delete those. Files macOS itself protects cannot be deleted by any app.</p>
     </details>
     <details>
       <summary>Is a helper that runs as root safe?</summary>
       <p>It deletes only inside system cache and log folders and your own home folder, never a protected folder, and refuses tricks with <code>..</code> and symlinks. It only answers the exact copy of Reclaim that installed it. The source is public, and you can remove it any time from System.</p>
     </details>
 
-    <h2 id="protected">Protected folders</h2>
+    <h2 id="protected">Protected folders<a class="anchor" href="#protected" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
     <p>These are never deleted as a whole, however the path is written: with different capital letters, through a symlink, or as <code>/System/Volumes/Data/…</code>. Everything inside them, apart from the system folders, can still be deleted.</p>
     <ul>
       <li>The disk root, and every folder directly in it, such as <code>/Applications</code>, <code>/Library</code>, <code>/Users</code> and <code>/opt</code>.</li>
@@ -70,7 +102,7 @@
     </ul>
     <p>Separately, macOS itself stops any app from changing its system files.</p>
 
-    <h2 id="sizes">Sizes</h2>
+    <h2 id="sizes">Sizes<a class="anchor" href="#sizes" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
     <details>
       <summary>Why do Reclaim's sizes differ from Finder's?</summary>
       <p>Reclaim shows the space files actually take on disk. Finder often shows how long files are. They differ for sparse files such as virtual machine disks, which can claim 64 GB while using a few, and for small files, which still occupy at least one disk block. Hard-linked files are counted once.</p>
@@ -84,7 +116,7 @@
       <p>Folders Reclaim cannot read are missing from the total (give it <a href="install.html#full-disk-access">Full Disk Access</a>), and the disk also holds snapshots and file-system data that are not files.</p>
     </details>
 
-    <h2 id="permissions">Permissions</h2>
+    <h2 id="permissions">Permissions<a class="anchor" href="#permissions" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
     <details>
       <summary>Why does it need Full Disk Access?</summary>
       <p>macOS hides other apps' data, Mail, Messages and parts of your Library from apps by default. Without access, those folders are not measured or suggested. Reclaim works without it, but sees less.</p>
@@ -102,19 +134,42 @@
       <p>The app is not notarized, which requires a paid Apple developer membership. Follow <a href="install.html#first-open">Open it the first time</a>, or build it from source.</p>
     </details>
 
-    <h2 id="privacy">Privacy</h2>
+    <h2 id="privacy">Privacy<a class="anchor" href="#privacy" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
     <details>
       <summary>Does Reclaim send anything over the network?</summary>
       <p>No. It has no account, no analytics and no update check. The scan and your file list stay on your Mac. Its only files are its settings and the <a href="guide.html#history">deletion history</a>.</p>
     </details>
-  </article>
-</main>
 
+    </article>
+    <div class="doc-meta"><a href="https://github.com/kstmostofa/reclaim/edit/main/site/pages/faq.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Edit this page on GitHub</a></div>
+    <nav class="pager" aria-label="Previous and next"><a class="pager-prev" href="what-it-finds.html"><span><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Previous</span><strong>What it finds</strong></a><span></span></nav>
+  </main>
+  <aside class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li class="toc-l2"><a href="#safety">Safety</a></li><li class="toc-l2"><a href="#protected">Protected folders</a></li><li class="toc-l2"><a href="#sizes">Sizes</a></li><li class="toc-l2"><a href="#permissions">Permissions</a></li><li class="toc-l2"><a href="#privacy">Privacy</a></li></ul></aside>
+</div>
 <footer class="site-footer">
-  <div class="wrap">
-    <span>Reclaim is free software under the MIT License.</span>
-    <span><a href="https://github.com/kstmostofa/reclaim">Source</a> · <a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a></span>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+      <p>Free, open-source Mac storage cleaner for developers. Free under the MIT License.</p>
+    </div>
+    <div class="footer-columns">
+      <div><h2>Product</h2><a href="https://github.com/kstmostofa/reclaim/releases/latest">Download</a><a href="install.html">Install</a><a href="https://github.com/kstmostofa/reclaim/releases">Release notes</a></div>
+      <div><h2>Docs</h2><a href="guide.html">Using Reclaim</a><a href="what-it-finds.html">What it finds</a><a href="faq.html">FAQ</a></div>
+      <div><h2>Project</h2><a href="https://github.com/kstmostofa/reclaim">Source code</a><a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a><a href="https://github.com/kstmostofa/reclaim/blob/main/LICENSE">License</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Md. Mostafijur Rahman</span>
+    <span>Icons in the style of <a href="https://lucide.dev">Lucide</a> (ISC)</span>
   </div>
 </footer>
+<div class="search-dialog" data-search hidden>
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the docs">
+    <div class="search-field"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="Search the docs" aria-label="Search the docs" autocomplete="off" data-search-input><kbd>Esc</kbd></div>
+    <ul class="search-results" data-search-results role="listbox"></ul>
+  </div>
+</div>
+<script src="assets/app.js" defer></script>
 </body>
 </html>

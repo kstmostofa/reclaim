@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kstmostofa.github.io/reclaim/sitemap.xml

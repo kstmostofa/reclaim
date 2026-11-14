@@ -1,110 +1,160 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Install Reclaim</title>
-  <meta name="description" content="Download Reclaim, open it the first time, and give it Full Disk Access.">
-  <link rel="stylesheet" href="assets/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install Reclaim on your Mac · Reclaim</title>
+<meta name="description" content="Download Reclaim for Mac, open it through Privacy &amp; Security the first time, and give it Full Disk Access. Plus updating, uninstalling and building from source.">
+<link rel="canonical" href="https://kstmostofa.github.io/reclaim/install.html">
+<meta name="author" content="Md. Mostafijur Rahman">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0d14" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Reclaim">
+<meta property="og:title" content="Install Reclaim on your Mac · Reclaim">
+<meta property="og:description" content="Download Reclaim for Mac, open it through Privacy &amp; Security the first time, and give it Full Disk Access. Plus updating, uninstalling and building from source.">
+<meta property="og:url" content="https://kstmostofa.github.io/reclaim/install.html">
+<meta property="og:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Reclaim: Free, open-source Mac storage cleaner for developers">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Install Reclaim on your Mac · Reclaim">
+<meta name="twitter:description" content="Download Reclaim for Mac, open it through Privacy &amp; Security the first time, and give it Full Disk Access. Plus updating, uninstalling and building from source.">
+<meta name="twitter:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Reclaim", "item": "https://kstmostofa.github.io/reclaim/"}, {"@type": "ListItem", "position": 2, "name": "Get started", "item": "https://kstmostofa.github.io/reclaim/install.html"}, {"@type": "ListItem", "position": 3, "name": "Install", "item": "https://kstmostofa.github.io/reclaim/install.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Install Reclaim on your Mac", "description": "Download Reclaim for Mac, open it through Privacy & Security the first time, and give it Full Disk Access. Plus updating, uninstalling and building from source.", "url": "https://kstmostofa.github.io/reclaim/install.html", "author": {"@type": "Person", "name": "Md. Mostafijur Rahman"}, "about": {"@type": "SoftwareApplication", "name": "Reclaim", "operatingSystem": "macOS"}}</script>
 </head>
 <body>
+<a class="skip" href="#content">Skip to content</a>
 <header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="index.html"><span class="brand-mark">R</span>Reclaim</a>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="install.html" aria-current="page">Install</a>
-      <a href="guide.html">Guide</a>
-      <a href="suggestions.html">What it finds</a>
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+    <nav class="top-nav" aria-label="Main">
+      <a href="guide.html" aria-current="page">Docs</a>
+      <a href="what-it-finds.html">What it finds</a>
       <a href="faq.html">FAQ</a>
-      <a href="https://github.com/kstmostofa/reclaim">GitHub</a>
     </nav>
+    <div class="header-actions">
+      <button class="search-button" type="button" data-search-open aria-label="Search the docs">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Search</span><kbd>⌘K</kbd>
+      </button>
+      <button class="icon-button" type="button" data-theme-toggle aria-label="Switch light or dark mode">
+        <span class="when-light"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><span class="when-dark"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      </button>
+      <a class="icon-button" href="https://github.com/kstmostofa/reclaim" aria-label="Reclaim on GitHub"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+      <a class="button button-primary button-small hide-mobile" href="https://github.com/kstmostofa/reclaim/releases/latest"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download</a>
+      <button class="icon-button show-mobile" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
   </div>
 </header>
+<div class="doc-layout">
+  <nav class="doc-sidebar" aria-label="Documentation" data-menu><div class="sidebar-group"><h2>Get started</h2><ul><li><a href="install.html" aria-current="page"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Install</a></li><li><a href="guide.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>Scan and clean</a></li></ul></div><div class="sidebar-group"><h2>Features</h2><ul><li><a href="explore.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Disk Map and duplicates</a></li><li><a href="docker.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>Docker and OrbStack</a></li><li><a href="system.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>System and the helper</a></li><li><a href="automation.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Menu bar and schedules</a></li></ul></div><div class="sidebar-group"><h2>Reference</h2><ul><li><a href="settings.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Settings</a></li><li><a href="what-it-finds.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>What it finds</a></li><li><a href="faq.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>FAQ</a></li></ul></div></nav>
+  <main class="doc-main" id="content">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Reclaim</a><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span>Get started</span><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span aria-current="page">Install</span></nav>
+    <article class="prose">
+      <h1>Install Reclaim on your Mac</h1>
+      <p class="lead">Three steps: download, open it once through System Settings, and give it Full Disk Access so it can see the whole disk.</p>
+      <div class="cards">
+  <a class="card-link" href="https://github.com/kstmostofa/reclaim/releases/latest"><span class="icon-tile"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></span><div><strong>Download the latest release</strong><span>Reclaim.zip from GitHub Releases</span></div></a>
+  <a class="card-link" href="#build"><span class="icon-tile"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg></span><div><strong>Build it yourself</strong><span>From source with Xcode</span></div></a>
+</div>
 
-<main class="wrap doc">
-  <aside class="toc">
-    <p>On this page</p>
-    <ul>
-      <li><a href="#requirements">Requirements</a></li>
-      <li><a href="#download">Download</a></li>
-      <li><a href="#first-open">Open it the first time</a></li>
-      <li><a href="#full-disk-access">Full Disk Access</a></li>
-      <li><a href="#update">Updating</a></li>
-      <li><a href="#uninstall">Uninstalling</a></li>
-      <li><a href="#build">Building from source</a></li>
-    </ul>
-  </aside>
+<h2 id="requirements">Requirements<a class="anchor" href="#requirements" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<ul>
+  <li><strong>macOS 14 Sonoma or later.</strong></li>
+  <li><strong>Apple silicon or Intel.</strong> The app is a universal binary. It is tested on Apple silicon.</li>
+</ul>
 
-  <article class="doc-body">
-    <h1>Install Reclaim</h1>
-    <p class="lead">Three steps: download, open it once through System Settings, and give it Full Disk Access so it can see the whole disk.</p>
+<h2 id="download">Download<a class="anchor" href="#download" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<ol class="steps">
+  <li><strong>Get the app.</strong> Open the <a href="https://github.com/kstmostofa/reclaim/releases/latest">latest release</a> and download <code>Reclaim.zip</code>, plus <code>Reclaim.zip.sha256</code> if you want to check it.</li>
+  <li><strong>Optional: check the download.</strong> In Terminal, in the folder you downloaded to, run the command below. It should print <code>Reclaim.zip: OK</code>.
+<pre><code>shasum -a 256 -c Reclaim.zip.sha256</code></pre></li>
+  <li><strong>Move it to Applications.</strong> Double-click <code>Reclaim.zip</code> and drag <strong>Reclaim</strong> into your <strong>Applications</strong> folder.</li>
+</ol>
 
-    <h2 id="requirements">Requirements</h2>
-    <ul>
-      <li>macOS 14 Sonoma or later.</li>
-      <li>Apple silicon or Intel. The app is a universal binary, but it is tested on Apple silicon only.</li>
-    </ul>
+<h2 id="first-open">Open it the first time<a class="anchor" href="#first-open" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<p>Reclaim is not notarized by Apple, because notarization needs a paid developer membership, so macOS blocks it the first time. You do this once per version.</p>
+<ol class="steps">
+  <li><strong>Try to open it.</strong> Double-click Reclaim in Applications. macOS says it cannot verify the app. Click <strong>Done</strong>.</li>
+  <li><strong>Open Privacy &amp; Security.</strong> Go to <strong>System Settings › Privacy &amp; Security</strong> and scroll to the Security section.</li>
+  <li><strong>Allow it.</strong> Next to the message about Reclaim, click <strong>Open Anyway</strong> and confirm with your password or Touch ID.</li>
+</ol>
+<div class="callout"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><div><p>The source is public, so you can also <a href="#build">build it yourself</a> instead of trusting a download.</p></div></div>
 
-    <h2 id="download">Download</h2>
-    <ol class="steps">
-      <li>Open the <a href="https://github.com/kstmostofa/reclaim/releases/latest">latest release</a> and download <code>Reclaim.zip</code>, plus <code>Reclaim.zip.sha256</code> if you want to check it.</li>
-      <li>Optional: check the download is intact. In Terminal, in the folder you downloaded to:
-        <pre><code>shasum -a 256 -c Reclaim.zip.sha256</code></pre>
-        It should print <code>Reclaim.zip: OK</code>.</li>
-      <li>Double-click <code>Reclaim.zip</code> and drag <strong>Reclaim</strong> into your <strong>Applications</strong> folder.</li>
-    </ol>
+<h2 id="full-disk-access">Give it Full Disk Access<a class="anchor" href="#full-disk-access" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<p>Without it, macOS asks for permission the first time any app opens Desktop, Documents, Downloads, iCloud Drive or another app's data, and the app has to wait for your answer. To keep scans from stalling, Reclaim skips those folders until it has Full Disk Access, and the Overview says so with a button to the right settings page.</p>
+<ol class="steps">
+  <li><strong>Open the setting.</strong> Go to <strong>System Settings › Privacy &amp; Security › Full Disk Access</strong>.</li>
+  <li><strong>Add Reclaim.</strong> Click <strong>+</strong>, choose <strong>Reclaim</strong> in Applications, and make sure its switch is on.</li>
+  <li><strong>Scan again.</strong> Quit and reopen Reclaim, then scan.</li>
+</ol>
+<p>No app can grant this to itself, and Reclaim never asks again once it is on.</p>
+<div class="callout"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><div><p>Your Music, TV and Photos libraries are always skipped, even with Full Disk Access, because macOS protects them with permissions of their own. Reclaim never suggests anything inside them.</p></div></div>
 
-    <h2 id="first-open">Open it the first time</h2>
-    <p>Reclaim is not notarized by Apple, because that needs a paid developer membership. macOS therefore blocks it the first time. You only do this once per version.</p>
-    <ol class="steps">
-      <li>Double-click Reclaim in Applications. macOS says it cannot verify the app. Click <strong>Done</strong>.</li>
-      <li>Open <strong>System Settings › Privacy &amp; Security</strong> and scroll down to the Security section.</li>
-      <li>Next to the message about Reclaim, click <strong>Open Anyway</strong>, then confirm with your password or Touch ID.</li>
-    </ol>
-    <div class="callout">
-      <p>The source is public, so you can also <a href="#build">build it yourself</a> instead of trusting a download.</p>
-    </div>
+<h2 id="update">Updating<a class="anchor" href="#update" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<p>Download the new release and replace the old app in Applications. Because each build is signed separately, macOS may ask you to repeat <a href="#first-open">Open Anyway</a>, you may need to switch Full Disk Access off and on again, and the <a href="system.html#pairing">helper</a>, if you use it, asks to be paired again.</p>
 
-    <h2 id="full-disk-access">Give it Full Disk Access</h2>
-    <p>Without it, macOS asks for permission the first time an app opens Desktop, Documents, Downloads, iCloud Drive or another app's data, and the app has to wait for your answer. To keep scans from stopping, Reclaim skips those folders until it has Full Disk Access. The Overview shows a notice while this is the case, with a button that opens the right settings page.</p>
-    <ol class="steps">
-      <li>Open <strong>System Settings › Privacy &amp; Security › Full Disk Access</strong>.</li>
-      <li>Click <strong>+</strong>, choose <strong>Reclaim</strong> in Applications, and make sure its switch is on.</li>
-      <li>Quit and reopen Reclaim, then scan again.</li>
-    </ol>
-    <p>No app can grant this to itself, and Reclaim never asks for it again once it is on.</p>
-    <div class="callout">
-      <p>Your Music, TV and Photos libraries are always skipped, even with Full Disk Access, because macOS protects them with permissions of their own. Reclaim never suggests anything inside them.</p>
-    </div>
+<h2 id="uninstall">Uninstalling<a class="anchor" href="#uninstall" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<ol class="steps">
+  <li><strong>Remove the helper</strong>, if you installed it: open <strong>System</strong> in the sidebar and click <strong>Remove Helper…</strong>.</li>
+  <li><strong>Remove the app.</strong> Quit Reclaim and move it from Applications to the Trash.</li>
+  <li><strong>Optional: remove its settings and history.</strong>
+<pre><code>rm ~/Library/Preferences/io.github.kstmostofa.reclaim.plist
+rm -r ~/Library/Application\ Support/Reclaim</code></pre></li>
+  <li><strong>Tidy up permissions.</strong> Remove it from <strong>Full Disk Access</strong> and, if you turned it on, from <strong>Login Items</strong> in System Settings.</li>
+</ol>
 
-    <h2 id="update">Updating</h2>
-    <p>Download the new release and replace the old app in Applications. Because each build is signed separately, macOS may ask you to repeat <a href="#first-open">Open Anyway</a>, and you may need to switch Full Disk Access off and on again.</p>
-
-    <h2 id="uninstall">Uninstalling</h2>
-    <ol>
-      <li>Quit Reclaim and move it from Applications to the Trash.</li>
-      <li>To remove its settings and deletion history too, delete these:
-        <pre><code>~/Library/Preferences/io.github.kstmostofa.reclaim.plist
-~/Library/Application Support/Reclaim</code></pre></li>
-      <li>Remove it from <strong>Full Disk Access</strong> in System Settings.</li>
-    </ol>
-
-    <h2 id="build">Building from source</h2>
-    <p>You need Xcode and <a href="https://github.com/yonaskolb/XcodeGen">XcodeGen</a> (<code>brew install xcodegen</code>).</p>
-    <pre><code>git clone https://github.com/kstmostofa/reclaim.git
+<h2 id="build">Building from source<a class="anchor" href="#build" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<p>You need Xcode and <a href="https://github.com/yonaskolb/XcodeGen">XcodeGen</a>.</p>
+<pre><code>brew install xcodegen
+git clone https://github.com/kstmostofa/reclaim.git
 cd reclaim
 xcodegen generate
 open Reclaim.xcodeproj</code></pre>
-    <p>Run the engine's tests with <code>swift test</code> in <code>Packages/ReclaimCore</code>. They only ever create and delete files in temporary folders.</p>
-  </article>
-</main>
+<p>The engine's tests run with <code>swift test</code> in <code>Packages/ReclaimCore</code>. They only ever create and delete files in temporary folders.</p>
 
+    </article>
+    <div class="doc-meta"><a href="https://github.com/kstmostofa/reclaim/edit/main/site/pages/install.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Edit this page on GitHub</a></div>
+    <nav class="pager" aria-label="Previous and next"><span></span><a class="pager-next" href="guide.html"><span>Next<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span><strong>Scan and clean</strong></a></nav>
+  </main>
+  <aside class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li class="toc-l2"><a href="#requirements">Requirements</a></li><li class="toc-l2"><a href="#download">Download</a></li><li class="toc-l2"><a href="#first-open">Open it the first time</a></li><li class="toc-l2"><a href="#full-disk-access">Give it Full Disk Access</a></li><li class="toc-l2"><a href="#update">Updating</a></li><li class="toc-l2"><a href="#uninstall">Uninstalling</a></li><li class="toc-l2"><a href="#build">Building from source</a></li></ul></aside>
+</div>
 <footer class="site-footer">
-  <div class="wrap">
-    <span>Reclaim is free software under the MIT License.</span>
-    <span><a href="https://github.com/kstmostofa/reclaim">Source</a> · <a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a></span>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+      <p>Free, open-source Mac storage cleaner for developers. Free under the MIT License.</p>
+    </div>
+    <div class="footer-columns">
+      <div><h2>Product</h2><a href="https://github.com/kstmostofa/reclaim/releases/latest">Download</a><a href="install.html">Install</a><a href="https://github.com/kstmostofa/reclaim/releases">Release notes</a></div>
+      <div><h2>Docs</h2><a href="guide.html">Using Reclaim</a><a href="what-it-finds.html">What it finds</a><a href="faq.html">FAQ</a></div>
+      <div><h2>Project</h2><a href="https://github.com/kstmostofa/reclaim">Source code</a><a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a><a href="https://github.com/kstmostofa/reclaim/blob/main/LICENSE">License</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Md. Mostafijur Rahman</span>
+    <span>Icons in the style of <a href="https://lucide.dev">Lucide</a> (ISC)</span>
   </div>
 </footer>
+<div class="search-dialog" data-search hidden>
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the docs">
+    <div class="search-field"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="Search the docs" aria-label="Search the docs" autocomplete="off" data-search-input><kbd>Esc</kbd></div>
+    <ul class="search-results" data-search-results role="listbox"></ul>
+  </div>
+</div>
+<script src="assets/app.js" defer></script>
 </body>
 </html>

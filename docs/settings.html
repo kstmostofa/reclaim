@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reclaim settings reference · Reclaim</title>
+<meta name="description" content="Every Reclaim setting explained: Trash mode, scan scope, thresholds, excluded folders, menu bar, schedules, auto-clean, low-space alerts and accent colour.">
+<link rel="canonical" href="https://kstmostofa.github.io/reclaim/settings.html">
+<meta name="author" content="Md. Mostafijur Rahman">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0d14" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Reclaim">
+<meta property="og:title" content="Reclaim settings reference · Reclaim">
+<meta property="og:description" content="Every Reclaim setting explained: Trash mode, scan scope, thresholds, excluded folders, menu bar, schedules, auto-clean, low-space alerts and accent colour.">
+<meta property="og:url" content="https://kstmostofa.github.io/reclaim/settings.html">
+<meta property="og:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Reclaim: Free, open-source Mac storage cleaner for developers">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reclaim settings reference · Reclaim">
+<meta name="twitter:description" content="Every Reclaim setting explained: Trash mode, scan scope, thresholds, excluded folders, menu bar, schedules, auto-clean, low-space alerts and accent colour.">
+<meta name="twitter:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Reclaim", "item": "https://kstmostofa.github.io/reclaim/"}, {"@type": "ListItem", "position": 2, "name": "Reference", "item": "https://kstmostofa.github.io/reclaim/settings.html"}, {"@type": "ListItem", "position": 3, "name": "Settings", "item": "https://kstmostofa.github.io/reclaim/settings.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Reclaim settings reference", "description": "Every Reclaim setting explained: Trash mode, scan scope, thresholds, excluded folders, menu bar, schedules, auto-clean, low-space alerts and accent colour.", "url": "https://kstmostofa.github.io/reclaim/settings.html", "author": {"@type": "Person", "name": "Md. Mostafijur Rahman"}, "about": {"@type": "SoftwareApplication", "name": "Reclaim", "operatingSystem": "macOS"}}</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+    <nav class="top-nav" aria-label="Main">
+      <a href="guide.html" aria-current="page">Docs</a>
+      <a href="what-it-finds.html">What it finds</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="search-button" type="button" data-search-open aria-label="Search the docs">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Search</span><kbd>⌘K</kbd>
+      </button>
+      <button class="icon-button" type="button" data-theme-toggle aria-label="Switch light or dark mode">
+        <span class="when-light"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><span class="when-dark"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      </button>
+      <a class="icon-button" href="https://github.com/kstmostofa/reclaim" aria-label="Reclaim on GitHub"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+      <a class="button button-primary button-small hide-mobile" href="https://github.com/kstmostofa/reclaim/releases/latest"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download</a>
+      <button class="icon-button show-mobile" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="doc-layout">
+  <nav class="doc-sidebar" aria-label="Documentation" data-menu><div class="sidebar-group"><h2>Get started</h2><ul><li><a href="install.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Install</a></li><li><a href="guide.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>Scan and clean</a></li></ul></div><div class="sidebar-group"><h2>Features</h2><ul><li><a href="explore.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Disk Map and duplicates</a></li><li><a href="docker.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>Docker and OrbStack</a></li><li><a href="system.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>System and the helper</a></li><li><a href="automation.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Menu bar and schedules</a></li></ul></div><div class="sidebar-group"><h2>Reference</h2><ul><li><a href="settings.html" aria-current="page"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Settings</a></li><li><a href="what-it-finds.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>What it finds</a></li><li><a href="faq.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>FAQ</a></li></ul></div></nav>
+  <main class="doc-main" id="content">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Reclaim</a><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span>Reference</span><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span aria-current="page">Settings</span></nav>
+    <article class="prose">
+      <h1>Reclaim settings reference</h1>
+      <p class="lead">Open Settings with Reclaim › Settings… or ⌘, . Changes apply at once unless noted.</p>
+      <h2 id="general">General<a class="anchor" href="#general" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<figure class="narrow"><div class="window"><img loading="lazy" decoding="async" width="1040" height="782" src="screenshots/settings-general.png" alt="General settings: move to Trash, tick Safe items after each scan, restore defaults."></div></figure>
+<div class="table-wrap"><table>
+  <thead><tr><th>Setting</th><th>What it does</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr><td>Move to Trash instead of deleting permanently</td><td>Ticked items go to the Trash, so you can put them back. Space is freed only when you empty it. Items that need the helper are left alone in this mode.</td><td>Off</td></tr>
+    <tr><td>Tick Safe items after each scan</td><td>Safe items are ticked as soon as a scan finishes. Rebuild and Personal items never are.</td><td>On</td></tr>
+    <tr><td>Restore Default Settings</td><td>Resets every setting on every tab.</td><td>—</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="scanning">Scanning<a class="anchor" href="#scanning" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<figure class="narrow"><div class="window"><img loading="lazy" decoding="async" width="1040" height="1170" src="screenshots/settings-scanning.png" alt="Scanning settings: scan scope, thresholds and excluded folders."></div></figure>
+<div class="table-wrap"><table>
+  <thead><tr><th>Setting</th><th>What it does</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr><td>Scan</td><td>The whole disk, or only your home folder. The whole disk also finds system caches and leftovers outside your home.</td><td>Whole disk</td></tr>
+    <tr><td>Large files from</td><td>The size from which a file appears in Large Files. The list updates as you change it.</td><td>500 MB</td></tr>
+    <tr><td>Old downloads after</td><td>How long a file in Downloads must be unchanged before it is suggested.</td><td>90 days</td></tr>
+    <tr><td>Compare duplicates from</td><td>The smallest file Duplicates compares.</td><td>1 MB</td></tr>
+    <tr><td>Never scan these folders</td><td>Folders skipped completely: nothing in them is measured, suggested or deletable.</td><td>None</td></tr>
+  </tbody>
+</table></div>
+<p>Scope, the downloads age and excluded folders take effect at the next scan.</p>
+
+<h2 id="automation">Automation<a class="anchor" href="#automation" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<figure class="narrow"><div class="window"><img loading="lazy" decoding="async" width="1040" height="1152" src="screenshots/settings-automation.png" alt="Automation settings: menu bar, open at login, scheduled scans, auto-clean and low-space alerts."></div></figure>
+<div class="table-wrap"><table>
+  <thead><tr><th>Setting</th><th>What it does</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr><td>Show Reclaim in the menu bar</td><td>Free space, the last scan, Scan Now and Clean Safe Items in the menu bar.</td><td>On</td></tr>
+    <tr><td>Open at login</td><td>Starts Reclaim when you log in, so the menu bar and schedules are always on.</td><td>Off</td></tr>
+    <tr><td>Scan automatically</td><td>Never, every day or every week, while Reclaim is open.</td><td>Never</td></tr>
+    <tr><td>Delete Safe items untouched for a day</td><td>After each scheduled scan, deletes Safe items that nothing changed for 24 hours. <a href="automation.html#auto-clean">Details</a>.</td><td>Off</td></tr>
+    <tr><td>Warn when free space is low</td><td>A notification once each time free space drops below the threshold.</td><td>On</td></tr>
+    <tr><td>Warn below</td><td>The free-space threshold for that warning.</td><td>10 GB</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="appearance">Appearance<a class="anchor" href="#appearance" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<figure class="narrow"><div class="window"><img loading="lazy" decoding="async" width="1040" height="780" src="screenshots/settings-appearance.png" alt="Appearance settings: system, light or dark, accent colour swatches, custom colour and a preview."></div></figure>
+<div class="table-wrap"><table>
+  <thead><tr><th>Setting</th><th>What it does</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr><td>Appearance</td><td>Follow the system, or always light or dark.</td><td>System</td></tr>
+    <tr><td>Accent color</td><td>The colour of buttons, selections and the reclaimable part of the storage bar. Twelve presets.</td><td>Indigo</td></tr>
+    <tr><td>Custom color</td><td>Pick any colour; Reclaim switches to it.</td><td>—</td></tr>
+  </tbody>
+</table></div>
+
+    </article>
+    <div class="doc-meta"><a href="https://github.com/kstmostofa/reclaim/edit/main/site/pages/settings.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Edit this page on GitHub</a></div>
+    <nav class="pager" aria-label="Previous and next"><a class="pager-prev" href="automation.html"><span><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Previous</span><strong>Menu bar and schedules</strong></a><a class="pager-next" href="what-it-finds.html"><span>Next<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span><strong>What it finds</strong></a></nav>
+  </main>
+  <aside class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li class="toc-l2"><a href="#general">General</a></li><li class="toc-l2"><a href="#scanning">Scanning</a></li><li class="toc-l2"><a href="#automation">Automation</a></li><li class="toc-l2"><a href="#appearance">Appearance</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+      <p>Free, open-source Mac storage cleaner for developers. Free under the MIT License.</p>
+    </div>
+    <div class="footer-columns">
+      <div><h2>Product</h2><a href="https://github.com/kstmostofa/reclaim/releases/latest">Download</a><a href="install.html">Install</a><a href="https://github.com/kstmostofa/reclaim/releases">Release notes</a></div>
+      <div><h2>Docs</h2><a href="guide.html">Using Reclaim</a><a href="what-it-finds.html">What it finds</a><a href="faq.html">FAQ</a></div>
+      <div><h2>Project</h2><a href="https://github.com/kstmostofa/reclaim">Source code</a><a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a><a href="https://github.com/kstmostofa/reclaim/blob/main/LICENSE">License</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Md. Mostafijur Rahman</span>
+    <span>Icons in the style of <a href="https://lucide.dev">Lucide</a> (ISC)</span>
+  </div>
+</footer>
+<div class="search-dialog" data-search hidden>
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the docs">
+    <div class="search-field"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="Search the docs" aria-label="Search the docs" autocomplete="off" data-search-input><kbd>Esc</kbd></div>
+    <ul class="search-results" data-search-results role="listbox"></ul>
+  </div>
+</div>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

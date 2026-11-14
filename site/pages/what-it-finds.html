@@ -1,49 +1,10 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>What Reclaim Finds</title>
-  <meta name="description" content="Every rule Reclaim uses to suggest deletions, with its safety level and what happens after deleting.">
-  <link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="index.html"><span class="brand-mark">R</span>Reclaim</a>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="install.html">Install</a>
-      <a href="guide.html">Guide</a>
-      <a href="suggestions.html" aria-current="page">What it finds</a>
-      <a href="faq.html">FAQ</a>
-      <a href="https://github.com/kstmostofa/reclaim">GitHub</a>
-    </nav>
-  </div>
-</header>
-
-<main class="wrap doc">
-  <aside class="toc">
-    <p>Categories</p>
-    <ul>
-      <li><a href="#build-caches">Build Caches</a></li>
-      <li><a href="#dependencies">Dependencies</a></li>
-      <li><a href="#package-caches">Package Caches</a></li>
-      <li><a href="#app-caches">App Caches and Logs</a></li>
-      <li><a href="#mobile">Mobile Tooling</a></li>
-      <li><a href="#leftovers">App Leftovers</a></li>
-      <li><a href="#trash-downloads">Trash and Old Downloads</a></li>
-      <li><a href="#large-files">Large Files</a></li>
-      <li><a href="#docker">Docker</a></li>
-      <li><a href="#system-junk">System Junk</a></li>
-      <li><a href="#never">Never suggested</a></li>
-    </ul>
-  </aside>
-
-  <article class="doc-body">
-    <h1>What Reclaim finds</h1>
-    <p class="lead">Every suggestion comes from one of the rules below. A rule only looks at a folder's name, where it is, and the files beside it; once a folder matches, nothing inside it is listed again.</p>
-    <p><code>~</code> means your home folder.</p>
+title: What Reclaim finds: every cache, dependency and leftover it suggests
+nav: What it finds
+icon: search
+description: Every folder Reclaim suggests deleting on a Mac: .next, node_modules, vendor, DerivedData, Gradle, npm and pip caches, Docker and system junk.
+lead: Every suggestion comes from one of these rules. A rule looks only at a folder's name, where it is and the files beside it; once a folder matches, nothing inside it is listed again.
+---
+<p><code>~</code> means your home folder.</p>
 
     <h2 id="build-caches">Build Caches</h2>
     <p>Output your project's tooling recreates on the next build or dev-server start. That first build is slower.</p>
@@ -75,9 +36,7 @@
         <tr><td>Python virtual environment</td><td><code>venv</code>, <code>.venv</code> or <code>env</code> containing <code>pyvenv.cfg</code></td><td><code>python -m venv</code> and reinstall requirements</td><td><span class="badge rebuild">Rebuild</span></td></tr>
       </tbody>
     </table></div>
-    <div class="callout">
-      <p>Packages that tools installed for themselves are skipped: anything in a hidden folder in your home (such as <code>~/.vscode/extensions</code> or <code>~/.composer</code>), in <code>~/Library</code>, or in system and Homebrew locations. Deleting those would break the tool, and there is no project to reinstall into.</p>
-    </div>
+    <div class="callout">{{icon:info}}<div><p>Packages that tools installed for themselves are skipped: anything in a hidden folder in your home (such as <code>~/.vscode/extensions</code> or <code>~/.composer</code>), in <code>~/Library</code>, or in system and Homebrew locations. Deleting those would break the tool, and there is no project to reinstall into.</p></div></div>
 
     <h2 id="package-caches">Package Caches</h2>
     <p>Downloads shared by every project, kept so they need not be fetched again. Deleting them only costs a re-download the next time a project needs them.</p>
@@ -137,7 +96,7 @@
     <p>Files of 500 MB or more (adjustable) that no rule above covers, outside apps and photo libraries. <span class="badge personal">Personal</span></p>
 
     <h2 id="docker">Docker</h2>
-    <p>From Docker's own disk-usage report, when an engine is running. See <a href="guide.html#containers">Containers</a>.</p>
+    <p>From Docker's own disk-usage report, when an engine is running. See <a href="docker.html">Containers</a>.</p>
     <div class="table-wrap"><table>
       <thead><tr><th>What</th><th>Removed with</th><th>Level</th></tr></thead>
       <tbody>
@@ -150,7 +109,7 @@
     </table></div>
 
     <h2 id="system-junk">System Junk</h2>
-    <p>Most of these belong to root, so deleting them needs the <a href="guide.html#system">helper</a>. Items macOS protects are skipped even then.</p>
+    <p>Most of these belong to root, so deleting them needs the <a href="system.html">helper</a>. Items macOS protects are skipped even then.</p>
     <div class="table-wrap"><table>
       <thead><tr><th>What</th><th>Location</th><th>Level</th></tr></thead>
       <tbody>
@@ -163,18 +122,7 @@
     <h2 id="never">Never suggested or deleted</h2>
     <ul>
       <li>Anything inside an app, framework, photo or music library, or other bundle is never suggested on its own.</li>
-      <li>Folders you list under <a href="guide.html#settings-scanning">Never scan these folders</a>.</li>
+      <li>Folders you list under <a href="settings.html#scanning">Never scan these folders</a>.</li>
       <li>Your Music, TV and Photos libraries, which macOS protects with permissions of their own.</li>
       <li>Protected folders, which cannot be deleted as a whole from anywhere in the app. See the <a href="faq.html#protected">FAQ</a> for the list.</li>
     </ul>
-  </article>
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <span>Reclaim is free software under the MIT License.</span>
-    <span><a href="https://github.com/kstmostofa/reclaim">Source</a> · <a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a></span>
-  </div>
-</footer>
-</body>
-</html>

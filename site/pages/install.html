@@ -1,0 +1,65 @@
+title: Install Reclaim on your Mac
+nav: Install
+icon: download
+description: Download Reclaim for Mac, open it through Privacy & Security the first time, and give it Full Disk Access. Plus updating, uninstalling and building from source.
+lead: Three steps: download, open it once through System Settings, and give it Full Disk Access so it can see the whole disk.
+---
+<div class="cards">
+  <a class="card-link" href="{{download}}"><span class="icon-tile">{{icon:download:20}}</span><div><strong>Download the latest release</strong><span>Reclaim.zip from GitHub Releases</span></div></a>
+  <a class="card-link" href="#build"><span class="icon-tile">{{icon:terminal:20}}</span><div><strong>Build it yourself</strong><span>From source with Xcode</span></div></a>
+</div>
+
+<h2 id="requirements">Requirements</h2>
+<ul>
+  <li><strong>macOS 14 Sonoma or later.</strong></li>
+  <li><strong>Apple silicon or Intel.</strong> The app is a universal binary. It is tested on Apple silicon.</li>
+</ul>
+
+<h2 id="download">Download</h2>
+<ol class="steps">
+  <li><strong>Get the app.</strong> Open the <a href="{{download}}">latest release</a> and download <code>Reclaim.zip</code>, plus <code>Reclaim.zip.sha256</code> if you want to check it.</li>
+  <li><strong>Optional: check the download.</strong> In Terminal, in the folder you downloaded to, run the command below. It should print <code>Reclaim.zip: OK</code>.
+<pre><code>shasum -a 256 -c Reclaim.zip.sha256</code></pre></li>
+  <li><strong>Move it to Applications.</strong> Double-click <code>Reclaim.zip</code> and drag <strong>Reclaim</strong> into your <strong>Applications</strong> folder.</li>
+</ol>
+
+<h2 id="first-open">Open it the first time</h2>
+<p>{{app}} is not notarized by Apple, because notarization needs a paid developer membership, so macOS blocks it the first time. You do this once per version.</p>
+<ol class="steps">
+  <li><strong>Try to open it.</strong> Double-click Reclaim in Applications. macOS says it cannot verify the app. Click <strong>Done</strong>.</li>
+  <li><strong>Open Privacy &amp; Security.</strong> Go to <strong>System Settings › Privacy &amp; Security</strong> and scroll to the Security section.</li>
+  <li><strong>Allow it.</strong> Next to the message about Reclaim, click <strong>Open Anyway</strong> and confirm with your password or Touch ID.</li>
+</ol>
+<div class="callout">{{icon:info}}<div><p>The source is public, so you can also <a href="#build">build it yourself</a> instead of trusting a download.</p></div></div>
+
+<h2 id="full-disk-access">Give it Full Disk Access</h2>
+<p>Without it, macOS asks for permission the first time any app opens Desktop, Documents, Downloads, iCloud Drive or another app's data, and the app has to wait for your answer. To keep scans from stalling, {{app}} skips those folders until it has Full Disk Access, and the Overview says so with a button to the right settings page.</p>
+<ol class="steps">
+  <li><strong>Open the setting.</strong> Go to <strong>System Settings › Privacy &amp; Security › Full Disk Access</strong>.</li>
+  <li><strong>Add Reclaim.</strong> Click <strong>+</strong>, choose <strong>Reclaim</strong> in Applications, and make sure its switch is on.</li>
+  <li><strong>Scan again.</strong> Quit and reopen Reclaim, then scan.</li>
+</ol>
+<p>No app can grant this to itself, and {{app}} never asks again once it is on.</p>
+<div class="callout">{{icon:info}}<div><p>Your Music, TV and Photos libraries are always skipped, even with Full Disk Access, because macOS protects them with permissions of their own. {{app}} never suggests anything inside them.</p></div></div>
+
+<h2 id="update">Updating</h2>
+<p>Download the new release and replace the old app in Applications. Because each build is signed separately, macOS may ask you to repeat <a href="#first-open">Open Anyway</a>, you may need to switch Full Disk Access off and on again, and the <a href="system.html#pairing">helper</a>, if you use it, asks to be paired again.</p>
+
+<h2 id="uninstall">Uninstalling</h2>
+<ol class="steps">
+  <li><strong>Remove the helper</strong>, if you installed it: open <strong>System</strong> in the sidebar and click <strong>Remove Helper…</strong>.</li>
+  <li><strong>Remove the app.</strong> Quit Reclaim and move it from Applications to the Trash.</li>
+  <li><strong>Optional: remove its settings and history.</strong>
+<pre><code>rm ~/Library/Preferences/io.github.kstmostofa.reclaim.plist
+rm -r ~/Library/Application\ Support/Reclaim</code></pre></li>
+  <li><strong>Tidy up permissions.</strong> Remove it from <strong>Full Disk Access</strong> and, if you turned it on, from <strong>Login Items</strong> in System Settings.</li>
+</ol>
+
+<h2 id="build">Building from source</h2>
+<p>You need Xcode and <a href="https://github.com/yonaskolb/XcodeGen">XcodeGen</a>.</p>
+<pre><code>brew install xcodegen
+git clone {{repo}}.git
+cd reclaim
+xcodegen generate
+open Reclaim.xcodeproj</code></pre>
+<p>The engine's tests run with <code>swift test</code> in <code>Packages/ReclaimCore</code>. They only ever create and delete files in temporary folders.</p>

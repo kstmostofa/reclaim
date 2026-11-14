@@ -1,0 +1,247 @@
+title: Reclaim
+description: Free, open-source Mac app that finds build caches, node_modules, app caches, Docker leftovers and duplicates, and frees the space in one click.
+layout: home
+---
+<section class="hero">
+  <a class="pill" href="{{download}}"><b>v{{version}}</b> Free and open source for macOS 14+ {{icon:arrow-right:14}}</a>
+  <h1>Get your Mac's <span class="gradient-text">disk space</span> back.</h1>
+  <p class="lead">{{app}} scans your whole Mac, explains what is safe to delete, and frees the space in one click. Built for developer Macs that keep filling up with build caches, <code>node_modules</code>, emulator images and Docker leftovers.</p>
+  <div class="hero-actions">
+    <a class="button button-primary button-large" href="{{download}}">{{icon:download:18}}Download for Mac</a>
+    <a class="button button-large" href="guide.html">{{icon:book:18}}Read the guide</a>
+  </div>
+  <ul class="hero-meta">
+    <li>{{icon:check:16}}Free, MIT licensed</li>
+    <li>{{icon:check:16}}Apple silicon and Intel</li>
+    <li>{{icon:check:16}}No account, no tracking</li>
+  </ul>
+  <div class="hero-shot">
+    <div class="window"><img src="screenshots/overview.png" alt="Reclaim's Overview: a storage bar with used, reclaimable and free space, and the largest kinds of suggestions by size." loading="eager" fetchpriority="high"></div>
+  </div>
+</section>
+
+<section class="trust" aria-label="At a glance">
+  <ul>
+    <li><span class="icon-tile">{{icon:zap:18}}</span>A full Mac scanned in about a minute</li>
+    <li><span class="icon-tile">{{icon:shield-check:18}}</span>Protected system folders can't be deleted</li>
+    <li><span class="icon-tile">{{icon:eye-off:18}}</span>Nothing leaves your Mac</li>
+    <li><span class="icon-tile">{{icon:code:18}}</span>Open source on GitHub</li>
+  </ul>
+</section>
+
+<section class="section" id="features">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="eyebrow">{{icon:sparkles:16}}Features</p>
+      <h2>Everything that quietly fills a developer's Mac, in one place.</h2>
+      <p>One scan finds the space hogs, and every suggestion tells you what it is, why it is listed and what happens after you delete it.</p>
+    </div>
+    <div class="features">
+      <article class="feature">
+        <span class="icon-tile">{{icon:hard-drive:22}}</span>
+        <h3>Scans the whole disk</h3>
+        <p>Measures the space files really use, so a sparse 32 GB disk image counts as what it occupies, and hard links count once.</p>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:wrench:22}}</span>
+        <h3>Knows developer junk</h3>
+        <p><code>.next</code>, <code>.turbo</code>, DerivedData, Rust <code>target</code>, <code>node_modules</code>, <code>vendor</code>, Gradle, npm and pip caches, emulator snapshots.</p>
+        <a class="more" href="what-it-finds.html">See every rule {{icon:arrow-right:14}}</a>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:list-checks:22}}</span>
+        <h3>Three safety levels</h3>
+        <p>Safe items rebuild themselves and are ticked for you. Rebuild and Personal items wait for your decision.</p>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:trash:22}}</span>
+        <h3>One-click delete</h3>
+        <p>Tick, click, done, with a summary of what was freed and the reason for anything that could not be removed.</p>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:bar-chart:22}}</span>
+        <h3>Disk Map and Large Files</h3>
+        <p>Every folder sorted by size. Drill in, see each folder's share, and tick anything that isn't protected.</p>
+        <a class="more" href="explore.html">Explore your disk {{icon:arrow-right:14}}</a>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:copy:22}}</span>
+        <h3>Duplicate files</h3>
+        <p>Byte-for-byte matches only. APFS copies that share storage are spotted, so the space reported is space you get back.</p>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:box:22}}</span>
+        <h3>Docker and OrbStack</h3>
+        <p>Build cache, dangling and unused images, stopped containers and unused volumes, removed with Docker's own commands.</p>
+        <a class="more" href="docker.html">Docker clean-up {{icon:arrow-right:14}}</a>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:lock:22}}</span>
+        <h3>System junk</h3>
+        <p>An optional helper removes system caches, logs, root-owned leftovers and local Time Machine snapshots.</p>
+        <a class="more" href="system.html">How the helper works {{icon:arrow-right:14}}</a>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:clock:22}}</span>
+        <h3>Menu bar and schedules</h3>
+        <p>Free space at a glance, low-space alerts, and daily or weekly scans that notify you or tidy up on their own.</p>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:shield-check:22}}</span>
+        <h3>Hard limits</h3>
+        <p>Never deletes the disk root, system folders, your home folder or folders like Documents as a whole, however the path is spelled.</p>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:eye-off:22}}</span>
+        <h3>Private by design</h3>
+        <p>No account, no analytics, no network access. Your file list stays on your Mac.</p>
+      </article>
+      <article class="feature">
+        <span class="icon-tile">{{icon:palette:22}}</span>
+        <h3>Yours to tune</h3>
+        <p>Indigo by default or any accent colour, light or dark, your own thresholds and folders to skip.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="how-it-works">
+  <div class="section-inner">
+    <div class="section-head center">
+      <p class="eyebrow">{{icon:zap:16}}How it works</p>
+      <h2>Scan, review, reclaim.</h2>
+      <p>No wizard and no upsell: three steps, and you stay in control of every file.</p>
+    </div>
+    <div class="steps-row">
+      <div class="step-card">
+        <span class="step-num">01</span>
+        <h3>{{icon:search:20}}Scan</h3>
+        <p>{{app}} walks your disk in parallel and matches what it finds against rules written from real developer Macs.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">02</span>
+        <h3>{{icon:list-checks:20}}Review</h3>
+        <p>Suggestions are grouped by kind and labelled Safe, Rebuild or Personal. Select any item to see exactly what it is.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">03</span>
+        <h3>{{icon:sparkles:20}}Reclaim</h3>
+        <p>Click Delete. Space is freed at once, or moved to the Trash if you prefer, and every run is kept in a history.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="safety">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="eyebrow">{{icon:shield-check:16}}Safety levels</p>
+      <h2>Know what you are deleting before you delete it.</h2>
+      <p>Every suggestion carries one of three levels, and only Safe items are ever ticked for you.</p>
+    </div>
+    <div class="levels">
+      <div class="level safe">
+        <h3>Safe <span class="badge safe">Ticked for you</span></h3>
+        <p>Rebuilds itself. Nothing for you to do afterwards.</p>
+        <ul><li>.next</li><li>DerivedData</li><li>~/Library/Caches</li><li>npm cache</li><li>build cache</li></ul>
+      </div>
+      <div class="level rebuild">
+        <h3>Rebuild <span class="badge rebuild">Your call</span></h3>
+        <p>Comes back after a reinstall or download.</p>
+        <ul><li>node_modules</li><li>vendor</li><li>Pods</li><li>.venv</li><li>unused images</li></ul>
+      </div>
+      <div class="level personal">
+        <h3>Personal <span class="badge personal">Your call</span></h3>
+        <p>Your data. Reported so you can decide.</p>
+        <ul><li>old downloads</li><li>large files</li><li>duplicates</li><li>volumes</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="section-inner split">
+    <div class="split-text">
+      <p class="eyebrow">{{icon:laptop:16}}Menu bar</p>
+      <h2>Free space at a glance, clean-up one click away.</h2>
+      <p>{{app}} lives in your menu bar, so you notice before the disk fills up.</p>
+      <ul class="checks">
+        <li>{{icon:check:18}}Free space and what the last scan found</li>
+        <li>{{icon:check:18}}Scan Now and Clean Safe Items from anywhere</li>
+        <li>{{icon:check:18}}A notification when free space runs low</li>
+        <li>{{icon:check:18}}Daily or weekly scans, with optional auto-clean of untouched caches</li>
+      </ul>
+      <a class="button" href="automation.html">Menu bar and schedules {{icon:arrow-right:16}}</a>
+    </div>
+    <div class="shot-small"><div class="window"><img src="screenshots/menu-bar.png" alt="The Reclaim menu-bar window with free space, a storage bar and Scan Now and Clean Safe Items buttons."></div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner split reverse">
+    <div class="split-text">
+      <p class="eyebrow">{{icon:bar-chart:16}}Disk Map</p>
+      <h2>See exactly where the space went.</h2>
+      <p>The whole disk as a size-sorted tree. Every folder shows its size, its share of its parent and how many files it holds.</p>
+      <ul class="checks">
+        <li>{{icon:check:18}}Double-click to drill in, breadcrumbs to go back</li>
+        <li>{{icon:check:18}}Tick anything that isn't protected</li>
+        <li>{{icon:check:18}}Sizes update the moment you delete</li>
+      </ul>
+      <a class="button" href="explore.html">Explore your disk {{icon:arrow-right:16}}</a>
+    </div>
+    <div class="window"><img src="screenshots/disk-map.png" alt="The Disk Map listing top-level folders with size bars, sizes, shares and file counts."></div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-head center">
+      <p class="eyebrow">{{icon:search:16}}What it finds</p>
+      <h2>Rules written from real developer Macs.</h2>
+      <p>A few of the places {{app}} looks. <a href="what-it-finds.html">See all of them</a>.</p>
+    </div>
+    <div class="chips">
+      <span>.next</span><span>.nuxt</span><span>.turbo</span><span>.svelte-kit</span><span>__pycache__</span><span>target</span>
+      <span>DerivedData</span><span>build/intermediates</span><span>~/.npm</span><span>~/.gradle/caches</span><span>Homebrew</span>
+      <span>~/Library/Caches</span><span>emulator snapshots</span><span>Docker build cache</span>
+      <span class="r">node_modules</span><span class="r">vendor</span><span class="r">Pods</span><span class="r">.venv</span><span class="r">~/.pub-cache</span><span class="r">Playwright browsers</span>
+      <span class="p">old downloads</span><span class="p">large files</span><span class="p">duplicates</span><span class="p">uninstalled apps' data</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head center">
+      <p class="eyebrow">{{icon:help:16}}Questions</p>
+      <h2>Good to know</h2>
+    </div>
+    <div class="faq-short prose">
+      <details>
+        <summary>Is it really free?</summary>
+        <p>Yes. {{app}} is open source under the MIT License, with no paid tier, account or tracking.</p>
+      </details>
+      <details>
+        <summary>Why is there no “Are you sure?” for every file?</summary>
+        <p>Because cleaning a developer Mac means deleting hundreds of items, and a confirmation per item gets clicked through without reading. {{app}} explains each item instead, ticks only Safe ones for you, and can never delete protected folders. Prefer a safety net? Turn on Move to Trash.</p>
+      </details>
+      <details>
+        <summary>Why does macOS block it the first time I open it?</summary>
+        <p>The app is not notarized by Apple, which needs a paid developer membership. Open it once through System Settings › Privacy &amp; Security › Open Anyway. <a href="install.html#first-open">See the steps</a>.</p>
+      </details>
+      <p style="text-align:center;margin-top:20px"><a href="faq.html">All questions {{icon:arrow-right:14}}</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-card">
+    <h2>Free up space in a minute.</h2>
+    <p>Download {{app}}, run one scan, and see what your Mac has been hoarding.</p>
+    <div class="hero-actions">
+      <a class="button button-large" href="{{download}}">{{icon:download:18}}Download for Mac</a>
+      <a class="button button-large button-ghost" href="{{repo}}">{{icon:github:18}}View on GitHub</a>
+    </div>
+  </div>
+</section>

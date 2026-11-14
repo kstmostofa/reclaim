@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Disk Map, large files and duplicate files on Mac · Reclaim</title>
+<meta name="description" content="See where your Mac&#x27;s disk space went with a size-sorted Disk Map, find large files, and remove duplicate files with APFS clones handled correctly.">
+<link rel="canonical" href="https://kstmostofa.github.io/reclaim/explore.html">
+<meta name="author" content="Md. Mostafijur Rahman">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0d14" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Reclaim">
+<meta property="og:title" content="Disk Map, large files and duplicate files on Mac · Reclaim">
+<meta property="og:description" content="See where your Mac&#x27;s disk space went with a size-sorted Disk Map, find large files, and remove duplicate files with APFS clones handled correctly.">
+<meta property="og:url" content="https://kstmostofa.github.io/reclaim/explore.html">
+<meta property="og:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Reclaim: Free, open-source Mac storage cleaner for developers">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Disk Map, large files and duplicate files on Mac · Reclaim">
+<meta name="twitter:description" content="See where your Mac&#x27;s disk space went with a size-sorted Disk Map, find large files, and remove duplicate files with APFS clones handled correctly.">
+<meta name="twitter:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Reclaim", "item": "https://kstmostofa.github.io/reclaim/"}, {"@type": "ListItem", "position": 2, "name": "Features", "item": "https://kstmostofa.github.io/reclaim/explore.html"}, {"@type": "ListItem", "position": 3, "name": "Disk Map and duplicates", "item": "https://kstmostofa.github.io/reclaim/explore.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Disk Map, large files and duplicate files on Mac", "description": "See where your Mac's disk space went with a size-sorted Disk Map, find large files, and remove duplicate files with APFS clones handled correctly.", "url": "https://kstmostofa.github.io/reclaim/explore.html", "author": {"@type": "Person", "name": "Md. Mostafijur Rahman"}, "about": {"@type": "SoftwareApplication", "name": "Reclaim", "operatingSystem": "macOS"}}</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+    <nav class="top-nav" aria-label="Main">
+      <a href="guide.html" aria-current="page">Docs</a>
+      <a href="what-it-finds.html">What it finds</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="search-button" type="button" data-search-open aria-label="Search the docs">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Search</span><kbd>⌘K</kbd>
+      </button>
+      <button class="icon-button" type="button" data-theme-toggle aria-label="Switch light or dark mode">
+        <span class="when-light"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><span class="when-dark"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      </button>
+      <a class="icon-button" href="https://github.com/kstmostofa/reclaim" aria-label="Reclaim on GitHub"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+      <a class="button button-primary button-small hide-mobile" href="https://github.com/kstmostofa/reclaim/releases/latest"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download</a>
+      <button class="icon-button show-mobile" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="doc-layout">
+  <nav class="doc-sidebar" aria-label="Documentation" data-menu><div class="sidebar-group"><h2>Get started</h2><ul><li><a href="install.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Install</a></li><li><a href="guide.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>Scan and clean</a></li></ul></div><div class="sidebar-group"><h2>Features</h2><ul><li><a href="explore.html" aria-current="page"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Disk Map and duplicates</a></li><li><a href="docker.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>Docker and OrbStack</a></li><li><a href="system.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>System and the helper</a></li><li><a href="automation.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Menu bar and schedules</a></li></ul></div><div class="sidebar-group"><h2>Reference</h2><ul><li><a href="settings.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Settings</a></li><li><a href="what-it-finds.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>What it finds</a></li><li><a href="faq.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>FAQ</a></li></ul></div></nav>
+  <main class="doc-main" id="content">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Reclaim</a><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span>Features</span><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span aria-current="page">Disk Map and duplicates</span></nav>
+    <article class="prose">
+      <h1>Disk Map, large files and duplicate files on Mac</h1>
+      <p class="lead">Beyond the suggestions: see where every gigabyte went, find big files, and remove duplicates.</p>
+      <h2 id="disk-map">Disk Map<a class="anchor" href="#disk-map" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<figure><div class="window"><img loading="lazy" decoding="async" width="1400" height="952" src="screenshots/disk-map.png" alt="The Disk Map listing folders with size bars, sizes, their share of the parent folder and file counts."></div></figure>
+<p>The whole scan as folders and files, largest first. Each row has a bar for its share of the folder you are in, its size, the number of files inside and when anything in it last changed.</p>
+<ul>
+  <li><strong>Go deeper:</strong> double-click a folder, or right-click it and choose <strong>Open</strong>.</li>
+  <li><strong>Go back:</strong> click any folder in the trail at the top, or the up arrow in the toolbar (<kbd>⌘</kbd><kbd>↑</kbd>).</li>
+  <li><strong>Tick anything</strong> that is not protected. Protected folders, such as the top level of the disk or your home folder, have a dimmed checkbox.</li>
+  <li><strong>Badges</strong> mark folders a rule already suggests. A lock means a folder could not be read, so its size is a lower bound.</li>
+  <li><strong>Small files</strong> under 1 MB are not listed one by one; their total appears below the list.</li>
+</ul>
+
+<h2 id="large-files">Large Files<a class="anchor" href="#large-files" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<p>Files of 500 MB or more that no other suggestion covers. Files inside apps and photo libraries are left out, because deleting part of a bundle breaks it. Everything here is <span class="badge personal">Personal</span>: only you know whether you still need it.</p>
+<p>Change the size in <a href="settings.html#scanning">Scanning › Large files from</a>; the list updates at once.</p>
+
+<h2 id="duplicates">Duplicates<a class="anchor" href="#duplicates" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<p>After a scan, open <strong>Duplicates</strong> and click <strong>Find Duplicates</strong>. Reclaim compares files of 1 MB or more and lists only files whose contents are identical, byte for byte.</p>
+
+<h3 id="how-duplicates-are-found">How duplicates are found<a class="anchor" href="#how-duplicates-are-found" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h3>
+<ol class="steps">
+  <li><strong>By size.</strong> Files with a unique size cannot have a twin, so they are dropped first.</li>
+  <li><strong>By their edges.</strong> The first and last 64 KB of the remaining files are compared.</li>
+  <li><strong>By full contents.</strong> Only the candidates left are read in full and compared by SHA-256. On a typical Mac this takes seconds.</li>
+</ol>
+
+<h3 id="what-duplicates-skips">What it leaves out<a class="anchor" href="#what-duplicates-skips" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h3>
+<ul>
+  <li>Anything inside apps, libraries and other bundles.</li>
+  <li>Hidden folders such as <code>~/.vscode</code>, and installed packages such as <code>node_modules</code> and <code>site-packages</code>: copies there belong to tools, and deleting one can break them.</li>
+  <li>App and system data in <code>~/Library</code>, <code>/Library</code> and <code>/Users/Shared</code>.</li>
+  <li>Anything another suggestion already covers.</li>
+</ul>
+
+<h3 id="apfs-clones">Hard links and APFS copies<a class="anchor" href="#apfs-clones" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h3>
+<p><strong>Hard links</strong> are one file with several names, so they never appear as duplicates. <strong>APFS copies</strong>, such as those made with Finder's Duplicate, can share storage with the original. Reclaim detects them from where their data sits on disk and marks them <em>Shares storage</em>. Deleting one frees almost nothing, so they don't count towards the reclaimable total.</p>
+
+<h3 id="keep">Choosing which copy to keep<a class="anchor" href="#keep" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h3>
+<p>Nothing is ticked for you. Each group shows every copy with its folder and date. The <strong>Keep</strong> menu in the toolbar ticks all but one copy in every group shown:</p>
+<ul>
+  <li><strong>Keep Oldest Copy</strong> or <strong>Keep Newest Copy</strong>, by modification date.</li>
+  <li><strong>Keep the Copy in a Folder…</strong>: choose a folder; in groups with a copy there, that copy is kept.</li>
+  <li><strong>Untick All Copies</strong>.</li>
+</ul>
+<p>Filter first to apply Keep to only some groups. Right-click a copy for <strong>Keep Only This Copy</strong>.</p>
+<div class="callout warn"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><div><p>If every copy in a group is ticked, the group shows a warning: deleting them all leaves you with none.</p></div></div>
+
+    </article>
+    <div class="doc-meta"><a href="https://github.com/kstmostofa/reclaim/edit/main/site/pages/explore.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Edit this page on GitHub</a></div>
+    <nav class="pager" aria-label="Previous and next"><a class="pager-prev" href="guide.html"><span><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Previous</span><strong>Scan and clean</strong></a><a class="pager-next" href="docker.html"><span>Next<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span><strong>Docker and OrbStack</strong></a></nav>
+  </main>
+  <aside class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li class="toc-l2"><a href="#disk-map">Disk Map</a></li><li class="toc-l2"><a href="#large-files">Large Files</a></li><li class="toc-l2"><a href="#duplicates">Duplicates</a></li><li class="toc-l3"><a href="#how-duplicates-are-found">How duplicates are found</a></li><li class="toc-l3"><a href="#what-duplicates-skips">What it leaves out</a></li><li class="toc-l3"><a href="#apfs-clones">Hard links and APFS copies</a></li><li class="toc-l3"><a href="#keep">Choosing which copy to keep</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+      <p>Free, open-source Mac storage cleaner for developers. Free under the MIT License.</p>
+    </div>
+    <div class="footer-columns">
+      <div><h2>Product</h2><a href="https://github.com/kstmostofa/reclaim/releases/latest">Download</a><a href="install.html">Install</a><a href="https://github.com/kstmostofa/reclaim/releases">Release notes</a></div>
+      <div><h2>Docs</h2><a href="guide.html">Using Reclaim</a><a href="what-it-finds.html">What it finds</a><a href="faq.html">FAQ</a></div>
+      <div><h2>Project</h2><a href="https://github.com/kstmostofa/reclaim">Source code</a><a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a><a href="https://github.com/kstmostofa/reclaim/blob/main/LICENSE">License</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Md. Mostafijur Rahman</span>
+    <span>Icons in the style of <a href="https://lucide.dev">Lucide</a> (ISC)</span>
+  </div>
+</footer>
+<div class="search-dialog" data-search hidden>
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the docs">
+    <div class="search-field"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="Search the docs" aria-label="Search the docs" autocomplete="off" data-search-input><kbd>Esc</kbd></div>
+    <ul class="search-results" data-search-results role="listbox"></ul>
+  </div>
+</div>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

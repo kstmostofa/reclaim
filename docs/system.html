@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delete system caches, logs and Time Machine snapshots on Mac · Reclaim</title>
+<meta name="description" content="Delete root-owned system caches, logs, sudo leftovers and local Time Machine snapshots on Mac with Reclaim&#x27;s optional, locked-down helper.">
+<link rel="canonical" href="https://kstmostofa.github.io/reclaim/system.html">
+<meta name="author" content="Md. Mostafijur Rahman">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0d14" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Reclaim">
+<meta property="og:title" content="Delete system caches, logs and Time Machine snapshots on Mac · Reclaim">
+<meta property="og:description" content="Delete root-owned system caches, logs, sudo leftovers and local Time Machine snapshots on Mac with Reclaim&#x27;s optional, locked-down helper.">
+<meta property="og:url" content="https://kstmostofa.github.io/reclaim/system.html">
+<meta property="og:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Reclaim: Free, open-source Mac storage cleaner for developers">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Delete system caches, logs and Time Machine snapshots on Mac · Reclaim">
+<meta name="twitter:description" content="Delete root-owned system caches, logs, sudo leftovers and local Time Machine snapshots on Mac with Reclaim&#x27;s optional, locked-down helper.">
+<meta name="twitter:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Reclaim", "item": "https://kstmostofa.github.io/reclaim/"}, {"@type": "ListItem", "position": 2, "name": "Features", "item": "https://kstmostofa.github.io/reclaim/explore.html"}, {"@type": "ListItem", "position": 3, "name": "System and the helper", "item": "https://kstmostofa.github.io/reclaim/system.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Delete system caches, logs and Time Machine snapshots on Mac", "description": "Delete root-owned system caches, logs, sudo leftovers and local Time Machine snapshots on Mac with Reclaim's optional, locked-down helper.", "url": "https://kstmostofa.github.io/reclaim/system.html", "author": {"@type": "Person", "name": "Md. Mostafijur Rahman"}, "about": {"@type": "SoftwareApplication", "name": "Reclaim", "operatingSystem": "macOS"}}</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+    <nav class="top-nav" aria-label="Main">
+      <a href="guide.html" aria-current="page">Docs</a>
+      <a href="what-it-finds.html">What it finds</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="search-button" type="button" data-search-open aria-label="Search the docs">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Search</span><kbd>⌘K</kbd>
+      </button>
+      <button class="icon-button" type="button" data-theme-toggle aria-label="Switch light or dark mode">
+        <span class="when-light"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><span class="when-dark"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      </button>
+      <a class="icon-button" href="https://github.com/kstmostofa/reclaim" aria-label="Reclaim on GitHub"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+      <a class="button button-primary button-small hide-mobile" href="https://github.com/kstmostofa/reclaim/releases/latest"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download</a>
+      <button class="icon-button show-mobile" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="doc-layout">
+  <nav class="doc-sidebar" aria-label="Documentation" data-menu><div class="sidebar-group"><h2>Get started</h2><ul><li><a href="install.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Install</a></li><li><a href="guide.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>Scan and clean</a></li></ul></div><div class="sidebar-group"><h2>Features</h2><ul><li><a href="explore.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Disk Map and duplicates</a></li><li><a href="docker.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>Docker and OrbStack</a></li><li><a href="system.html" aria-current="page"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>System and the helper</a></li><li><a href="automation.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Menu bar and schedules</a></li></ul></div><div class="sidebar-group"><h2>Reference</h2><ul><li><a href="settings.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Settings</a></li><li><a href="what-it-finds.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>What it finds</a></li><li><a href="faq.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>FAQ</a></li></ul></div></nav>
+  <main class="doc-main" id="content">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Reclaim</a><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span>Features</span><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span aria-current="page">System and the helper</span></nav>
+    <article class="prose">
+      <h1>Delete system caches, logs and Time Machine snapshots on Mac</h1>
+      <p class="lead">Some caches, logs and leftovers belong to root, the system's administrator account. Reclaim can't delete them on its own; its optional helper can.</p>
+      <figure><div class="window"><img loading="lazy" decoding="async" width="1400" height="874" src="screenshots/system.png" alt="The System screen with the helper's status and Install Helper button, system caches and logs, and local Time Machine snapshots."></div></figure>
+
+<h2 id="what-it-handles">What the helper handles<a class="anchor" href="#what-it-handles" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<ul>
+  <li><strong>System caches</strong> in <code>/Library/Caches</code>.</li>
+  <li><strong>System logs</strong> in <code>/Library/Logs</code> and <code>/private/var/log</code>.</li>
+  <li><strong>Root-owned files in your home folder</strong>, such as those left by <code>sudo npm install</code>.</li>
+  <li><strong>Local Time Machine snapshots</strong>.</li>
+</ul>
+<p>Items that need the helper show a lock until it is installed, and Safe ones are only ticked for you once it is.</p>
+
+<h2 id="install">Installing<a class="anchor" href="#install" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<ol class="steps">
+  <li><strong>Open System.</strong> Click <strong>System</strong> in the sidebar, then <strong>Install Helper…</strong>.</li>
+  <li><strong>Enter your password.</strong> macOS asks in its own dialog. Reclaim never sees it.</li>
+</ol>
+<p>The helper is copied to <code>/Library/PrivilegedHelperTools</code> and started by macOS whenever Reclaim needs it. After that, deleting works as usual: anything Reclaim may not delete is passed to the helper automatically when deleting permanently. In Move to Trash mode, such items are left alone.</p>
+
+<h2 id="security">What keeps it safe<a class="anchor" href="#security" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<div class="cards">
+  <div class="card-link"><span class="icon-tile"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2.5a1 1 0 0 1-.8-.4l-.9-1.2A1 1 0 0 0 15 3h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z"/><path d="M20 21a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-2.9a1 1 0 0 1-.88-.55l-.42-.85a1 1 0 0 0-.92-.6H13a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z"/><path d="M3 5a2 2 0 0 0 2 2h3"/><path d="M3 3v13a2 2 0 0 0 2 2h3"/></svg></span><div><strong>Fixed folders only</strong><span>System cache and log folders and your own home folder, after resolving symlinks. Never a protected folder.</span></div></div>
+  <div class="card-link"><span class="icon-tile"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span><div><strong>No path tricks</strong><span>Paths with <code>..</code> are refused, and so is a folder swapped for a link at the last moment.</span></div></div>
+  <div class="card-link"><span class="icon-tile"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><div><strong>One app only</strong><span>Paired with the exact build of Reclaim that installed it. Any other program is refused.</span></div></div>
+  <div class="card-link"><span class="icon-tile"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span><div><strong>Open source</strong><span>The helper is small, and its rules are tested. Read it on GitHub.</span></div></div>
+</div>
+
+<h2 id="pairing">After updating Reclaim<a class="anchor" href="#pairing" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<p>The pairing names one exact build, so after an update the helper refuses the new version. <strong>System</strong> then shows <strong>Pair Again…</strong>, which asks for your password once more. A paid Apple developer certificate would remove this step.</p>
+
+<h2 id="snapshots">Local Time Machine snapshots<a class="anchor" href="#snapshots" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<p>Time Machine keeps snapshots on your Mac's disk between backups, and they hold on to the space of files you deleted since. System lists them; with the helper installed you can tick and delete them. Backups on your backup disk are not affected, and macOS also removes local snapshots on its own when space runs low.</p>
+
+<h2 id="remove">Removing the helper<a class="anchor" href="#remove" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+<p>Click <strong>Remove Helper…</strong> in System and enter your password. Everything else in Reclaim keeps working without it.</p>
+
+    </article>
+    <div class="doc-meta"><a href="https://github.com/kstmostofa/reclaim/edit/main/site/pages/system.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Edit this page on GitHub</a></div>
+    <nav class="pager" aria-label="Previous and next"><a class="pager-prev" href="docker.html"><span><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Previous</span><strong>Docker and OrbStack</strong></a><a class="pager-next" href="automation.html"><span>Next<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span><strong>Menu bar and schedules</strong></a></nav>
+  </main>
+  <aside class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li class="toc-l2"><a href="#what-it-handles">What the helper handles</a></li><li class="toc-l2"><a href="#install">Installing</a></li><li class="toc-l2"><a href="#security">What keeps it safe</a></li><li class="toc-l2"><a href="#pairing">After updating Reclaim</a></li><li class="toc-l2"><a href="#snapshots">Local Time Machine snapshots</a></li><li class="toc-l2"><a href="#remove">Removing the helper</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+      <p>Free, open-source Mac storage cleaner for developers. Free under the MIT License.</p>
+    </div>
+    <div class="footer-columns">
+      <div><h2>Product</h2><a href="https://github.com/kstmostofa/reclaim/releases/latest">Download</a><a href="install.html">Install</a><a href="https://github.com/kstmostofa/reclaim/releases">Release notes</a></div>
+      <div><h2>Docs</h2><a href="guide.html">Using Reclaim</a><a href="what-it-finds.html">What it finds</a><a href="faq.html">FAQ</a></div>
+      <div><h2>Project</h2><a href="https://github.com/kstmostofa/reclaim">Source code</a><a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a><a href="https://github.com/kstmostofa/reclaim/blob/main/LICENSE">License</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Md. Mostafijur Rahman</span>
+    <span>Icons in the style of <a href="https://lucide.dev">Lucide</a> (ISC)</span>
+  </div>
+</footer>
+<div class="search-dialog" data-search hidden>
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the docs">
+    <div class="search-field"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="Search the docs" aria-label="Search the docs" autocomplete="off" data-search-input><kbd>Esc</kbd></div>
+    <ul class="search-results" data-search-results role="listbox"></ul>
+  </div>
+</div>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

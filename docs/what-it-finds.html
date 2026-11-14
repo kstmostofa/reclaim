@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Reclaim finds: every cache, dependency and leftover it suggests · Reclaim</title>
+<meta name="description" content="Every folder Reclaim suggests deleting on a Mac: .next, node_modules, vendor, DerivedData, Gradle, npm and pip caches, Docker and system junk.">
+<link rel="canonical" href="https://kstmostofa.github.io/reclaim/what-it-finds.html">
+<meta name="author" content="Md. Mostafijur Rahman">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0d14" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Reclaim">
+<meta property="og:title" content="What Reclaim finds: every cache, dependency and leftover it suggests · Reclaim">
+<meta property="og:description" content="Every folder Reclaim suggests deleting on a Mac: .next, node_modules, vendor, DerivedData, Gradle, npm and pip caches, Docker and system junk.">
+<meta property="og:url" content="https://kstmostofa.github.io/reclaim/what-it-finds.html">
+<meta property="og:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Reclaim: Free, open-source Mac storage cleaner for developers">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What Reclaim finds: every cache, dependency and leftover it suggests · Reclaim">
+<meta name="twitter:description" content="Every folder Reclaim suggests deleting on a Mac: .next, node_modules, vendor, DerivedData, Gradle, npm and pip caches, Docker and system junk.">
+<meta name="twitter:image" content="https://kstmostofa.github.io/reclaim/assets/og-image.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Reclaim", "item": "https://kstmostofa.github.io/reclaim/"}, {"@type": "ListItem", "position": 2, "name": "Reference", "item": "https://kstmostofa.github.io/reclaim/settings.html"}, {"@type": "ListItem", "position": 3, "name": "What it finds", "item": "https://kstmostofa.github.io/reclaim/what-it-finds.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "What Reclaim finds: every cache, dependency and leftover it suggests", "description": "Every folder Reclaim suggests deleting on a Mac: .next, node_modules, vendor, DerivedData, Gradle, npm and pip caches, Docker and system junk.", "url": "https://kstmostofa.github.io/reclaim/what-it-finds.html", "author": {"@type": "Person", "name": "Md. Mostafijur Rahman"}, "about": {"@type": "SoftwareApplication", "name": "Reclaim", "operatingSystem": "macOS"}}</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+    <nav class="top-nav" aria-label="Main">
+      <a href="guide.html">Docs</a>
+      <a href="what-it-finds.html" aria-current="page">What it finds</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="search-button" type="button" data-search-open aria-label="Search the docs">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Search</span><kbd>⌘K</kbd>
+      </button>
+      <button class="icon-button" type="button" data-theme-toggle aria-label="Switch light or dark mode">
+        <span class="when-light"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><span class="when-dark"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      </button>
+      <a class="icon-button" href="https://github.com/kstmostofa/reclaim" aria-label="Reclaim on GitHub"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+      <a class="button button-primary button-small hide-mobile" href="https://github.com/kstmostofa/reclaim/releases/latest"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download</a>
+      <button class="icon-button show-mobile" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="doc-layout">
+  <nav class="doc-sidebar" aria-label="Documentation" data-menu><div class="sidebar-group"><h2>Get started</h2><ul><li><a href="install.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Install</a></li><li><a href="guide.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>Scan and clean</a></li></ul></div><div class="sidebar-group"><h2>Features</h2><ul><li><a href="explore.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Disk Map and duplicates</a></li><li><a href="docker.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>Docker and OrbStack</a></li><li><a href="system.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>System and the helper</a></li><li><a href="automation.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Menu bar and schedules</a></li></ul></div><div class="sidebar-group"><h2>Reference</h2><ul><li><a href="settings.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Settings</a></li><li><a href="what-it-finds.html" aria-current="page"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>What it finds</a></li><li><a href="faq.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>FAQ</a></li></ul></div></nav>
+  <main class="doc-main" id="content">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Reclaim</a><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span>Reference</span><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span aria-current="page">What it finds</span></nav>
+    <article class="prose">
+      <h1>What Reclaim finds: every cache, dependency and leftover it suggests</h1>
+      <p class="lead">Every suggestion comes from one of these rules. A rule looks only at a folder's name, where it is and the files beside it; once a folder matches, nothing inside it is listed again.</p>
+      <p><code>~</code> means your home folder.</p>
+
+    <h2 id="build-caches">Build Caches<a class="anchor" href="#build-caches" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <p>Output your project's tooling recreates on the next build or dev-server start. That first build is slower.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>What</th><th>Matched when</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>Next.js build cache</td><td><code>.next</code> beside a <code>package.json</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Nuxt build cache</td><td><code>.nuxt</code> beside a <code>package.json</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>SvelteKit build cache</td><td><code>.svelte-kit</code> beside a <code>package.json</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Turborepo cache</td><td>any <code>.turbo</code> folder</td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Parcel cache</td><td>any <code>.parcel-cache</code> folder</td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Dart tool cache</td><td><code>.dart_tool</code> beside a <code>pubspec.yaml</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Python bytecode cache</td><td>any <code>__pycache__</code> folder</td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Rust build output</td><td><code>target</code> beside a <code>Cargo.toml</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Gradle project cache</td><td><code>.gradle</code> beside a <code>build.gradle</code>, <code>build.gradle.kts</code> or settings file</td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Android build intermediates</td><td><code>build/intermediates</code>; built APKs and bundles in <code>build/outputs</code> are kept</td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Xcode DerivedData</td><td>each project folder in <code>~/Library/Developer/Xcode/DerivedData</code></td><td><span class="badge safe">Safe</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="dependencies">Dependencies<a class="anchor" href="#dependencies" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <p>Packages your project installed. Run the install command again before using the project.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>What</th><th>Matched when</th><th>To get it back</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>Node packages</td><td><code>node_modules</code> beside a <code>package.json</code></td><td><code>npm install</code>, <code>pnpm install</code> or <code>yarn</code></td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>Composer packages</td><td><code>vendor</code> beside a <code>composer.json</code></td><td><code>composer install</code></td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>CocoaPods</td><td><code>Pods</code> beside a <code>Podfile</code></td><td><code>pod install</code></td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>Python virtual environment</td><td><code>venv</code>, <code>.venv</code> or <code>env</code> containing <code>pyvenv.cfg</code></td><td><code>python -m venv</code> and reinstall requirements</td><td><span class="badge rebuild">Rebuild</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><div><p>Packages that tools installed for themselves are skipped: anything in a hidden folder in your home (such as <code>~/.vscode/extensions</code> or <code>~/.composer</code>), in <code>~/Library</code>, or in system and Homebrew locations. Deleting those would break the tool, and there is no project to reinstall into.</p></div></div>
+
+    <h2 id="package-caches">Package Caches<a class="anchor" href="#package-caches" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <p>Downloads shared by every project, kept so they need not be fetched again. Deleting them only costs a re-download the next time a project needs them.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>What</th><th>Location</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>npm cache</td><td><code>~/.npm/_cacache</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>pnpm store</td><td><code>~/Library/pnpm/store</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Yarn cache</td><td><code>~/Library/Caches/Yarn</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>pip cache</td><td><code>~/Library/Caches/pip</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Composer cache</td><td><code>~/Library/Caches/composer</code>, <code>~/.composer/cache</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Gradle caches and wrapper downloads</td><td><code>~/.gradle/caches</code>, <code>~/.gradle/wrapper/dists</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Homebrew downloads</td><td><code>~/Library/Caches/Homebrew</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>CocoaPods cache</td><td><code>~/Library/Caches/CocoaPods</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Cargo downloads and sources</td><td><code>~/.cargo/registry/cache</code>, <code>~/.cargo/registry/src</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Go build cache</td><td><code>~/Library/Caches/go-build</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Dart and Flutter packages</td><td><code>~/.pub-cache</code>; run <code>flutter pub get</code> afterwards, and re-activate global tools</td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>Playwright browsers</td><td><code>~/Library/Caches/ms-playwright</code>; run <code>npx playwright install</code> afterwards</td><td><span class="badge rebuild">Rebuild</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="app-caches">App Caches and Logs<a class="anchor" href="#app-caches" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>What</th><th>Location</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>App cache</td><td>each folder in <code>~/Library/Caches</code>. The app rebuilds it and may start slower once.</td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Logs</td><td>each item in <code>~/Library/Logs</code>, including crash reports</td><td><span class="badge safe">Safe</span></td></tr>
+      </tbody>
+    </table></div>
+    <p>If the app a cache belongs to is running, the item shows a warning. Quit the app first.</p>
+
+    <h2 id="mobile">Mobile Tooling<a class="anchor" href="#mobile" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>What</th><th>Matched when</th><th>After deleting</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>Android emulator snapshots</td><td><code>snapshots</code> inside an emulator folder (beside its <code>config.ini</code>)</td><td>The emulator cold-boots once</td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Android emulator user data</td><td><code>userdata-qemu.img</code> in an emulator folder</td><td>The emulator starts as if factory reset</td><td><span class="badge personal">Personal</span></td></tr>
+        <tr><td>iOS device support</td><td>each version in <code>~/Library/Developer/Xcode/iOS DeviceSupport</code></td><td>Xcode copies it again when that device is connected</td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>Simulator caches</td><td><code>~/Library/Developer/CoreSimulator/Caches</code></td><td>Recreated when needed</td><td><span class="badge safe">Safe</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="leftovers">App Leftovers<a class="anchor" href="#leftovers" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <p>Folders in <code>~/Library/Containers</code> and <code>~/Library/Application Support</code> named after an app's identifier (such as <code>com.docker.docker</code>) when no installed app has that identifier. Apple's own folders are never included, and an extension's folder counts as its app's. <span class="badge personal">Personal</span></p>
+    <p>If you reinstall the app later, it starts without its old settings and data.</p>
+
+    <h2 id="trash-downloads">Trash and Old Downloads<a class="anchor" href="#trash-downloads" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>What</th><th>Matched when</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>In the Trash</td><td>each item in your Trash. Deleting it is the same as emptying the Trash.</td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Old download</td><td>each item in <code>~/Downloads</code> not changed for 90 days (adjustable)</td><td><span class="badge personal">Personal</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="large-files">Large Files<a class="anchor" href="#large-files" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <p>Files of 500 MB or more (adjustable) that no rule above covers, outside apps and photo libraries. <span class="badge personal">Personal</span></p>
+
+    <h2 id="docker">Docker<a class="anchor" href="#docker" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <p>From Docker's own disk-usage report, when an engine is running. See <a href="docker.html">Containers</a>.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>What</th><th>Removed with</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>Build cache not used by any image</td><td><code>docker builder prune --all</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Dangling images</td><td><code>docker image rm</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Unused images</td><td><code>docker image rm</code></td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>Stopped containers</td><td><code>docker container rm</code></td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>Unused volumes</td><td><code>docker volume rm</code></td><td><span class="badge personal">Personal</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="system-junk">System Junk<a class="anchor" href="#system-junk" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <p>Most of these belong to root, so deleting them needs the <a href="system.html">helper</a>. Items macOS protects are skipped even then.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>What</th><th>Location</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>System cache</td><td>each folder in <code>/Library/Caches</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>System logs</td><td>each item in <code>/Library/Logs</code> and <code>/private/var/log</code></td><td><span class="badge safe">Safe</span></td></tr>
+      </tbody>
+    </table></div>
+    <p>Safe items that need the helper are only ticked for you once it is installed.</p>
+
+    <h2 id="never">Never suggested or deleted<a class="anchor" href="#never" aria-label="Link to this section"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></h2>
+    <ul>
+      <li>Anything inside an app, framework, photo or music library, or other bundle is never suggested on its own.</li>
+      <li>Folders you list under <a href="settings.html#scanning">Never scan these folders</a>.</li>
+      <li>Your Music, TV and Photos libraries, which macOS protects with permissions of their own.</li>
+      <li>Protected folders, which cannot be deleted as a whole from anywhere in the app. See the <a href="faq.html#protected">FAQ</a> for the list.</li>
+    </ul>
+
+    </article>
+    <div class="doc-meta"><a href="https://github.com/kstmostofa/reclaim/edit/main/site/pages/what-it-finds.html"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Edit this page on GitHub</a></div>
+    <nav class="pager" aria-label="Previous and next"><a class="pager-prev" href="settings.html"><span><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Previous</span><strong>Settings</strong></a><a class="pager-next" href="faq.html"><span>Next<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span><strong>FAQ</strong></a></nav>
+  </main>
+  <aside class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li class="toc-l2"><a href="#build-caches">Build Caches</a></li><li class="toc-l2"><a href="#dependencies">Dependencies</a></li><li class="toc-l2"><a href="#package-caches">Package Caches</a></li><li class="toc-l2"><a href="#app-caches">App Caches and Logs</a></li><li class="toc-l2"><a href="#mobile">Mobile Tooling</a></li><li class="toc-l2"><a href="#leftovers">App Leftovers</a></li><li class="toc-l2"><a href="#trash-downloads">Trash and Old Downloads</a></li><li class="toc-l2"><a href="#large-files">Large Files</a></li><li class="toc-l2"><a href="#docker">Docker</a></li><li class="toc-l2"><a href="#system-junk">System Junk</a></li><li class="toc-l2"><a href="#never">Never suggested or deleted</a></li></ul></aside>
+</div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+      <p>Free, open-source Mac storage cleaner for developers. Free under the MIT License.</p>
+    </div>
+    <div class="footer-columns">
+      <div><h2>Product</h2><a href="https://github.com/kstmostofa/reclaim/releases/latest">Download</a><a href="install.html">Install</a><a href="https://github.com/kstmostofa/reclaim/releases">Release notes</a></div>
+      <div><h2>Docs</h2><a href="guide.html">Using Reclaim</a><a href="what-it-finds.html">What it finds</a><a href="faq.html">FAQ</a></div>
+      <div><h2>Project</h2><a href="https://github.com/kstmostofa/reclaim">Source code</a><a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a><a href="https://github.com/kstmostofa/reclaim/blob/main/LICENSE">License</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Md. Mostafijur Rahman</span>
+    <span>Icons in the style of <a href="https://lucide.dev">Lucide</a> (ISC)</span>
+  </div>
+</footer>
+<div class="search-dialog" data-search hidden>
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the docs">
+    <div class="search-field"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="Search the docs" aria-label="Search the docs" autocomplete="off" data-search-input><kbd>Esc</kbd></div>
+    <ul class="search-results" data-search-results role="listbox"></ul>
+  </div>
+</div>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

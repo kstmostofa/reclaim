@@ -34,6 +34,7 @@
       <li><a href="#disk-map">Disk Map</a></li>
       <li><a href="#large-files">Large Files</a></li>
       <li><a href="#duplicates">Duplicates</a></li>
+      <li><a href="#containers">Containers</a></li>
       <li><a href="#settings">Settings</a></li>
       <li><a href="#history">History</a></li>
       <li><a href="#shortcuts">Keyboard shortcuts</a></li>
@@ -134,6 +135,20 @@
       <li><strong>Untick All Copies</strong>.</li>
     </ul>
     <p>Filter first to apply Keep to only some groups. Right-click a copy for <strong>Keep Only This Copy</strong>. If every copy in a group is ticked, the group shows a warning, because deleting them all leaves you with none.</p>
+
+    <h2 id="containers">Containers (Docker and OrbStack)</h2>
+    <p>If the <code>docker</code> command is installed and an engine is running, such as OrbStack, Docker Desktop or Colima, <strong>Containers</strong> lists what Docker can remove, with the sizes Docker reports. If the engine is not running, start it and click <strong>Refresh</strong>.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Item</th><th>What it is</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>Build cache</td><td>Layers kept to speed up builds that no image uses now. Listed as one item.</td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Dangling image</td><td>An untagged image left behind when a newer build took its tag.</td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Unused image</td><td>A tagged image no container uses. Pulled or built again when needed.</td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>Stopped container</td><td>A container that is not running. Changes made inside it are lost.</td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>Unused volume</td><td>A volume no container uses. These often hold databases.</td><td><span class="badge personal">Personal</span></td></tr>
+      </tbody>
+    </table></div>
+    <p>Images, containers and volumes that are in use are never listed. Ticked items are removed with Docker's own commands (<code>docker image rm</code>, <code>container rm</code>, <code>volume rm</code> and <code>builder prune</code>), never forced, so Docker itself refuses anything in use. Reclaim never touches the engine's disk image directly. Docker items share the Delete bar and the history with everything else.</p>
 
     <h2 id="settings">Settings</h2>
     <p>Open with <strong>Reclaim › Settings…</strong> or <kbd>⌘</kbd><kbd>,</kbd>.</p>

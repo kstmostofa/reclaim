@@ -405,7 +405,9 @@ private extension Dictionary where Key == String, Value == Any {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-        let parts = text.split(separator: " ")
+        var parts = text.split(separator: " ").map(String.init)
+        // Build cache times carry fractional seconds: "19:26:07.015220959".
+        if parts.count >= 2, let dot = parts[1].firstIndex(of: ".") { parts[1] = String(parts[1][..<dot]) }
         if parts.count >= 3, let date = formatter.date(from: parts[0...2].joined(separator: " ")) { return date }
         return ISO8601DateFormatter().date(from: text)
     }

@@ -2,6 +2,26 @@ import Foundation
 import ReclaimCore
 
 // Usage: reclaim-scan [folder]   (default: home folder; pass /System/Volumes/Data for the whole disk)
+if CommandLine.arguments.contains("--docker") {
+    let client = DockerClient()
+    print("Docker: \(await client.status())")
+    let items = try await client.removableItems()
+    for kind in [DockerItem.Kind.danglingImage, .unusedImage, .stoppedContainer, .unusedVolume, .buildCache] {
+        let some = items.filter { $0.kind == kind }
+        let total = some.reduce(Int64(0)) { $0 + $1.size }
+        print("  \(kind.title.padding(toLength: 18, withPad: " ", startingAt: 0)) \(some.count) items, \(ByteCountFormatter.string(fromByteCount: total, countStyle: .decimal))")
+    }
+    // Test of the removal path; only ever touches images named reclaim-test.
+    if CommandLine.arguments.contains("--docker-remove-test") {
+        let targets = items.filter { $0.kind == .unusedImage && $0.name.hasPrefix("reclaim-test:") }
+        print("Removing: \(targets.map(\.name))")
+        for outcome in await client.remove(targets) {
+            print("  \(outcome.item.title): \(outcome.error ?? "removed")")
+        }
+    }
+    exit(0)
+}
+
 let root = CommandLine.arguments.dropFirst().first { !$0.hasPrefix("--") } ?? NSHomeDirectory()
 let progress = ScanProgress()
 let scanner = DiskScanner(rules: .defaults())

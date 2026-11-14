@@ -34,6 +34,7 @@
       <li><a href="#leftovers">App Leftovers</a></li>
       <li><a href="#trash-downloads">Trash and Old Downloads</a></li>
       <li><a href="#large-files">Large Files</a></li>
+      <li><a href="#docker">Docker</a></li>
       <li><a href="#never">Never suggested</a></li>
     </ul>
   </aside>
@@ -133,6 +134,19 @@
 
     <h2 id="large-files">Large Files</h2>
     <p>Files of 500 MB or more (adjustable) that no rule above covers, outside apps and photo libraries. <span class="badge personal">Personal</span></p>
+
+    <h2 id="docker">Docker</h2>
+    <p>From Docker's own disk-usage report, when an engine is running. See <a href="guide.html#containers">Containers</a>.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>What</th><th>Removed with</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>Build cache not used by any image</td><td><code>docker builder prune --all</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Dangling images</td><td><code>docker image rm</code></td><td><span class="badge safe">Safe</span></td></tr>
+        <tr><td>Unused images</td><td><code>docker image rm</code></td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>Stopped containers</td><td><code>docker container rm</code></td><td><span class="badge rebuild">Rebuild</span></td></tr>
+        <tr><td>Unused volumes</td><td><code>docker volume rm</code></td><td><span class="badge personal">Personal</span></td></tr>
+      </tbody>
+    </table></div>
 
     <h2 id="never">Never suggested or deleted</h2>
     <ul>

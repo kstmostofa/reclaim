@@ -38,7 +38,7 @@ final class FakeDocker: CommandRunning, @unchecked Sendable {
       {"Name":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","Links":"0","Size":"N/A"}
     ],
     "BuildCache":[
-      {"ID":"x1","InUse":false,"Size":"100MB","LastUsedAt":"2026-11-10 08:00:00 +0100 CET"},
+      {"ID":"x1","InUse":false,"Size":"100MB","LastUsedAt":"2026-11-11 20:22:15.82193 +0000 UTC"},
       {"ID":"x2","InUse":true,"Size":"999MB"},
       {"ID":"x3","InUse":"false","Size":"50MB"}
     ]}
@@ -59,6 +59,7 @@ final class FakeDocker: CommandRunning, @unchecked Sendable {
         #expect(!items.contains { $0.name.hasPrefix("redis") || $0.name == "cache" || $0.name == "live_db" })
         #expect(items.first?.name == "shop_db")
         #expect(byPath["docker:stoppedContainer:c2c2c2c2c2c2"]?.created != nil)
+        #expect(byPath["docker:buildCache:"]?.created == Date(timeIntervalSince1970: 1_794_428_535))
     }
 
     @Test func sizes() {

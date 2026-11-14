@@ -9,7 +9,9 @@ struct ReclaimApp: App {
     init() {
         let settings = AppSettings()
         _settings = State(initialValue: settings)
-        _model = State(initialValue: AppModel(settings: settings))
+        let model = AppModel(settings: settings)
+        _model = State(initialValue: model)
+        model.startBackgroundWork()
     }
 
     var body: some Scene {
@@ -29,6 +31,25 @@ struct ReclaimApp: App {
                     .disabled(model.phase == .scanning)
             }
         }
+
+        MenuBarExtra(isInserted: Binding(get: { settings.showMenuBar }, set: { settings.showMenuBar = $0 })) {
+            MenuBarView()
+                .environment(model)
+                .environment(settings)
+                .tint(settings.accentColor)
+        } label: {
+            Image(systemName: "internaldrive")
+        }
+        .menuBarExtraStyle(.window)
+
+        // The menu-bar window's content in an ordinary window, opened by `-previewMenuBar YES` for screenshots.
+        Window("Menu Bar Preview", id: "menubar-preview") {
+            MenuBarView()
+                .environment(model)
+                .environment(settings)
+                .tint(settings.accentColor)
+        }
+        .windowResizability(.contentSize)
 
         Settings {
             SettingsView()
@@ -70,6 +91,7 @@ struct ContentView: View {
         )
     }
     @Environment(\.openSettings) private var openSettings
+    @Environment(\.openWindow) private var openWindow
 
     private static func launchSection() -> SidebarItem {
         switch UserDefaults.standard.string(forKey: "section") {
@@ -132,6 +154,7 @@ struct ContentView: View {
                 let results = (try? await model.helper.remove(paths: [target, "/etc/hosts"])) ?? [:]
                 FileHandle.standardError.write(Data("helper results: \(results)\n".utf8))
             }
+            if UserDefaults.standard.bool(forKey: "previewMenuBar") { openWindow(id: "menubar-preview") }
             // `-openSettings YES` opens Settings at launch, for the same reason.
             if UserDefaults.standard.bool(forKey: "openSettings") { openSettings() }
         }

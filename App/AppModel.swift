@@ -50,6 +50,9 @@ final class AppModel {
     var ticked: Set<String> = []
     /// The suggestion shown in the inspector.
     var inspected: Suggestion?
+    /// When the last scan finished and what it found, kept across launches for the menu bar and schedule.
+    private(set) var lastScanDate = UserDefaults.standard.object(forKey: "lastScanDate") as? Date
+    private(set) var lastReclaimable = (UserDefaults.standard.object(forKey: "lastReclaimable") as? NSNumber)?.int64Value
     var deletion: DeletionRun?
 
     /// What each tickable path is, whichever screen it was ticked on.
@@ -60,6 +63,9 @@ final class AppModel {
     @ObservationIgnored private let protectedPaths = ProtectedPaths()
     @ObservationIgnored private let docker = DockerClient()
     @ObservationIgnored let helper = HelperManager()
+    @ObservationIgnored private let scheduler = ScanScheduler()
+    @ObservationIgnored private var lowSpace = LowSpaceAlert(threshold: 0)
+    @ObservationIgnored private var monitorTask: Task<Void, Never>?
 
     init(settings: AppSettings) {
         self.settings = settings
@@ -67,8 +73,9 @@ final class AppModel {
 
     // MARK: Scanning
 
-    func startScan() {
-        guard phase != .scanning else { return }
+    @discardableResult
+    func startScan() -> Task<Void, Never>? {
+        guard phase != .scanning else { return scanTask }
         scanTask?.cancel()
         phase = .scanning
         scanError = nil
@@ -105,6 +112,7 @@ final class AppModel {
                 phase = result == nil ? .idle : .scanned
             }
         }
+        return scanTask
     }
 
     func cancelScan() {
@@ -128,6 +136,10 @@ final class AppModel {
         refreshRunningApps()
         volume = VolumeInfo.forPath()
         phase = .scanned
+        lastScanDate = Date()
+        lastReclaimable = reclaimable
+        UserDefaults.standard.set(lastScanDate, forKey: "lastScanDate")
+        UserDefaults.standard.set(reclaimable, forKey: "lastReclaimable")
         refreshDocker()
         refreshHelper(measure: true)
     }
@@ -139,6 +151,68 @@ final class AppModel {
                                 unreadableFolders: result.unreadableFolders)
             .largeFiles(threshold: settings.largeFileThreshold)
         for s in largeFiles { tickable[s.path] = s.deletionItem }
+    }
+
+    // MARK: Background work
+
+    /// Starts scheduled scans and the low-space check. They run while the app runs, menu bar or not.
+    func startBackgroundWork() {
+        scheduler.start(
+            schedule: { await MainActor.run { self.settings.schedule } },
+            lastRun: { await MainActor.run { self.lastScanDate } },
+            onDue: { await self.runScheduledScan() }
+        )
+        monitorTask = Task {
+            while !Task.isCancelled {
+                checkFreeSpace()
+                try? await Task.sleep(for: .seconds(300))
+            }
+        }
+    }
+
+    /// A scan started by the schedule. By default it only notifies; with auto-clean on, it deletes Safe items
+    /// nothing has touched for 24 hours.
+    func runScheduledScan() async {
+        guard phase != .scanning, deletion == nil else { return }
+        await startScan()?.value
+        guard phase == .scanned else { return }
+        if settings.autoClean {
+            let items = AutoCleanPolicy().items(from: suggestions)
+            if !items.isEmpty {
+                let report = await runDeletion(items.map(\.deletionItem))
+                Notifier.post(title: "Reclaim freed \(Format.size(report.freedBytes))",
+                              body: "Scheduled clean-up deleted \(report.outcomes.count - report.failures.count) Safe items untouched for a day.")
+                return
+            }
+        }
+        guard reclaimable > 0 else { return }
+        Notifier.post(title: "\(Format.size(reclaimable)) can be reclaimed",
+                      body: "\(Format.size(safeReclaimable)) of it is Safe to delete. Open Reclaim to review.")
+    }
+
+    /// Every Safe item Reclaim can delete right now, for the menu bar's Clean button.
+    var cleanableSafeItems: [Suggestion] {
+        suggestions.filter { $0.level == .safe && ($0.isDeletableByUser || helperStatus == .ready) }
+    }
+
+    func cleanSafeItems() async {
+        let items = cleanableSafeItems
+        guard !items.isEmpty, deletion == nil else { return }
+        let report = await runDeletion(items.map(\.deletionItem))
+        Notifier.post(title: "Reclaim freed \(Format.size(report.freedBytes))",
+                      body: report.failures.isEmpty ? "Deleted \(report.outcomes.count) Safe items."
+                                                    : "\(report.failures.count) items could not be deleted. Open Reclaim for details.")
+    }
+
+    func checkFreeSpace() {
+        volume = VolumeInfo.forPath()
+        guard settings.lowSpaceWarning, let volume else { return }
+        lowSpace.threshold = Int64(settings.lowSpaceThresholdGB) * 1_000_000_000
+        if lowSpace.shouldWarn(available: volume.available) {
+            Notifier.post(title: "Only \(Format.size(volume.available)) free on \(volume.name)",
+                          body: lastReclaimable.map { "The last scan found \(Format.size($0)) you could reclaim." }
+                              ?? "Scan with Reclaim to see what you can delete.")
+        }
     }
 
     // MARK: Helper
@@ -363,6 +437,13 @@ final class AppModel {
         let items = tickedItems
         guard !items.isEmpty, deletion == nil else { return }
         deletion = DeletionRun(total: items.count, current: items[0].path)
+        Task { await runDeletion(items) }
+    }
+
+    /// Deletes `items`, sending each to Docker, the helper or the file deleter, then updates every list and
+    /// the history. Progress shows in the deletion sheet when one is open.
+    @discardableResult
+    func runDeletion(_ items: [DeletionItem]) async -> DeletionReport {
         let deleter = Deleter(mode: settings.moveToTrash ? .trash : .permanent)
         // Docker items are removed by Docker, snapshots by the helper; everything else is a file or folder.
         let dockerByPath = Dictionary(uniqueKeysWithValues: dockerItems.map { ($0.path, $0) })
@@ -374,58 +455,57 @@ final class AppModel {
         let helperReady = helperStatus == .ready
         let permanent = !settings.moveToTrash
         let history = history
-        Task {
-            var report = await Task.detached(priority: .userInitiated) {
-                await deleter.delete(files) { done, outcome in
-                    Task { @MainActor in
-                        self.deletion?.done = done
-                        self.deletion?.current = outcome.item.path
-                    }
-                }
-            }.value
-            // What the user may not delete goes to the helper, when it is installed and deletion is permanent.
-            let denied = report.outcomes.indices.filter { report.outcomes[$0].error == Deleter.permissionDenied }
-            if !denied.isEmpty {
-                if helperReady && permanent {
-                    deletion?.current = "Asking the helper…"
-                    let paths = denied.map { report.outcomes[$0].item.path }
-                    let results = (try? await helper.remove(paths: paths)) ?? [:]
-                    for index in denied {
-                        if let result = results[report.outcomes[index].item.path] {
-                            report.outcomes[index].error = result.isEmpty ? nil : result
-                        }
-                    }
-                } else {
-                    for index in denied {
-                        report.outcomes[index].error = helperReady
-                            ? "Belongs to another user. Turn off Move to Trash to delete it with the helper."
-                            : "Belongs to another user, such as root. Install the helper in System to delete it."
-                    }
-                }
-            }
-            report.outcomes += await docker.remove(dockerItems) { outcome in
+        var report = await Task.detached(priority: .userInitiated) {
+            await deleter.delete(files) { done, outcome in
                 Task { @MainActor in
-                    self.deletion?.done += 1
-                    self.deletion?.current = outcome.item.title
+                    self.deletion?.done = done
+                    self.deletion?.current = outcome.item.path
                 }
             }
-            if !snapshotItems.isEmpty {
-                let dates = snapshotItems.compactMap { LocalSnapshots.date(of: $0.path) }
-                let results = helperReady ? ((try? await helper.deleteLocalSnapshots(dates: dates)) ?? [:]) : [:]
-                for item in snapshotItems {
-                    let result = LocalSnapshots.date(of: item.path).flatMap { results[$0] }
-                    let error = helperReady ? (result.map { $0.isEmpty ? nil : $0 } ?? "The helper did not answer.")
-                                            : "Deleting snapshots needs the helper."
-                    report.outcomes.append(DeletionOutcome(item: item, error: error))
+        }.value
+        // What the user may not delete goes to the helper, when it is installed and deletion is permanent.
+        let denied = report.outcomes.indices.filter { report.outcomes[$0].error == Deleter.permissionDenied }
+        if !denied.isEmpty {
+            if helperReady && permanent {
+                deletion?.current = "Asking the helper…"
+                let paths = denied.map { report.outcomes[$0].item.path }
+                let results = (try? await helper.remove(paths: paths)) ?? [:]
+                for index in denied {
+                    if let result = results[report.outcomes[index].item.path] {
+                        report.outcomes[index].error = result.isEmpty ? nil : result
+                    }
                 }
-                deletion?.done += snapshotItems.count
+            } else {
+                for index in denied {
+                    report.outcomes[index].error = helperReady
+                        ? "Belongs to another user. Turn off Move to Trash to delete it with the helper."
+                        : "Belongs to another user, such as root. Install the helper in System to delete it."
+                }
             }
-            report.finishedAt = Date()
-            try? history.append(report)
-            finish(report)
-            if !dockerItems.isEmpty { refreshDocker() }
-            if !snapshotItems.isEmpty { refreshHelper() }
         }
+        report.outcomes += await docker.remove(dockerItems) { outcome in
+            Task { @MainActor in
+                self.deletion?.done += 1
+                self.deletion?.current = outcome.item.title
+            }
+        }
+        if !snapshotItems.isEmpty {
+            let dates = snapshotItems.compactMap { LocalSnapshots.date(of: $0.path) }
+            let results = helperReady ? ((try? await helper.deleteLocalSnapshots(dates: dates)) ?? [:]) : [:]
+            for item in snapshotItems {
+                let result = LocalSnapshots.date(of: item.path).flatMap { results[$0] }
+                let error = helperReady ? (result.map { $0.isEmpty ? nil : $0 } ?? "The helper did not answer.")
+                                        : "Deleting snapshots needs the helper."
+                report.outcomes.append(DeletionOutcome(item: item, error: error))
+            }
+            deletion?.done += snapshotItems.count
+        }
+        report.finishedAt = Date()
+        try? history.append(report)
+        finish(report)
+        if !dockerItems.isEmpty { refreshDocker() }
+        if !snapshotItems.isEmpty { refreshHelper() }
+        return report
     }
 
     private func finish(_ report: DeletionReport) {

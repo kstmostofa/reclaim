@@ -63,6 +63,12 @@ final class AppSettings {
     /// Large Files lists files of at least this many megabytes.
     var largeFileThresholdMB: Int { didSet { defaults.set(largeFileThresholdMB, forKey: "largeFileThresholdMB") } }
     var downloadsAgeDays: Int { didSet { defaults.set(downloadsAgeDays, forKey: "downloadsAgeDays") } }
+    var showMenuBar: Bool { didSet { defaults.set(showMenuBar, forKey: "showMenuBar") } }
+    var schedule: ScanSchedule { didSet { defaults.set(schedule.rawValue, forKey: "schedule") } }
+    /// Off by default: the only time Reclaim deletes something nobody ticked at that moment.
+    var autoClean: Bool { didSet { defaults.set(autoClean, forKey: "autoClean") } }
+    var lowSpaceWarning: Bool { didSet { defaults.set(lowSpaceWarning, forKey: "lowSpaceWarning") } }
+    var lowSpaceThresholdGB: Int { didSet { defaults.set(lowSpaceThresholdGB, forKey: "lowSpaceThresholdGB") } }
     /// Duplicates compares files of at least this many megabytes.
     var duplicateMinimumMB: Int { didSet { defaults.set(duplicateMinimumMB, forKey: "duplicateMinimumMB") } }
 
@@ -77,6 +83,11 @@ final class AppSettings {
         largeFileThresholdMB = defaults.object(forKey: "largeFileThresholdMB") as? Int ?? 500
         downloadsAgeDays = defaults.object(forKey: "downloadsAgeDays") as? Int ?? OldDownloadsRule.defaultDays
         duplicateMinimumMB = defaults.object(forKey: "duplicateMinimumMB") as? Int ?? 1
+        showMenuBar = defaults.object(forKey: "showMenuBar") as? Bool ?? true
+        schedule = ScanSchedule(rawValue: defaults.string(forKey: "schedule") ?? "") ?? .off
+        autoClean = defaults.bool(forKey: "autoClean")
+        lowSpaceWarning = defaults.object(forKey: "lowSpaceWarning") as? Bool ?? true
+        lowSpaceThresholdGB = defaults.object(forKey: "lowSpaceThresholdGB") as? Int ?? 10
     }
 
     var accentColor: Color {
@@ -100,7 +111,8 @@ final class AppSettings {
 
     func resetToDefaults() {
         for key in ["accent", "customAccentHex", "appearance", "moveToTrash", "preselectSafe", "scanScope",
-                    "excludedFolders", "largeFileThresholdMB", "downloadsAgeDays", "duplicateMinimumMB"] {
+                    "excludedFolders", "largeFileThresholdMB", "downloadsAgeDays", "duplicateMinimumMB", "showMenuBar", "schedule", "autoClean",
+                    "lowSpaceWarning", "lowSpaceThresholdGB"] {
             defaults.removeObject(forKey: key)
         }
         let fresh = AppSettings()
@@ -114,6 +126,11 @@ final class AppSettings {
         largeFileThresholdMB = fresh.largeFileThresholdMB
         downloadsAgeDays = fresh.downloadsAgeDays
         duplicateMinimumMB = fresh.duplicateMinimumMB
+        showMenuBar = fresh.showMenuBar
+        schedule = fresh.schedule
+        autoClean = fresh.autoClean
+        lowSpaceWarning = fresh.lowSpaceWarning
+        lowSpaceThresholdGB = fresh.lowSpaceThresholdGB
     }
 }
 

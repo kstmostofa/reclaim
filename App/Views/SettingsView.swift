@@ -14,6 +14,9 @@ struct SettingsView: View {
             ScanSettings()
                 .tabItem { Label("Scanning", systemImage: "magnifyingglass") }
                 .tag("scanning")
+            AutomationSettings()
+                .tabItem { Label("Automation", systemImage: "clock.arrow.circlepath") }
+                .tag("automation")
             AppearanceSettings()
                 .tabItem { Label("Appearance", systemImage: "paintpalette") }
                 .tag("appearance")
@@ -116,6 +119,64 @@ private struct ScanSettings: View {
                 settings.excludedFolders.append(url.path)
             }
         }
+    }
+}
+
+private struct AutomationSettings: View {
+    @Environment(AppSettings.self) private var settings
+    @State private var openAtLogin = LoginItem.isEnabled
+    @State private var loginError: String?
+
+    var body: some View {
+        @Bindable var settings = settings
+        Form {
+            Section {
+                Toggle("Show Reclaim in the menu bar", isOn: $settings.showMenuBar)
+                Toggle("Open at login", isOn: $openAtLogin)
+                    .onChange(of: openAtLogin) { _, on in
+                        loginError = LoginItem.set(on)
+                        openAtLogin = LoginItem.isEnabled
+                    }
+                if LoginItem.needsApproval {
+                    HStack {
+                        Text("macOS needs you to allow Reclaim in Login Items.").font(.caption).foregroundStyle(.orange)
+                        Button("Open Login Items") { LoginItem.openSettings() }.controlSize(.small)
+                    }
+                }
+                if let loginError {
+                    Text(loginError).font(.caption).foregroundStyle(.red)
+                }
+            } footer: {
+                Text("The menu bar shows free space and the last scan, with Scan Now and Clean Safe Items. Scheduled scans and low-space warnings run while Reclaim is open, even with its window closed.")
+                    .settingsFootnote()
+            }
+            Section("Scheduled scans") {
+                Picker("Scan automatically", selection: $settings.schedule) {
+                    ForEach(ScanSchedule.allCases) { Text($0.title).tag($0) }
+                }
+                .onChange(of: settings.schedule) { _, schedule in
+                    if schedule != .off { Notifier.requestPermission() }
+                }
+                Toggle("Delete Safe items untouched for a day", isOn: $settings.autoClean)
+                    .disabled(settings.schedule == .off)
+                Text(settings.autoClean
+                     ? "After each scheduled scan, Safe items that nothing has changed for 24 hours are deleted without asking. Projects you are working in keep their caches. Rebuild and Personal items are never deleted this way."
+                     : "A scheduled scan only sends a notification with what it found.")
+                    .settingsFootnote()
+            }
+            Section("Low space") {
+                Toggle("Warn when free space is low", isOn: $settings.lowSpaceWarning)
+                    .onChange(of: settings.lowSpaceWarning) { _, on in
+                        if on { Notifier.requestPermission() }
+                    }
+                Stepper(value: $settings.lowSpaceThresholdGB, in: 1...500) {
+                    LabeledContent("Warn below", value: "\(settings.lowSpaceThresholdGB) GB")
+                }
+                .disabled(!settings.lowSpaceWarning)
+            }
+        }
+        .formStyle(.grouped)
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 

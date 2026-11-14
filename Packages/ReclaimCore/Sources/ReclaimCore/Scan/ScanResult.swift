@@ -8,23 +8,30 @@ public struct Suggestion: Sendable, Identifiable, Hashable {
     public let size: Int64
     public let modified: Date
     public let match: RuleMatch
+    /// False when it belongs to another user, such as root, or its folder is not writable: deleting it
+    /// then needs the helper.
+    public let isDeletableByUser: Bool
 
     public var id: String { path }
     public var category: SuggestionCategory { match.category }
     public var level: SafetyLevel { match.level }
 
-    public init(path: String, name: String, isDirectory: Bool, size: Int64, modified: Date, match: RuleMatch) {
+    public init(path: String, name: String, isDirectory: Bool, size: Int64, modified: Date, match: RuleMatch,
+                isDeletableByUser: Bool = true) {
         self.path = path
         self.name = name
         self.isDirectory = isDirectory
         self.size = size
         self.modified = modified
         self.match = match
+        self.isDeletableByUser = isDeletableByUser
     }
 
     init(_ node: FileNode, match: RuleMatch) {
+        let parent = (node.path as NSString).deletingLastPathComponent
         self.init(path: node.path, name: node.name, isDirectory: node.isDirectory, size: node.size,
-                  modified: node.modified, match: match)
+                  modified: node.modified, match: match,
+                  isDeletableByUser: node.owner == getuid() && access(parent, W_OK) == 0)
     }
 
     public var deletionItem: DeletionItem {

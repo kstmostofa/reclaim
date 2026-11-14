@@ -79,6 +79,7 @@ public struct RuleSet: Sendable {
         rules += MobileToolingRules.all(home: home)
         rules.append(LeftoverAppDataRule(home: home, apps: appLocator))
         rules += AppCacheRules.all(home: home)
+        rules += SystemRules.all()
         rules.append(TrashRule(home: home))
         rules.append(OldDownloadsRule(home: home, days: downloadsAgeDays, now: now))
         return RuleSet(rules)

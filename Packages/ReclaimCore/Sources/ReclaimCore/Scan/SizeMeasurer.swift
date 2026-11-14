@@ -8,6 +8,7 @@ struct EntryStat: Sendable {
     let device: dev_t
     let inode: ino_t
     let linkCount: nlink_t
+    let owner: uid_t
     /// Allocated bytes: `st_blocks` × 512, so sparse files report what they really occupy.
     let allocatedSize: Int64
     let modified: Date
@@ -17,6 +18,7 @@ struct EntryStat: Sendable {
         device = st.st_dev
         inode = st.st_ino
         linkCount = st.st_nlink
+        owner = st.st_uid
         allocatedSize = Int64(st.st_blocks) * 512
         modified = Date(timeIntervalSince1970: TimeInterval(st.st_mtimespec.tv_sec))
     }

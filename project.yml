@@ -22,6 +22,12 @@ targets:
     dependencies:
       - package: ReclaimCore
         product: ReclaimCore
+      # The root helper ships inside the app and is copied to /Library/PrivilegedHelperTools when installed.
+      - target: ReclaimHelper
+        embed: true
+        codeSign: false
+        copy:
+          destination: executables
     info:
       path: App/Info.plist
       properties:
@@ -43,3 +49,22 @@ targets:
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         GENERATE_INFOPLIST_FILE: NO
         COMBINE_HIDPI_IMAGES: YES
+
+  ReclaimHelper:
+    type: tool
+    platform: macOS
+    sources:
+      - Helper
+    dependencies:
+      - package: ReclaimCore
+        product: ReclaimCore
+    settings:
+      base:
+        PRODUCT_NAME: io.github.kstmostofa.reclaim.helper
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.kstmostofa.reclaim.helper
+        ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "-"
+        SKIP_INSTALL: YES
+        ONLY_ACTIVE_ARCH[config=Debug]: YES
+        ONLY_ACTIVE_ARCH[config=Release]: NO

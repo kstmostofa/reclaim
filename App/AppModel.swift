@@ -36,6 +36,11 @@ final class AppModel {
     private(set) var dockerItems: [DockerItem] = []
     private(set) var isLoadingDocker = false
     private(set) var dockerError: String?
+    /// Nil until checked.
+    private(set) var helperStatus: HelperManager.Status?
+    private(set) var helperError: String?
+    /// Local Time Machine snapshot dates, oldest first.
+    private(set) var snapshots: [String] = []
     private(set) var duplicateProgress = DuplicateProgress.Snapshot()
     private(set) var runningBundleIDs: Set<String> = []
     private(set) var hasFullDiskAccess = PrivacyAccess.hasFullDiskAccess()
@@ -54,6 +59,7 @@ final class AppModel {
     @ObservationIgnored private let history = HistoryLog()
     @ObservationIgnored private let protectedPaths = ProtectedPaths()
     @ObservationIgnored private let docker = DockerClient()
+    @ObservationIgnored let helper = HelperManager()
 
     init(settings: AppSettings) {
         self.settings = settings
@@ -114,11 +120,16 @@ final class AppModel {
         tickable = [:]
         for s in suggestions { tickable[s.path] = s.deletionItem }
         recomputeLargeFiles()
-        ticked = settings.preselectSafe ? Set(suggestions.filter(\.level.isPreselected).map(\.path)) : []
+        // Items that need the helper are only ticked for you when the helper can actually delete them.
+        let helperReady = helperStatus == .ready
+        ticked = settings.preselectSafe
+            ? Set(suggestions.filter { $0.level.isPreselected && ($0.isDeletableByUser || helperReady) }.map(\.path))
+            : []
         refreshRunningApps()
         volume = VolumeInfo.forPath()
         phase = .scanned
         refreshDocker()
+        refreshHelper(measure: true)
     }
 
     /// Rebuilds Large Files from the tree, for example after the threshold changes.
@@ -128,6 +139,59 @@ final class AppModel {
                                 unreadableFolders: result.unreadableFolders)
             .largeFiles(threshold: settings.largeFileThreshold)
         for s in largeFiles { tickable[s.path] = s.deletionItem }
+    }
+
+    // MARK: Helper
+
+    /// Checks the helper and lists local snapshots. With `measure`, also asks the helper for the true size of
+    /// suggestions the scan could not fully read because they belong to root.
+    func refreshHelper(measure: Bool = false) {
+        Task {
+            helperStatus = await helper.status()
+            snapshots = await LocalSnapshots.dates()
+            for date in snapshots {
+                let path = LocalSnapshots.path(for: date)
+                tickable[path] = DeletionItem(path: path, size: 0, title: "Time Machine snapshot \(date)",
+                                              category: .system, level: .safe)
+            }
+            ticked = ticked.filter { LocalSnapshots.date(of: $0).map(snapshots.contains) ?? true }
+            if measure && helperStatus == .ready { await measureRootOwned() }
+        }
+    }
+
+    private func measureRootOwned() async {
+        let paths = suggestions.filter { !$0.isDeletableByUser }.map(\.path)
+        guard !paths.isEmpty, let sizes = try? await helper.measure(paths: paths) else { return }
+        suggestions = suggestions.map { s in
+            guard let size = sizes[s.path], size > s.size else { return s }
+            tickable[s.path] = DeletionItem(path: s.path, size: size, title: s.match.title, category: s.category, level: s.level)
+            return Suggestion(path: s.path, name: s.name, isDirectory: s.isDirectory, size: size, modified: s.modified,
+                              match: s.match, isDeletableByUser: false)
+        }
+        .sorted { $0.size > $1.size }
+    }
+
+    /// Installs or re-pairs the helper. macOS asks for the password in its own dialog.
+    func installHelper() {
+        helperError = nil
+        do {
+            try helper.install()
+        } catch HelperManager.InstallError.cancelled {
+        } catch {
+            helperError = error.localizedDescription
+        }
+        refreshHelper(measure: true)
+    }
+
+    func uninstallHelper() {
+        helperError = nil
+        do {
+            try helper.uninstall()
+        } catch HelperManager.InstallError.cancelled {
+        } catch {
+            helperError = error.localizedDescription
+        }
+        refreshHelper()
     }
 
     // MARK: Docker
@@ -300,11 +364,15 @@ final class AppModel {
         guard !items.isEmpty, deletion == nil else { return }
         deletion = DeletionRun(total: items.count, current: items[0].path)
         let deleter = Deleter(mode: settings.moveToTrash ? .trash : .permanent)
-        // Docker items are removed by Docker; everything else is a file or folder.
+        // Docker items are removed by Docker, snapshots by the helper; everything else is a file or folder.
         let dockerByPath = Dictionary(uniqueKeysWithValues: dockerItems.map { ($0.path, $0) })
         let dockerItems = items.compactMap { dockerByPath[$0.path] }
-        let files = items.filter { dockerByPath[$0.path] == nil }
+        let snapshotItems = items.filter { LocalSnapshots.date(of: $0.path) != nil }
+        let files = items.filter { dockerByPath[$0.path] == nil && LocalSnapshots.date(of: $0.path) == nil }
         let docker = docker
+        let helper = helper
+        let helperReady = helperStatus == .ready
+        let permanent = !settings.moveToTrash
         let history = history
         Task {
             var report = await Task.detached(priority: .userInitiated) {
@@ -315,16 +383,48 @@ final class AppModel {
                     }
                 }
             }.value
+            // What the user may not delete goes to the helper, when it is installed and deletion is permanent.
+            let denied = report.outcomes.indices.filter { report.outcomes[$0].error == Deleter.permissionDenied }
+            if !denied.isEmpty {
+                if helperReady && permanent {
+                    deletion?.current = "Asking the helper…"
+                    let paths = denied.map { report.outcomes[$0].item.path }
+                    let results = (try? await helper.remove(paths: paths)) ?? [:]
+                    for index in denied {
+                        if let result = results[report.outcomes[index].item.path] {
+                            report.outcomes[index].error = result.isEmpty ? nil : result
+                        }
+                    }
+                } else {
+                    for index in denied {
+                        report.outcomes[index].error = helperReady
+                            ? "Belongs to another user. Turn off Move to Trash to delete it with the helper."
+                            : "Belongs to another user, such as root. Install the helper in System to delete it."
+                    }
+                }
+            }
             report.outcomes += await docker.remove(dockerItems) { outcome in
                 Task { @MainActor in
                     self.deletion?.done += 1
                     self.deletion?.current = outcome.item.title
                 }
             }
+            if !snapshotItems.isEmpty {
+                let dates = snapshotItems.compactMap { LocalSnapshots.date(of: $0.path) }
+                let results = helperReady ? ((try? await helper.deleteLocalSnapshots(dates: dates)) ?? [:]) : [:]
+                for item in snapshotItems {
+                    let result = LocalSnapshots.date(of: item.path).flatMap { results[$0] }
+                    let error = helperReady ? (result.map { $0.isEmpty ? nil : $0 } ?? "The helper did not answer.")
+                                            : "Deleting snapshots needs the helper."
+                    report.outcomes.append(DeletionOutcome(item: item, error: error))
+                }
+                deletion?.done += snapshotItems.count
+            }
             report.finishedAt = Date()
             try? history.append(report)
             finish(report)
             if !dockerItems.isEmpty { refreshDocker() }
+            if !snapshotItems.isEmpty { refreshHelper() }
         }
     }
 

@@ -46,6 +46,7 @@ enum SidebarItem: Hashable {
     case largeFiles
     case duplicates
     case containers
+    case system
 }
 
 struct ContentView: View {
@@ -76,6 +77,7 @@ struct ContentView: View {
         case "largeFiles": .largeFiles
         case "duplicates": .duplicates
         case "containers": .containers
+        case "system": .system
         default: .overview
         }
     }
@@ -99,6 +101,8 @@ struct ContentView: View {
                     DuplicatesView()
                 case .containers:
                     ContainersView()
+                case .system:
+                    SystemView(selection: $selection)
                 case .overview, nil:
                     OverviewView(selection: $selection)
                 }
@@ -166,6 +170,9 @@ struct Sidebar: View {
                 Label("Containers", systemImage: SuggestionCategory.containers.systemImage)
                     .badge(model.dockerItems.isEmpty ? nil : Text(Format.size(model.dockerItems.reduce(0) { $0 + $1.size })).monospacedDigit())
                     .tag(SidebarItem.containers)
+                Label("System", systemImage: "lock.shield")
+                    .badge(model.helperStatus == .needsPairing ? Text("!") : nil)
+                    .tag(SidebarItem.system)
             }
         }
     }

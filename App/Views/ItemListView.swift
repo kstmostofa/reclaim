@@ -42,6 +42,11 @@ struct ItemListView: View {
                     VStack(alignment: .leading, spacing: 1) {
                         HStack(spacing: 4) {
                             Text(item.name).lineLimit(1)
+                            if !item.isDeletableByUser && model.helperStatus != .ready {
+                                Image(systemName: "lock.fill")
+                                    .foregroundStyle(.secondary)
+                                    .help("Owned by root or another user. Install the helper in System to delete it.")
+                            }
                             if model.belongsToRunningApp(item) {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .foregroundStyle(.orange)

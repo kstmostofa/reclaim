@@ -30,6 +30,11 @@ public struct DeletionOutcome: Sendable, Codable, Hashable {
     /// Nil on success.
     public var error: String?
 
+    public init(item: DeletionItem, error: String?) {
+        self.item = item
+        self.error = error
+    }
+
     public var succeeded: Bool { error == nil }
 }
 
@@ -74,6 +79,9 @@ public struct Deleter: Sendable {
         return DeletionReport(startedAt: started, finishedAt: Date(), mode: mode, outcomes: outcomes)
     }
 
+    /// The error for items the user may not delete; the app can retry those through the helper.
+    public static let permissionDenied = "Permission denied. It may be owned by another user or protected by macOS."
+
     /// Returns nil on success, or why it failed.
     func deleteOne(_ path: String) -> String? {
         do {
@@ -86,9 +94,7 @@ public struct Deleter: Sendable {
         case .permanent:
             guard removefile(path, nil, removefile_flags_t(REMOVEFILE_RECURSIVE)) == 0 else {
                 let code = errno
-                if code == EPERM || code == EACCES {
-                    return "Permission denied. It may be owned by another user or protected by macOS."
-                }
+                if code == EPERM || code == EACCES { return Self.permissionDenied }
                 return String(cString: strerror(code))
             }
             return nil

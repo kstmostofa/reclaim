@@ -157,7 +157,7 @@ private struct Walker: Sendable {
         return FileNode(
             name: dir.name, path: dir.path, isDirectory: true, size: level.size, fileCount: level.files,
             modified: level.newest, children: children.sorted { $0.size > $1.size }, match: dir.match,
-            isUnreadable: level.unreadable
+            isUnreadable: level.unreadable, owner: dir.stat.owner
         )
     }
 
@@ -199,7 +199,8 @@ private struct Walker: Sendable {
             if entry.stat.modified > level.newest { level.newest = entry.stat.modified }
             if entry.stat.isRegularFile && (size >= options.retainFilesFrom || match != nil) {
                 level.fileNodes.append(FileNode(name: entry.name, path: path, isDirectory: false, size: size,
-                                                fileCount: 1, modified: entry.stat.modified, match: match))
+                                                fileCount: 1, modified: entry.stat.modified, match: match,
+                                                owner: entry.stat.owner))
             }
         }
         level.size += fileBytes

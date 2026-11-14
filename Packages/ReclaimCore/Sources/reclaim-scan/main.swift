@@ -2,6 +2,24 @@ import Foundation
 import ReclaimCore
 
 // Usage: reclaim-scan [folder]   (default: home folder; pass /System/Volumes/Data for the whole disk)
+// Talks to a helper started as a per-user launchd job under a test name, to check pairing without root.
+if let index = CommandLine.arguments.firstIndex(of: "--helper-test"), CommandLine.arguments.count > index + 1 {
+    let client = HelperClient(machService: CommandLine.arguments[index + 1], privileged: false, helperRequirement: nil)
+    do {
+        print("version:", try await client.version())
+        if let target = CommandLine.arguments.dropFirst(index + 2).first {
+            print("remove:", try await client.remove(paths: [target, "/etc/hosts", "/tmp/../etc/hosts"]))
+        }
+    } catch {
+        print("refused:", error.localizedDescription)
+    }
+    exit(0)
+}
+if CommandLine.arguments.contains("--print-requirement") {
+    print(CodeIdentity.ownRequirement() ?? "none")
+    exit(0)
+}
+
 if CommandLine.arguments.contains("--docker") {
     let client = DockerClient()
     print("Docker: \(await client.status())")

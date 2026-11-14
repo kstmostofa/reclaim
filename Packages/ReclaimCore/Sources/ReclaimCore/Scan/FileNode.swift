@@ -17,11 +17,13 @@ public final class FileNode: Sendable, Identifiable {
     public let match: RuleMatch?
     /// True when the folder could not be read, so its size is a lower bound.
     public let isUnreadable: Bool
+    /// The user who owns it.
+    public let owner: uid_t
 
     public var id: String { path }
 
     public init(name: String, path: String, isDirectory: Bool, size: Int64, fileCount: Int, modified: Date,
-                children: [FileNode] = [], match: RuleMatch? = nil, isUnreadable: Bool = false) {
+                children: [FileNode] = [], match: RuleMatch? = nil, isUnreadable: Bool = false, owner: uid_t = getuid()) {
         self.name = name
         self.path = path
         self.isDirectory = isDirectory
@@ -31,6 +33,7 @@ public final class FileNode: Sendable, Identifiable {
         self.children = children
         self.match = match
         self.isUnreadable = isUnreadable
+        self.owner = owner
     }
 
     /// Bytes inside this folder not accounted for by `children` (small files not kept in the tree).
@@ -65,7 +68,8 @@ public final class FileNode: Sendable, Identifiable {
         guard removedSize != 0 || removedFiles != 0 || kept.count != children.count else { return self }
         return FileNode(name: name, path: path, isDirectory: true, size: size - removedSize,
                         fileCount: fileCount - removedFiles, modified: modified,
-                        children: kept.sorted { $0.size > $1.size }, match: match, isUnreadable: isUnreadable)
+                        children: kept.sorted { $0.size > $1.size }, match: match, isUnreadable: isUnreadable,
+                        owner: owner)
     }
 
     /// Finds the node at `path` by walking down from this one.

@@ -44,6 +44,7 @@ public enum SuggestionCategory: String, Codable, Sendable, CaseIterable {
     case largeFiles
     case duplicates
     case containers
+    case system
     case custom
 
     public var title: String {
@@ -60,6 +61,7 @@ public enum SuggestionCategory: String, Codable, Sendable, CaseIterable {
         case .largeFiles: "Large Files"
         case .duplicates: "Duplicates"
         case .containers: "Docker"
+        case .system: "System Junk"
         case .custom: "Your Rules"
         }
     }
@@ -79,6 +81,7 @@ public enum SuggestionCategory: String, Codable, Sendable, CaseIterable {
         case .largeFiles: "doc.richtext"
         case .duplicates: "doc.on.doc"
         case .containers: "shippingbox.circle"
+        case .system: "gearshape.2"
         case .custom: "slider.horizontal.3"
         }
     }

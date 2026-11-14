@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reclaim Guide</title>
+  <meta name="description" content="How to scan, review suggestions, delete, explore the disk map and change Reclaim's settings.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark">R</span>Reclaim</a>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="install.html">Install</a>
+      <a href="guide.html" aria-current="page">Guide</a>
+      <a href="suggestions.html">What it finds</a>
+      <a href="faq.html">FAQ</a>
+      <a href="https://github.com/kstmostofa/reclaim">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap doc">
+  <aside class="toc">
+    <p>On this page</p>
+    <ul>
+      <li><a href="#scan">Scanning</a></li>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#suggestions">Suggestions</a></li>
+      <li><a href="#safety">Safety levels</a></li>
+      <li><a href="#delete">Deleting</a></li>
+      <li><a href="#disk-map">Disk Map</a></li>
+      <li><a href="#large-files">Large Files</a></li>
+      <li><a href="#settings">Settings</a></li>
+      <li><a href="#history">History</a></li>
+      <li><a href="#shortcuts">Keyboard shortcuts</a></li>
+    </ul>
+  </aside>
+
+  <article class="doc-body">
+    <h1>Using Reclaim</h1>
+    <p class="lead">Scan, review what Reclaim suggests, tick what you want gone, and delete it in one click.</p>
+
+    <h2 id="scan">Scanning</h2>
+    <p>Click <strong>Scan</strong> on the Overview, or press <kbd>⌘</kbd><kbd>R</kbd>. Reclaim reads every folder it is allowed to and shows a live count of files and bytes. A full Mac takes about a minute; you can click <strong>Stop</strong> at any time.</p>
+    <ul>
+      <li>By default it scans the whole disk. To scan only your home folder, change <a href="#settings-scanning">Scanning › Scan</a>.</li>
+      <li>Sizes are the space files really use on disk. A 32 GB disk image that holds 1 GB of data counts as 1 GB, and a file with several hard links counts once.</li>
+      <li>Other disks, such as external drives, are never scanned.</li>
+      <li>If some folders could not be read, the Overview says how many. Give Reclaim <a href="install.html#full-disk-access">Full Disk Access</a> to include them.</li>
+    </ul>
+
+    <h2 id="overview">Overview</h2>
+    <figure>
+      <div class="shot"><img src="screenshots/overview.png" alt="Overview with storage bar, last scan summary and top categories." width="1400" height="952" loading="lazy"></div>
+    </figure>
+    <ul>
+      <li><strong>Storage bar:</strong> used space, the part of it Reclaim suggests deleting (in your accent colour), and free space.</li>
+      <li><strong>Last scan:</strong> how much you could reclaim, how much of that is Safe, and how long the scan took.</li>
+      <li><strong>Top categories:</strong> each kind of suggestion with its size. Click one to open its list.</li>
+    </ul>
+
+    <h2 id="suggestions">Suggestions</h2>
+    <p>The sidebar has one entry per kind of suggestion, with its total size. See <a href="suggestions.html">What it finds</a> for every rule. Each list shows:</p>
+    <ul>
+      <li>a checkbox to tick the item for deletion;</li>
+      <li>its name, and the folder it is in;</li>
+      <li>its size, safety level and when anything inside it last changed.</li>
+    </ul>
+    <p>Click a column header to sort. Type in the search field to filter by name or path. <strong>Select All Safe</strong> ticks every Safe item in the list, and <strong>Deselect All</strong> unticks the list. Right-click rows to tick or untick several at once, or to reveal one in Finder.</p>
+    <p>Select a row to see the <strong>inspector</strong> on the right: what the item is, why it is suggested, what happens after deleting it, and its full location. Toggle the inspector with the sidebar button in the toolbar.</p>
+    <div class="callout warn">
+      <p>⚠️ An orange warning next to an app's cache means that app is running. Quit it before deleting its files, or it may recreate them or misbehave.</p>
+    </div>
+
+    <h2 id="safety">Safety levels</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Level</th><th>Meaning</th><th>Ticked for you</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge safe">Safe</span></td><td>Rebuilds itself; nothing for you to do. Build caches, app caches, logs, emulator quick-boot snapshots, the Trash.</td><td>Yes</td></tr>
+          <tr><td><span class="badge rebuild">Rebuild</span></td><td>Comes back only after a reinstall or download, such as <code>npm install</code> or <code>composer install</code>.</td><td>No</td></tr>
+          <tr><td><span class="badge personal">Personal</span></td><td>Your own data. Reclaim reports it so you can decide: old downloads, large files, emulator user data, leftovers of uninstalled apps.</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>You can stop Reclaim ticking Safe items after each scan in <a href="#settings-general">General settings</a>.</p>
+
+    <h2 id="delete">Deleting</h2>
+    <p>Whenever something is ticked, a bar at the bottom shows how many items and how much space, for example <strong>Delete 23 items · 31.4 GB</strong>. Ticks are kept across every list and the Disk Map, and an item inside a ticked folder is never counted twice.</p>
+    <div class="callout warn">
+      <p><strong>There is no confirmation.</strong> Clicking the button, or pressing <kbd>⌘</kbd><kbd>⌫</kbd>, deletes the ticked items immediately and permanently.</p>
+      <p>If you would rather be able to undo, turn on <a href="#settings-general">Move to Trash instead of deleting permanently</a>. The space is then freed only when you empty the Trash.</p>
+    </div>
+    <p>A sheet shows progress, then a summary: how much was freed and anything that could not be removed, with the reason. Common reasons:</p>
+    <ul>
+      <li><strong>Permission denied:</strong> the item belongs to another user or to the system (for example files created with <code>sudo</code>), or macOS protects it.</li>
+      <li><strong>It no longer exists:</strong> something else removed it after the scan.</li>
+      <li><strong>Protected:</strong> the path is one of the folders Reclaim never deletes as a whole (see the <a href="faq.html#protected">FAQ</a>).</li>
+    </ul>
+    <p>The lists and the Disk Map update straight away; no rescan is needed.</p>
+
+    <h2 id="disk-map">Disk Map</h2>
+    <figure>
+      <div class="shot"><img src="screenshots/disk-map.png" alt="Disk Map showing folders with size bars and their share of the parent folder." width="1400" height="952" loading="lazy"></div>
+    </figure>
+    <p>The whole scan as folders and files, largest first. Each row has a bar for its share of the folder you are in.</p>
+    <ul>
+      <li><strong>Go deeper:</strong> double-click a folder, or right-click it and choose <strong>Open</strong>.</li>
+      <li><strong>Go back:</strong> click a folder in the trail at the top, or the up arrow in the toolbar (<kbd>⌘</kbd><kbd>↑</kbd>).</li>
+      <li><strong>Tick anything</strong> that is not protected. Protected folders, such as the top level of the disk or your home folder, have a dimmed checkbox.</li>
+      <li>A safety badge marks folders a rule already suggests. A lock means the folder could not be read, so its size is a lower bound.</li>
+      <li>Files under 1 MB are not listed one by one. Their total appears under the list.</li>
+    </ul>
+
+    <h2 id="large-files">Large Files</h2>
+    <p>Files of 500 MB or more (adjustable in <a href="#settings-scanning">Scanning settings</a>) that no other suggestion already covers. Files inside apps and photo libraries are left out, because deleting part of a bundle breaks it. Everything here is Personal: only you know whether you still need it.</p>
+
+    <h2 id="settings">Settings</h2>
+    <p>Open with <strong>Reclaim › Settings…</strong> or <kbd>⌘</kbd><kbd>,</kbd>.</p>
+
+    <h3 id="settings-general">General</h3>
+    <figure>
+      <div class="shot"><img src="screenshots/settings-general.png" alt="General settings: move to Trash, tick Safe items after each scan, restore defaults." width="1040" height="782" loading="lazy"></div>
+    </figure>
+    <ul>
+      <li><strong>Move to Trash instead of deleting permanently.</strong> Off by default.</li>
+      <li><strong>Tick Safe items after each scan.</strong> On by default.</li>
+      <li><strong>Restore Default Settings</strong> resets everything on every tab.</li>
+    </ul>
+
+    <h3 id="settings-scanning">Scanning</h3>
+    <figure>
+      <div class="shot"><img src="screenshots/settings-scanning.png" alt="Scanning settings: scan scope, thresholds and excluded folders." width="1040" height="1170" loading="lazy"></div>
+    </figure>
+    <ul>
+      <li><strong>Scan:</strong> the whole disk, or only your home folder.</li>
+      <li><strong>Large files from:</strong> the size from which a file appears in Large Files. Default 500 MB; the list updates as you change it.</li>
+      <li><strong>Old downloads after:</strong> how long a file in Downloads must be unchanged before it is suggested. Default 90 days.</li>
+      <li><strong>Never scan these folders:</strong> folders Reclaim skips completely, so nothing in them is measured, suggested or deletable.</li>
+    </ul>
+    <p>Scope, age and excluded folders take effect at the next scan.</p>
+
+    <h3 id="settings-appearance">Appearance</h3>
+    <figure>
+      <div class="shot"><img src="screenshots/settings-appearance.png" alt="Appearance settings: system, light or dark, accent colour swatches, custom colour and preview." width="1040" height="780" loading="lazy"></div>
+    </figure>
+    <ul>
+      <li><strong>Appearance:</strong> follow the system, or always light or dark.</li>
+      <li><strong>Accent color:</strong> Indigo by default, or any of the preset colours.</li>
+      <li><strong>Custom color:</strong> pick any colour; Reclaim switches to it.</li>
+    </ul>
+
+    <h2 id="history">History</h2>
+    <p>Every deletion run is recorded: when, what was deleted or moved to the Trash, how big it was and anything that failed. The log is kept at <code>~/Library/Application Support/Reclaim/history.jsonl</code>. A History screen in the app is coming.</p>
+
+    <h2 id="shortcuts">Keyboard shortcuts</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>⌘</kbd><kbd>R</kbd></td><td>Scan</td></tr>
+          <tr><td><kbd>⌘</kbd><kbd>⌫</kbd></td><td>Delete ticked items (no confirmation)</td></tr>
+          <tr><td><kbd>⌘</kbd><kbd>↑</kbd></td><td>Enclosing folder in the Disk Map</td></tr>
+          <tr><td><kbd>⌘</kbd><kbd>F</kbd></td><td>Filter the current list</td></tr>
+          <tr><td><kbd>⌘</kbd><kbd>,</kbd></td><td>Settings</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>Reclaim is free software under the MIT License.</span>
+    <span><a href="https://github.com/kstmostofa/reclaim">Source</a> · <a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a></span>
+  </div>
+</footer>
+</body>
+</html>

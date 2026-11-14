@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reclaim · Mac Storage Cleaner</title>
+  <meta name="description" content="Reclaim is a free, open-source Mac app that finds build caches, dependencies, app caches and leftovers, and deletes what you tick in one click.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark">R</span>Reclaim</a>
+    <nav class="nav">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="install.html">Install</a>
+      <a href="guide.html">Guide</a>
+      <a href="suggestions.html">What it finds</a>
+      <a href="faq.html">FAQ</a>
+      <a href="https://github.com/kstmostofa/reclaim">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <h1>Get your Mac's disk space back.</h1>
+    <p class="lead">Reclaim scans the whole disk, explains what is safe to delete, and removes what you tick in one click. Built for developer Macs that keep filling up with build caches, <code>node_modules</code> and emulator images.</p>
+    <div class="buttons">
+      <a class="button primary" href="https://github.com/kstmostofa/reclaim/releases/latest">Download for macOS</a>
+      <a class="button" href="guide.html">Read the guide</a>
+    </div>
+    <p class="small-note">Free and open source (MIT). macOS 14 or later, Apple silicon and Intel.</p>
+    <div class="shot">
+      <img src="screenshots/overview.png" alt="Reclaim's Overview: a storage bar showing used, reclaimable and free space, and the top categories of suggestions by size." width="1400" height="952">
+    </div>
+  </div>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>What it does</h2>
+      <p class="section-lead">One scan, then a list you can trust: every suggestion says what it is, why it is there and what happens after you delete it.</p>
+      <div class="grid">
+        <div class="card">
+          <h3><span class="icon">🔎</span> Scans everything</h3>
+          <p>Walks the whole disk in parallel, about a minute for a full Mac. Sizes are what files really occupy, so sparse disk images and hard links are counted correctly.</p>
+        </div>
+        <div class="card">
+          <h3><span class="icon">🧹</span> Knows developer junk</h3>
+          <p><code>.next</code>, <code>.turbo</code>, Xcode DerivedData, Rust <code>target</code>, <code>node_modules</code>, Composer <code>vendor</code>, Gradle and npm caches, emulator snapshots, and more.</p>
+        </div>
+        <div class="card">
+          <h3><span class="icon">🚦</span> Three safety levels</h3>
+          <p><span class="badge safe">Safe</span> rebuilds itself. <span class="badge rebuild">Rebuild</span> needs a reinstall. <span class="badge personal">Personal</span> is your data. Only Safe is ticked for you.</p>
+        </div>
+        <div class="card">
+          <h3><span class="icon">⚡️</span> One-click delete</h3>
+          <p>No "Are you sure?" for every file. Tick, click, done, with a summary of what was freed and anything that could not be removed.</p>
+        </div>
+        <div class="card">
+          <h3><span class="icon">🗺</span> Disk map</h3>
+          <p>The whole disk as a size-sorted tree. Drill into any folder and tick anything that is not protected.</p>
+        </div>
+        <div class="card">
+          <h3><span class="icon">🛡</span> Hard limits</h3>
+          <p>Never deletes the disk root, system folders, your home folder or folders like Documents as a whole, however the path is spelled.</p>
+        </div>
+        <div class="card">
+          <h3><span class="icon">🎨</span> Yours to tune</h3>
+          <p>Indigo by default, or any accent colour. Light or dark. Choose what to scan, what to skip and what counts as large or old.</p>
+        </div>
+        <div class="card">
+          <h3><span class="icon">🔒</span> Private</h3>
+          <p>No account, no analytics, no network access. Your file list never leaves your Mac.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>See where the space went</h2>
+      <p class="section-lead">The Disk Map shows every folder by size, with how much of its parent it takes up. Double-click to go deeper.</p>
+      <div class="shot">
+        <img src="screenshots/disk-map.png" alt="The Disk Map listing the top-level folders of the disk with size bars, sizes, share of the parent and file counts." width="1400" height="952" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>Coming next</h2>
+      <p class="section-lead">These are being built for version 0.1 and will be documented here as they land.</p>
+      <div class="grid">
+        <div class="card"><h3>Duplicate files <span class="badge soon">Soon</span></h3><p>Finds identical files, skips hard links and APFS clones that use no extra space, and lets you keep oldest, newest or one folder's copy.</p></div>
+        <div class="card"><h3>Docker and OrbStack <span class="badge soon">Soon</span></h3><p>Build cache, dangling and unused images, stopped containers and volumes, removed through Docker's own commands.</p></div>
+        <div class="card"><h3>System junk <span class="badge soon">Soon</span></h3><p>An optional helper for system caches and logs and for root-owned files left in your home folder.</p></div>
+        <div class="card"><h3>Menu bar and schedules <span class="badge soon">Soon</span></h3><p>Free space at a glance, low-space alerts, and daily or weekly scans.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>Reclaim is free software under the MIT License.</span>
+    <span><a href="https://github.com/kstmostofa/reclaim">Source</a> · <a href="https://github.com/kstmostofa/reclaim/issues">Report a problem</a></span>
+  </div>
+</footer>
+</body>
+</html>

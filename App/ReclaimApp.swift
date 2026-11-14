@@ -38,7 +38,7 @@ struct ReclaimApp: App {
                 .environment(settings)
                 .tint(settings.accentColor)
         } label: {
-            Image(systemName: "internaldrive")
+            Image("MenuBarIcon")
         }
         .menuBarExtraStyle(.window)
 

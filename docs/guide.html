@@ -33,6 +33,7 @@
       <li><a href="#delete">Deleting</a></li>
       <li><a href="#disk-map">Disk Map</a></li>
       <li><a href="#large-files">Large Files</a></li>
+      <li><a href="#duplicates">Duplicates</a></li>
       <li><a href="#settings">Settings</a></li>
       <li><a href="#history">History</a></li>
       <li><a href="#shortcuts">Keyboard shortcuts</a></li>
@@ -49,7 +50,7 @@
       <li>By default it scans the whole disk. To scan only your home folder, change <a href="#settings-scanning">Scanning › Scan</a>.</li>
       <li>Sizes are the space files really use on disk. A 32 GB disk image that holds 1 GB of data counts as 1 GB, and a file with several hard links counts once.</li>
       <li>Other disks, such as external drives, are never scanned.</li>
-      <li>If some folders could not be read, the Overview says how many. Give Reclaim <a href="install.html#full-disk-access">Full Disk Access</a> to include them.</li>
+      <li>Without <a href="install.html#full-disk-access">Full Disk Access</a>, the scan skips Desktop, Documents, Downloads, iCloud Drive and other apps' data, and the Overview says so. Otherwise macOS would pause the scan to ask about each of those folders.</li>
     </ul>
 
     <h2 id="overview">Overview</h2>
@@ -118,6 +119,22 @@
     <h2 id="large-files">Large Files</h2>
     <p>Files of 500 MB or more (adjustable in <a href="#settings-scanning">Scanning settings</a>) that no other suggestion already covers. Files inside apps and photo libraries are left out, because deleting part of a bundle breaks it. Everything here is Personal: only you know whether you still need it.</p>
 
+    <h2 id="duplicates">Duplicates</h2>
+    <p>After a scan, open <strong>Duplicates</strong> and click <strong>Find Duplicates</strong>. Reclaim compares files of 1 MB or more (adjustable in <a href="#settings-scanning">Scanning settings</a>) and lists only files whose contents are identical, byte for byte.</p>
+    <ul>
+      <li><strong>How it compares:</strong> files are grouped by size first, then by their first and last 64 KB, and only the remaining candidates are read in full and compared by SHA-256. On a typical Mac this takes seconds.</li>
+      <li><strong>What it leaves out:</strong> anything inside apps, libraries and bundles; hidden folders such as <code>~/.vscode</code>; installed packages such as <code>node_modules</code> and <code>site-packages</code>; app and system data in <code>~/Library</code>, <code>/Library</code> and <code>/Users/Shared</code>; and anything another suggestion already covers. Copies in those places usually belong to a tool, and deleting one can break it.</li>
+      <li><strong>Hard links</strong> are one file with several names, so they never appear as duplicates.</li>
+      <li><strong>Copies that share storage:</strong> a copy made with Finder's Duplicate on APFS can share its storage with the original. Reclaim marks these <em>Shares storage</em>. Deleting one frees almost nothing, so they do not count towards the reclaimable total.</li>
+    </ul>
+    <p>Nothing is ticked for you. Each group shows every copy with its folder and date. To tick all but one copy in every group shown, use the <strong>Keep</strong> menu in the toolbar:</p>
+    <ul>
+      <li><strong>Keep Oldest Copy</strong> or <strong>Keep Newest Copy</strong>, by modification date;</li>
+      <li><strong>Keep the Copy in a Folder…</strong>: choose a folder, and in groups with a copy there, that copy is kept;</li>
+      <li><strong>Untick All Copies</strong>.</li>
+    </ul>
+    <p>Filter first to apply Keep to only some groups. Right-click a copy for <strong>Keep Only This Copy</strong>. If every copy in a group is ticked, the group shows a warning, because deleting them all leaves you with none.</p>
+
     <h2 id="settings">Settings</h2>
     <p>Open with <strong>Reclaim › Settings…</strong> or <kbd>⌘</kbd><kbd>,</kbd>.</p>
 
@@ -139,6 +156,7 @@
       <li><strong>Scan:</strong> the whole disk, or only your home folder.</li>
       <li><strong>Large files from:</strong> the size from which a file appears in Large Files. Default 500 MB; the list updates as you change it.</li>
       <li><strong>Old downloads after:</strong> how long a file in Downloads must be unchanged before it is suggested. Default 90 days.</li>
+      <li><strong>Compare duplicates from:</strong> the smallest file Duplicates compares. Default 1 MB.</li>
       <li><strong>Never scan these folders:</strong> folders Reclaim skips completely, so nothing in them is measured, suggested or deletable.</li>
     </ul>
     <p>Scope, age and excluded folders take effect at the next scan.</p>

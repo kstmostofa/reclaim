@@ -67,13 +67,16 @@
     </div>
 
     <h2 id="full-disk-access">Give it Full Disk Access</h2>
-    <p>Without it, macOS hides parts of your Library folder and other apps' data, so the scan misses them. The Overview tells you how many folders could not be read.</p>
+    <p>Without it, macOS asks for permission the first time an app opens Desktop, Documents, Downloads, iCloud Drive or another app's data, and the app has to wait for your answer. To keep scans from stopping, Reclaim skips those folders until it has Full Disk Access. The Overview shows a notice while this is the case, with a button that opens the right settings page.</p>
     <ol class="steps">
       <li>Open <strong>System Settings › Privacy &amp; Security › Full Disk Access</strong>.</li>
       <li>Click <strong>+</strong>, choose <strong>Reclaim</strong> in Applications, and make sure its switch is on.</li>
       <li>Quit and reopen Reclaim, then scan again.</li>
     </ol>
     <p>No app can grant this to itself, and Reclaim never asks for it again once it is on.</p>
+    <div class="callout">
+      <p>Your Music, TV and Photos libraries are always skipped, even with Full Disk Access, because macOS protects them with permissions of their own. Reclaim never suggests anything inside them.</p>
+    </div>
 
     <h2 id="update">Updating</h2>
     <p>Download the new release and replace the old app in Applications. Because each build is signed separately, macOS may ask you to repeat <a href="#first-open">Open Anyway</a>, and you may need to switch Full Disk Access off and on again.</p>

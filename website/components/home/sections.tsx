@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import { Reveal } from './reveal';
 import { GitHubIcon, LogoMark } from "@/components/logo";
-import { appName, asset, author, downloadUrl, repoUrl } from '@/lib/shared';
+import { appName, asset, author, downloadUrl, releasesUrl, repoUrl } from '@/lib/shared';
 import { cn } from '@/lib/cn';
 import { faqs } from '@/lib/faqs';
 
@@ -380,7 +380,7 @@ export function Cta() {
 
 export function Footer() {
   const cols = [
-    { title: 'Product', links: [['Download', downloadUrl], ['Install', '/docs/install'], ['Release notes', `${repoUrl}/releases`]] },
+    { title: 'Product', links: [['Download', downloadUrl], ['Install', '/docs/install'], ['Release notes', releasesUrl]] },
     { title: 'Docs', links: [['Scan and clean', '/docs/guide'], ['What it finds', '/docs/what-it-finds'], ['FAQ', '/docs/faq']] },
     { title: 'Project', links: [['Source code', repoUrl], ['Report a problem', `${repoUrl}/issues`], ['License', `${repoUrl}/blob/main/LICENSE`]] },
   ];

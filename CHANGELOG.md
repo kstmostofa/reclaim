@@ -2,7 +2,7 @@
 
 ## 1.0.0
 
-The first release of Reclaim, a free, open-source Mac storage cleaner for developers.
+The first release of Reclaim, a free, open-source Mac storage cleaner for developers. Download `Reclaim.dmg` and drag Reclaim to Applications; `Reclaim.zip` holds the same app.
 
 ### Scan and clean
 - Scans the whole disk in parallel, measuring the space files really use: hard links count once, sparse disk images count what they occupy, and other drives are left alone.

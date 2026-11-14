@@ -15,7 +15,7 @@ import { appName, author, getPageImageUrl, getPageMarkdownUrl, gitConfig, repoUr
 
 /** FAQ structured data from the page's `### question` headings and the paragraphs under them. */
 function faqJsonLd(markdown: string) {
-  const entries = [...markdown.matchAll(/^### (.+)\n+([\s\S]*?)(?=\n#{2,3} |$)/gm)].map(([, q, a]) => ({
+  const entries = [...markdown.matchAll(/^### (.+?)(?: \[#[^\]]+\])?\n+([\s\S]*?)(?=\n#{2,3} |(?![\s\S]))/gm)].map(([, q, a]) => ({
     '@type': 'Question',
     name: q.trim(),
     acceptedAnswer: { '@type': 'Answer', text: a.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[`*]/g, '').trim() },
@@ -89,7 +89,20 @@ export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): P
     title: page.data.title,
     description: page.data.description,
     alternates: { canonical: `${page.url}/` },
-    openGraph: { type: 'article', title: `${page.data.title} · ${appName}`, description: page.data.description, url: `${page.url}/`, images: image },
-    twitter: { card: 'summary_large_image', title: `${page.data.title} · ${appName}`, description: page.data.description, images: image },
+    openGraph: {
+      type: 'article',
+      siteName: appName,
+      locale: 'en_US',
+      title: `${page.data.title} · ${appName}`,
+      description: page.data.description,
+      url: `${page.url}/`,
+      images: [{ url: image, width: 1200, height: 630, alt: `${page.data.title} · ${appName} docs` }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${page.data.title} · ${appName}`,
+      description: page.data.description,
+      images: [{ url: image, alt: `${page.data.title} · ${appName} docs` }],
+    },
   };
 }

@@ -314,7 +314,7 @@ macOS 14 Sonoma or later, on Apple silicon or Intel.
 <Step>
 ### Get the app [#get-the-app]
 
-Open the [latest release](https://github.com/kstmostofa/reclaim/releases/latest) and download `Reclaim.zip`, plus `Reclaim.zip.sha256` if you want to check it.
+[Download Reclaim.dmg](https://github.com/kstmostofa/reclaim/releases/latest/download/Reclaim.dmg), the latest version, ready to run: there is nothing to build. The [release page](https://github.com/kstmostofa/reclaim/releases/latest) also has `Reclaim.dmg.sha256` to check it, and the same app as `Reclaim.zip`.
 </Step>
 
 <Step>
@@ -323,16 +323,16 @@ Open the [latest release](https://github.com/kstmostofa/reclaim/releases/latest)
 In Terminal, in the folder you downloaded to:
 
 ```sh
-shasum -a 256 -c Reclaim.zip.sha256
+shasum -a 256 -c Reclaim.dmg.sha256
 ```
 
-It should print `Reclaim.zip: OK`.
+It should print `Reclaim.dmg: OK`.
 </Step>
 
 <Step>
 ### Move it to Applications [#move-it-to-applications]
 
-Double-click `Reclaim.zip` and drag **Reclaim** into your **Applications** folder.
+Double-click `Reclaim.dmg` and drag **Reclaim** onto the **Applications** folder in the window that opens. Then eject the disk image in Finder.
 </Step>
 </Steps>
 

@@ -21,9 +21,13 @@ export const metadata: Metadata = {
   authors: [{ name: author }],
   keywords: ['mac cleaner', 'disk space', 'node_modules', 'Xcode DerivedData', 'Docker cleanup', 'developer tools', 'macOS', 'open source'],
   alternates: { canonical: './' },
-  openGraph: { type: 'website', siteName: appName, title: `${appName} — ${tagline}`, description, url: './' },
+  openGraph: { type: 'website', siteName: appName, locale: 'en_US', title: `${appName} — ${tagline}`, description, url: './' },
   twitter: { card: 'summary_large_image', title: `${appName} — ${tagline}`, description },
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
+  category: 'utilities',
+  creator: author,
+  publisher: author,
+  formatDetection: { telephone: false, email: false, address: false },
 };
 
 export const viewport: Viewport = {

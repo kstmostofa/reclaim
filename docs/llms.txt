@@ -3,7 +3,7 @@
 
 - **Get started**
 - [Introduction](/docs): Reclaim is a free, open-source Mac app that finds build caches, dependencies, app caches and Docker leftovers, explains what is safe to delete, and frees the space in one click.
-- [Install](/docs/install): Download Reclaim for Mac, open it through Privacy & Security the first time, and give it Full Disk Access. Plus updating, uninstalling and building from source.
+- [Install](/docs/install): Download the Reclaim disk image for Mac, open it through Privacy & Security the first time, and give it Full Disk Access. Plus updating, uninstalling and building from source.
 - [Scan and clean](/docs/guide): How to scan your Mac with Reclaim, read the Overview, review suggestions by safety level, and delete caches, node_modules and other junk in one click.
 
 - **Features**

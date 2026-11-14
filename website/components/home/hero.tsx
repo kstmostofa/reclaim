@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ArrowRight, Download } from 'lucide-react';
 import { AppWindow } from './app-window';
-import { downloadUrl, version } from '@/lib/shared';
+import { downloadUrl, releasesUrl, version } from '@/lib/shared';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -44,7 +44,7 @@ export function Hero() {
 
       <div className="mx-auto max-w-6xl px-6 text-center">
         <motion.a
-          href={downloadUrl}
+          href={releasesUrl}
           initial={reduce ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease }}

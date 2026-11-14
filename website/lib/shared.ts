@@ -7,7 +7,9 @@ export const version = '1.0.0';
 export const author = 'Md. Mostafijur Rahman';
 export const gitConfig = { user: 'kstmostofa', repo: 'reclaim', branch: 'main' };
 export const repoUrl = `https://github.com/${gitConfig.user}/${gitConfig.repo}`;
-export const downloadUrl = `${repoUrl}/releases/latest`;
+/** The latest release's disk image, downloaded directly; the release page lists every file. */
+export const downloadUrl = `${repoUrl}/releases/latest/download/Reclaim.dmg`;
+export const releasesUrl = `${repoUrl}/releases/latest`;
 
 /** The site is served at the root of its own domain; set NEXT_PUBLIC_BASE_PATH to host it under a folder. */
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';

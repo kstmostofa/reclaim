@@ -6,7 +6,7 @@
 
 <p align="center">
   A free, open-source Mac storage cleaner for developers.<br>
-  <a href="https://github.com/kstmostofa/reclaim/releases/latest"><b>Download</b></a> ·
+  <a href="https://github.com/kstmostofa/reclaim/releases/latest/download/Reclaim.dmg"><b>Download Reclaim.dmg</b></a> ·
   <a href="https://reclaim.mostofa.me">Website</a> ·
   <a href="https://reclaim.mostofa.me/docs">Docs</a>
 </p>
@@ -38,8 +38,9 @@ happens if you delete it, and removes what you tick in one click.
 
 Requires macOS 14 or later, on Apple silicon or Intel.
 
-1. Download `Reclaim.zip` from the [latest release](https://github.com/kstmostofa/reclaim/releases/latest) and move
-   **Reclaim** to Applications. Optionally check it with `shasum -a 256 -c Reclaim.zip.sha256`.
+1. [Download Reclaim.dmg](https://github.com/kstmostofa/reclaim/releases/latest/download/Reclaim.dmg), open it and
+   drag **Reclaim** onto Applications. No need to build anything. Optionally check it with
+   `shasum -a 256 -c Reclaim.dmg.sha256` (from the [release page](https://github.com/kstmostofa/reclaim/releases/latest)).
 2. Reclaim is not notarized, so macOS blocks it the first time. Open it once, then go to
    **System Settings › Privacy & Security** and click **Open Anyway**.
 3. Give it **Full Disk Access** in **System Settings › Privacy & Security › Full Disk Access** so it can see the
@@ -64,7 +65,7 @@ open Reclaim.xcodeproj
 - `App/`: the SwiftUI app. `Helper/`: the root helper.
 - `website/`: the website and docs (Next.js and Fumadocs), exported to `docs/` for GitHub Pages.
 - `brand/`: scripts that draw the icons.
-- `scripts/release.sh`: builds, signs and zips a release.
+- `scripts/release.sh`: builds and signs a release as a disk image and a zip.
 
 ## License
 

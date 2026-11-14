@@ -63,6 +63,8 @@ final class AppSettings {
     /// Large Files lists files of at least this many megabytes.
     var largeFileThresholdMB: Int { didSet { defaults.set(largeFileThresholdMB, forKey: "largeFileThresholdMB") } }
     var downloadsAgeDays: Int { didSet { defaults.set(downloadsAgeDays, forKey: "downloadsAgeDays") } }
+    /// Duplicates compares files of at least this many megabytes.
+    var duplicateMinimumMB: Int { didSet { defaults.set(duplicateMinimumMB, forKey: "duplicateMinimumMB") } }
 
     init() {
         accent = Accent(rawValue: defaults.string(forKey: "accent") ?? "") ?? .indigo
@@ -74,6 +76,7 @@ final class AppSettings {
         excludedFolders = defaults.stringArray(forKey: "excludedFolders") ?? []
         largeFileThresholdMB = defaults.object(forKey: "largeFileThresholdMB") as? Int ?? 500
         downloadsAgeDays = defaults.object(forKey: "downloadsAgeDays") as? Int ?? OldDownloadsRule.defaultDays
+        duplicateMinimumMB = defaults.object(forKey: "duplicateMinimumMB") as? Int ?? 1
     }
 
     var accentColor: Color {
@@ -97,7 +100,7 @@ final class AppSettings {
 
     func resetToDefaults() {
         for key in ["accent", "customAccentHex", "appearance", "moveToTrash", "preselectSafe", "scanScope",
-                    "excludedFolders", "largeFileThresholdMB", "downloadsAgeDays"] {
+                    "excludedFolders", "largeFileThresholdMB", "downloadsAgeDays", "duplicateMinimumMB"] {
             defaults.removeObject(forKey: key)
         }
         let fresh = AppSettings()
@@ -110,6 +113,7 @@ final class AppSettings {
         excludedFolders = fresh.excludedFolders
         largeFileThresholdMB = fresh.largeFileThresholdMB
         downloadsAgeDays = fresh.downloadsAgeDays
+        duplicateMinimumMB = fresh.duplicateMinimumMB
     }
 }
 

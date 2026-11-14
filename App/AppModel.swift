@@ -28,7 +28,14 @@ final class AppModel {
     private(set) var suggestions: [Suggestion] = []
     private(set) var largeFiles: [Suggestion] = []
     private(set) var scanError: String?
+    /// Nil until duplicates are searched for after the current scan.
+    private(set) var duplicates: [DuplicateGroup]?
+    private(set) var isFindingDuplicates = false
+    private(set) var duplicateProgress = DuplicateProgress.Snapshot()
     private(set) var runningBundleIDs: Set<String> = []
+    private(set) var hasFullDiskAccess = PrivacyAccess.hasFullDiskAccess()
+    /// True when the last scan left out folders macOS would have asked about.
+    private(set) var lastScanSkippedPrivateFolders = false
     /// Paths ticked for deletion.
     var ticked: Set<String> = []
     var deletion: DeletionRun?
@@ -36,6 +43,7 @@ final class AppModel {
     /// What each tickable path is, whichever screen it was ticked on.
     @ObservationIgnored private var tickable: [String: DeletionItem] = [:]
     @ObservationIgnored private var scanTask: Task<Void, Never>?
+    @ObservationIgnored private var duplicateTask: Task<Void, Never>?
     @ObservationIgnored private let history = HistoryLog()
     @ObservationIgnored private let protectedPaths = ProtectedPaths()
 
@@ -54,6 +62,11 @@ final class AppModel {
         let tracker = ScanProgress()
         var options = ScanOptions()
         options.excludedPaths = Set(settings.excludedFolders)
+        refreshAccess()
+        // Without Full Disk Access these folders raise consent dialogs that stall the scan until answered.
+        let skipPrivate = !hasFullDiskAccess
+        options.excludedPaths.formUnion(skipPrivate ? PrivacyAccess.promptingLocations()
+                                                    : PrivacyAccess.alwaysPromptingLocations())
         let scanner = DiskScanner(rules: .defaults(downloadsAgeDays: settings.downloadsAgeDays), options: options)
         let root = settings.scanScope.root
         scanTask = Task {
@@ -69,6 +82,7 @@ final class AppModel {
                     try await scanner.scan(root: root, progress: tracker)
                 }.value
                 progress = tracker.snapshot
+                lastScanSkippedPrivateFolders = skipPrivate
                 apply(scan)
             } catch is CancellationError {
                 phase = result == nil ? .idle : .scanned
@@ -84,6 +98,8 @@ final class AppModel {
     }
 
     private func apply(_ scan: ScanResult) {
+        duplicateTask?.cancel()
+        duplicates = nil
         result = scan
         tree = scan.root
         suggestions = scan.suggestions()
@@ -103,6 +119,51 @@ final class AppModel {
                                 unreadableFolders: result.unreadableFolders)
             .largeFiles(threshold: settings.largeFileThreshold)
         for s in largeFiles { tickable[s.path] = s.deletionItem }
+    }
+
+    // MARK: Duplicates
+
+    func findDuplicates() {
+        guard let tree, !isFindingDuplicates else { return }
+        isFindingDuplicates = true
+        duplicateProgress = DuplicateProgress.Snapshot()
+        let tracker = DuplicateProgress()
+        let finder = DuplicateFinder(minimumSize: Int64(settings.duplicateMinimumMB) * 1_000_000)
+        duplicateTask = Task {
+            let poller = Task {
+                while !Task.isCancelled {
+                    duplicateProgress = tracker.snapshot
+                    try? await Task.sleep(for: .milliseconds(120))
+                }
+            }
+            defer {
+                poller.cancel()
+                isFindingDuplicates = false
+            }
+            guard let groups = try? await Task.detached(priority: .userInitiated, operation: {
+                try await finder.find(in: tree, progress: tracker)
+            }).value else { return }
+            duplicateProgress = tracker.snapshot
+            for group in groups {
+                for file in group.files { tickable[file.path] = group.deletionItem(for: file) }
+            }
+            duplicates = groups
+        }
+    }
+
+    func cancelDuplicates() {
+        duplicateTask?.cancel()
+    }
+
+    /// Ticks every copy except the one `choice` keeps, in each of `groups`. Groups the choice does not
+    /// apply to are left as they are.
+    func keep(_ choice: KeepChoice, in groups: [DuplicateGroup]) {
+        for group in groups {
+            let delete = choice.copiesToDelete(in: group)
+            guard !delete.isEmpty else { continue }
+            ticked.subtract(group.files.map(\.path))
+            ticked.formUnion(delete.map(\.path))
+        }
     }
 
     // MARK: Queries
@@ -143,6 +204,14 @@ final class AppModel {
         suggestion.category == .appCache || suggestion.category == .appLeftovers
             ? runningBundleIDs.contains(suggestion.name.lowercased())
             : false
+    }
+
+    func refreshAccess() {
+        hasFullDiskAccess = PrivacyAccess.hasFullDiskAccess()
+    }
+
+    func openFullDiskAccessSettings() {
+        NSWorkspace.shared.open(PrivacyAccess.settingsURL)
     }
 
     func refreshRunningApps() {
@@ -212,6 +281,10 @@ final class AppModel {
         }
         suggestions.removeAll { isGone($0.path) }
         largeFiles.removeAll { isGone($0.path) }
+        duplicates = duplicates?.compactMap { group in
+            let left = group.files.filter { !isGone($0.path) }
+            return left.count > 1 ? DuplicateGroup(hash: group.hash, size: group.size, files: left) : nil
+        }
         ticked = ticked.filter { !isGone($0) }
         tree = tree?.removing(gone)
         volume = VolumeInfo.forPath()

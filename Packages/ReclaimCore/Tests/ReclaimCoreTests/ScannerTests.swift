@@ -160,3 +160,22 @@ extension DiskScanner {
         #expect(try await scan(30) == 1)
     }
 }
+
+@Suite struct PrivacyAccessTests {
+    @Test func missingProbesDoNotCountAsDenied() throws {
+        let fx = try Fixture()
+        try fx.folder("open")
+        try fx.folder("locked")
+        chmod(fx.path("locked"), 0o000)
+        defer { chmod(fx.path("locked"), 0o755) }
+        #expect(PrivacyAccess.hasFullDiskAccess(probes: [fx.path("missing"), fx.path("open")]))
+        #expect(!PrivacyAccess.hasFullDiskAccess(probes: [fx.path("missing"), fx.path("locked"), fx.path("open")]))
+        #expect(PrivacyAccess.hasFullDiskAccess(probes: [fx.path("missing")]))
+    }
+
+    @Test func mediaLibrariesAreAlwaysSkipped() {
+        let always = Set(PrivacyAccess.alwaysPromptingLocations(home: "/Users/x"))
+        #expect(always.contains("/Users/x/Music/Music"))
+        #expect(always.isSubset(of: PrivacyAccess.promptingLocations(home: "/Users/x")))
+    }
+}

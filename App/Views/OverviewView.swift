@@ -9,6 +9,9 @@ struct OverviewView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 storage
+                if !model.hasFullDiskAccess {
+                    AccessBanner()
+                }
                 scanSection
                 if !model.categories.isEmpty {
                     topCategories
@@ -74,8 +77,8 @@ struct OverviewView: View {
                             Text("\(Format.count(model.progress.files)) files in \(String(format: "%.0f", result.duration)) s, \(result.startedAt.formatted(.relative(presentation: .named)))")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
-                            if result.unreadableFolders > 0 {
-                                Text("\(Format.count(result.unreadableFolders)) folders could not be read. Give Reclaim Full Disk Access in System Settings › Privacy & Security to include them.")
+                            if result.unreadableFolders > 0 && model.hasFullDiskAccess {
+                                Text("\(Format.count(result.unreadableFolders)) folders could not be read, usually because they belong to macOS or another user.")
                                     .font(.caption)
                                     .foregroundStyle(.orange)
                             }
@@ -149,5 +152,29 @@ struct StorageBar: View {
         .accessibilityElement()
         .accessibilityLabel("Storage")
         .accessibilityValue("\(Format.size(volume.used)) used, \(Format.size(reclaimable)) reclaimable, \(Format.size(volume.available)) free")
+    }
+}
+
+/// Explains what a scan leaves out without Full Disk Access, and opens the setting.
+struct AccessBanner: View {
+    @Environment(AppModel.self) private var model
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: "lock.shield")
+                .font(.title2)
+                .foregroundStyle(.orange)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Reclaim can't see everything yet").font(.headline)
+                Text("Without Full Disk Access, scans skip \(PrivacyAccess.promptingSummary), so macOS doesn't stop the scan to ask about each one. Turn on Reclaim in Full Disk Access, then scan again.")
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer()
+            Button("Open Settings") { model.openFullDiskAccessSettings() }
+        }
+        .padding(14)
+        .background(Color.orange.opacity(0.1), in: RoundedRectangle(cornerRadius: 10))
+        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.orange.opacity(0.3)))
     }
 }

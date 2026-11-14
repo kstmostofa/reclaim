@@ -77,6 +77,9 @@ private struct ScanSettings: View {
                 Stepper(value: $settings.downloadsAgeDays, in: 7...3650, step: 7) {
                     LabeledContent("Old downloads after", value: "\(settings.downloadsAgeDays) days")
                 }
+                Stepper(value: $settings.duplicateMinimumMB, in: 1...1000) {
+                    LabeledContent("Compare duplicates from", value: "\(settings.duplicateMinimumMB) MB")
+                }
             }
             Section {
                 List(selection: $selectedFolder) {

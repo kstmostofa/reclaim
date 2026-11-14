@@ -41,3 +41,21 @@ if CommandLine.arguments.contains("--leftovers") {
     print("\nLeftovers:")
     for s in suggestions where s.category == .appLeftovers { print("  \(size(s.size).padding(toLength: 10, withPad: " ", startingAt: 0)) \(s.path)") }
 }
+
+if CommandLine.arguments.contains("--duplicates") {
+    let started = Date()
+    let dupProgress = DuplicateProgress()
+    let finder = DuplicateFinder()
+    let candidates = finder.candidates(in: result.root)
+    let groups = try await finder.find(paths: candidates, progress: dupProgress)
+    let p = dupProgress.snapshot
+    print("\nDuplicates: \(groups.count) groups, \(size(groups.reduce(0) { $0 + $1.reclaimable })) reclaimable;"
+          + " \(candidates.count) candidates, \(p.filesRead) reads, \(size(p.bytesRead)) read in"
+          + " \(String(format: "%.1f", Date().timeIntervalSince(started))) s")
+    let shared = groups.flatMap { g in g.files.filter { g.sharesStorage($0) } }.count
+    print("  copies sharing storage with another (APFS clones): \(shared)")
+    func abbreviate(_ p: String) -> String { p.replacingOccurrences(of: NSHomeDirectory(), with: "~") }
+    for g in groups {
+        print("  \(size(g.reclaimable).padding(toLength: 10, withPad: " ", startingAt: 0)) " + g.files.map { abbreviate($0.path) }.joined(separator: "  |  "))
+    }
+}

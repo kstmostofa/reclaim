@@ -43,13 +43,24 @@ enum SidebarItem: Hashable {
     case category(SuggestionCategory)
     case diskMap
     case largeFiles
+    case duplicates
 }
 
 struct ContentView: View {
     @Environment(AppModel.self) private var model
     @Environment(AppSettings.self) private var settings
-    @State private var selection: SidebarItem? = .overview
+    /// `-section duplicates` (or diskMap, largeFiles) opens that screen at launch; used for screenshots.
+    @State private var selection: SidebarItem? = ContentView.launchSection()
     @Environment(\.openSettings) private var openSettings
+
+    private static func launchSection() -> SidebarItem {
+        switch UserDefaults.standard.string(forKey: "section") {
+        case "diskMap": .diskMap
+        case "largeFiles": .largeFiles
+        case "duplicates": .duplicates
+        default: .overview
+        }
+    }
 
     var body: some View {
         NavigationSplitView {
@@ -66,6 +77,8 @@ struct ContentView: View {
                                  emptyMessage: "No files of \(settings.largeFileThresholdMB) MB or more outside the suggestions.")
                 case .diskMap:
                     DiskMapView()
+                case .duplicates:
+                    DuplicatesView()
                 case .overview, nil:
                     OverviewView(selection: $selection)
                 }
@@ -87,6 +100,14 @@ struct ContentView: View {
             if UserDefaults.standard.bool(forKey: "openSettings") { openSettings() }
         }
         .onChange(of: settings.largeFileThresholdMB) { model.recomputeLargeFiles() }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            model.refreshAccess()
+            model.refreshRunningApps()
+        }
+        .onChange(of: model.phase) {
+            // `-autoDuplicates YES` searches for duplicates as soon as a scan finishes, for screenshots.
+            if model.phase == .scanned && UserDefaults.standard.bool(forKey: "autoDuplicates") { model.findDuplicates() }
+        }
     }
 }
 
@@ -115,6 +136,9 @@ struct Sidebar: View {
                 Label("Large Files", systemImage: SuggestionCategory.largeFiles.systemImage)
                     .badge(model.largeFiles.isEmpty ? nil : Text(Format.size(model.total(of: model.largeFiles))).monospacedDigit())
                     .tag(SidebarItem.largeFiles)
+                Label("Duplicates", systemImage: SuggestionCategory.duplicates.systemImage)
+                    .badge(model.duplicates.map { Text(Format.size($0.reduce(0) { $0 + $1.reclaimable })).monospacedDigit() })
+                    .tag(SidebarItem.duplicates)
             }
         }
     }

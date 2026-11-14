@@ -31,6 +31,11 @@ final class AppModel {
     /// Nil until duplicates are searched for after the current scan.
     private(set) var duplicates: [DuplicateGroup]?
     private(set) var isFindingDuplicates = false
+    /// Nil until Docker has been checked.
+    private(set) var dockerStatus: DockerClient.Status?
+    private(set) var dockerItems: [DockerItem] = []
+    private(set) var isLoadingDocker = false
+    private(set) var dockerError: String?
     private(set) var duplicateProgress = DuplicateProgress.Snapshot()
     private(set) var runningBundleIDs: Set<String> = []
     private(set) var hasFullDiskAccess = PrivacyAccess.hasFullDiskAccess()
@@ -46,6 +51,7 @@ final class AppModel {
     @ObservationIgnored private var duplicateTask: Task<Void, Never>?
     @ObservationIgnored private let history = HistoryLog()
     @ObservationIgnored private let protectedPaths = ProtectedPaths()
+    @ObservationIgnored private let docker = DockerClient()
 
     init(settings: AppSettings) {
         self.settings = settings
@@ -110,6 +116,7 @@ final class AppModel {
         refreshRunningApps()
         volume = VolumeInfo.forPath()
         phase = .scanned
+        refreshDocker()
     }
 
     /// Rebuilds Large Files from the tree, for example after the threshold changes.
@@ -119,6 +126,39 @@ final class AppModel {
                                 unreadableFolders: result.unreadableFolders)
             .largeFiles(threshold: settings.largeFileThreshold)
         for s in largeFiles { tickable[s.path] = s.deletionItem }
+    }
+
+    // MARK: Docker
+
+    /// Checks the Docker engine and lists what it can remove. Newly found Safe items are ticked when
+    /// Safe items are ticked after scans.
+    func refreshDocker() {
+        guard !isLoadingDocker else { return }
+        isLoadingDocker = true
+        dockerError = nil
+        let docker = docker
+        Task {
+            defer { isLoadingDocker = false }
+            let status = await docker.status()
+            dockerStatus = status
+            guard case .running = status else {
+                dockerItems = []
+                return
+            }
+            do {
+                let items = try await docker.removableItems()
+                let known = Set(dockerItems.map(\.path))
+                for item in items { tickable[item.path] = item.deletionItem }
+                if settings.preselectSafe {
+                    ticked.formUnion(items.filter { $0.level == .safe && !known.contains($0.path) }.map(\.path))
+                }
+                let current = Set(items.map(\.path))
+                ticked = ticked.filter { !$0.hasPrefix("docker:") || current.contains($0) }
+                dockerItems = items
+            } catch {
+                dockerError = error.localizedDescription
+            }
+        }
     }
 
     // MARK: Duplicates
@@ -258,24 +298,39 @@ final class AppModel {
         guard !items.isEmpty, deletion == nil else { return }
         deletion = DeletionRun(total: items.count, current: items[0].path)
         let deleter = Deleter(mode: settings.moveToTrash ? .trash : .permanent)
+        // Docker items are removed by Docker; everything else is a file or folder.
+        let dockerByPath = Dictionary(uniqueKeysWithValues: dockerItems.map { ($0.path, $0) })
+        let dockerItems = items.compactMap { dockerByPath[$0.path] }
+        let files = items.filter { dockerByPath[$0.path] == nil }
+        let docker = docker
         let history = history
         Task {
-            let report = await Task.detached(priority: .userInitiated) {
-                await deleter.delete(items) { done, outcome in
+            var report = await Task.detached(priority: .userInitiated) {
+                await deleter.delete(files) { done, outcome in
                     Task { @MainActor in
                         self.deletion?.done = done
                         self.deletion?.current = outcome.item.path
                     }
                 }
             }.value
+            report.outcomes += await docker.remove(dockerItems) { outcome in
+                Task { @MainActor in
+                    self.deletion?.done += 1
+                    self.deletion?.current = outcome.item.title
+                }
+            }
+            report.finishedAt = Date()
             try? history.append(report)
             finish(report)
+            if !dockerItems.isEmpty { refreshDocker() }
         }
     }
 
     private func finish(_ report: DeletionReport) {
-        let gone = Set(report.outcomes.filter { $0.succeeded || !FileManager.default.fileExists(atPath: $0.item.path) }
-            .map(\.item.path))
+        // A file that failed but is no longer there is gone all the same; Docker items have no file to check.
+        let gone = Set(report.outcomes.filter {
+            $0.succeeded || ($0.item.path.hasPrefix("/") && !FileManager.default.fileExists(atPath: $0.item.path))
+        }.map(\.item.path))
         func isGone(_ path: String) -> Bool {
             gone.contains(path) || gone.contains { path.hasPrefix($0 + "/") }
         }
@@ -285,6 +340,7 @@ final class AppModel {
             let left = group.files.filter { !isGone($0.path) }
             return left.count > 1 ? DuplicateGroup(hash: group.hash, size: group.size, files: left) : nil
         }
+        dockerItems.removeAll { gone.contains($0.path) }
         ticked = ticked.filter { !isGone($0) }
         tree = tree?.removing(gone)
         volume = VolumeInfo.forPath()

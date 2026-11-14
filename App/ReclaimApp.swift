@@ -44,6 +44,7 @@ enum SidebarItem: Hashable {
     case diskMap
     case largeFiles
     case duplicates
+    case containers
 }
 
 struct ContentView: View {
@@ -58,6 +59,7 @@ struct ContentView: View {
         case "diskMap": .diskMap
         case "largeFiles": .largeFiles
         case "duplicates": .duplicates
+        case "containers": .containers
         default: .overview
         }
     }
@@ -79,6 +81,8 @@ struct ContentView: View {
                     DiskMapView()
                 case .duplicates:
                     DuplicatesView()
+                case .containers:
+                    ContainersView()
                 case .overview, nil:
                     OverviewView(selection: $selection)
                 }
@@ -139,6 +143,9 @@ struct Sidebar: View {
                 Label("Duplicates", systemImage: SuggestionCategory.duplicates.systemImage)
                     .badge(model.duplicates.map { Text(Format.size($0.reduce(0) { $0 + $1.reclaimable })).monospacedDigit() })
                     .tag(SidebarItem.duplicates)
+                Label("Containers", systemImage: SuggestionCategory.containers.systemImage)
+                    .badge(model.dockerItems.isEmpty ? nil : Text(Format.size(model.dockerItems.reduce(0) { $0 + $1.size })).monospacedDigit())
+                    .tag(SidebarItem.containers)
             }
         }
     }

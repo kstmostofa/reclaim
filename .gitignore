@@ -9,3 +9,7 @@ dist/
 
 # Local planning notes, never published
 PLAN.md
+
+# Release builds
+build/
+dist/

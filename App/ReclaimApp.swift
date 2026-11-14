@@ -76,6 +76,9 @@ struct ContentView: View {
     /// `-section duplicates` (or diskMap, largeFiles) opens that screen at launch; used for screenshots.
     @State private var selection: SidebarItem? = ContentView.launchSection()
     @AppStorage("showInspector") private var showInspector = true
+    /// The one-time notice about permanent deletion and Full Disk Access.
+    @AppStorage("welcomeShown") private var welcomeShown = false
+    @State private var showWelcome = false
 
     /// The inspector belongs to the suggestion lists. It is a column of the window rather than of the detail
     /// view, because an inspector inside a split view's detail pushes the whole window sideways as it opens.
@@ -94,7 +97,12 @@ struct ContentView: View {
     @Environment(\.openWindow) private var openWindow
 
     private static func launchSection() -> SidebarItem {
-        switch UserDefaults.standard.string(forKey: "section") {
+        let section = UserDefaults.standard.string(forKey: "section") ?? ""
+        // `-section category:buildCache` opens a suggestion category.
+        if section.hasPrefix("category:"), let category = SuggestionCategory(rawValue: String(section.dropFirst(9))) {
+            return .category(category)
+        }
+        return switch section {
         case "diskMap": .diskMap
         case "largeFiles": .largeFiles
         case "duplicates": .duplicates
@@ -104,43 +112,65 @@ struct ContentView: View {
         }
     }
 
+    @ViewBuilder private var detailColumn: some View {
+        VStack(spacing: 0) {
+            switch selection {
+            case .category(let category):
+                ItemListView(title: category.title, items: model.suggestions(in: category))
+                    .id(category)
+            case .largeFiles:
+                ItemListView(title: "Large Files", items: model.largeFiles,
+                             emptyMessage: "No files of \(settings.largeFileThresholdMB) MB or more outside the suggestions.")
+            case .diskMap:
+                DiskMapView()
+            case .duplicates:
+                DuplicatesView()
+            case .containers:
+                ContainersView()
+            case .system:
+                SystemView(selection: $selection)
+            case .overview, nil:
+                OverviewView(selection: $selection)
+            }
+            if !model.ticked.isEmpty {
+                ActionBar()
+            }
+        }
+        // The deletion toast floats over the content, above the action bar.
+        .overlay(alignment: .bottomTrailing) {
+            DeletionToast()
+                .padding(.trailing, 20)
+                .padding(.bottom, model.ticked.isEmpty ? 20 : 64)
+                .animation(.smooth, value: model.deletion?.report == nil)
+        }
+    }
+
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $selection)
                 .navigationSplitViewColumnWidth(min: 200, ideal: 230)
         } detail: {
-            VStack(spacing: 0) {
-                switch selection {
-                case .category(let category):
-                    ItemListView(title: category.title, items: model.suggestions(in: category))
-                        .id(category)
-                case .largeFiles:
-                    ItemListView(title: "Large Files", items: model.largeFiles,
-                                 emptyMessage: "No files of \(settings.largeFileThresholdMB) MB or more outside the suggestions.")
-                case .diskMap:
-                    DiskMapView()
-                case .duplicates:
-                    DuplicatesView()
-                case .containers:
-                    ContainersView()
-                case .system:
-                    SystemView(selection: $selection)
-                case .overview, nil:
-                    OverviewView(selection: $selection)
-                }
-                if !model.ticked.isEmpty {
-                    ActionBar()
-                }
-            }
+            detailColumn
         }
         .inspector(isPresented: inspectorShown) {
             InspectorView(item: model.inspected)
                 .inspectorColumnWidth(min: 240, ideal: 280, max: 400)
         }
-        .sheet(isPresented: .constant(model.deletion != nil)) {
-            DeletionSheet()
+        .sheet(isPresented: $showWelcome, onDismiss: { welcomeShown = true }) {
+            WelcomeView()
                 .environment(model)
                 .environment(settings)
+                .tint(settings.accentColor)
+        }
+        .onAppear {
+            // Screenshot launches pass -autoScan or -section and skip the notice.
+            let scripted = UserDefaults.standard.bool(forKey: "autoScan") || UserDefaults.standard.string(forKey: "section") != nil
+                || UserDefaults.standard.string(forKey: "demoDeletion") != nil
+            if !welcomeShown && !scripted { showWelcome = true }
+        }
+        .sheet(isPresented: Binding(get: { model.showDeletionDetails }, set: { model.showDeletionDetails = $0 })) {
+            DeletionDetails()
+                .environment(model)
                 .tint(settings.accentColor)
         }
         .task {
@@ -155,6 +185,17 @@ struct ContentView: View {
                 FileHandle.standardError.write(Data("helper results: \(results)\n".utf8))
             }
             if UserDefaults.standard.bool(forKey: "previewMenuBar") { openWindow(id: "menubar-preview") }
+            // `-demoDeletion ok` (or `fail`) deletes a throwaway folder made in the temporary directory, to show
+            // the deletion toast without touching anything real; `fail` adds a path that does not exist.
+            if let demo = UserDefaults.standard.string(forKey: "demoDeletion") {
+                let folder = FileManager.default.temporaryDirectory.appendingPathComponent("ReclaimDemo-\(UUID().uuidString)")
+                try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+                for i in 0..<40 { try? Data(count: 3_000_000).write(to: folder.appendingPathComponent("file\(i).bin")) }
+                var items = [DeletionItem(path: folder.path, size: 120_000_000, title: "Demo folder")]
+                if demo == "fail" { items.append(DeletionItem(path: folder.path + "-missing", size: 1, title: "Missing")) }
+                try? await Task.sleep(for: .seconds(1))
+                model.delete(items)
+            }
             // `-openSettings YES` opens Settings at launch, for the same reason.
             if UserDefaults.standard.bool(forKey: "openSettings") { openSettings() }
         }

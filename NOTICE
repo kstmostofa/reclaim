@@ -1,0 +1,12 @@
+Reclaim is released under the MIT License (see LICENSE), except for the files listed below.
+
+Apple images
+------------
+The images in website/public/sf-symbols/ are renderings of Apple's SF Symbols, and website/public/cursor-arrow.png
+is macOS's arrow pointer. They belong to Apple Inc., are used only to depict this Mac app's own interface on its
+website, and are not covered by the MIT License. They are generated on a Mac by brand/sf-symbols.swift and
+brand/cursor.swift; see Apple's SF Symbols license for the terms of their use.
+
+Fonts
+-----
+The website loads Inter, Khand and JetBrains Mono through Google Fonts under the SIL Open Font License.

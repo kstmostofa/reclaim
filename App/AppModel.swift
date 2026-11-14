@@ -1,5 +1,6 @@
 import AppKit
 import Observation
+import SwiftUI
 import ReclaimCore
 
 /// The app's state: the last scan, what is ticked, and any deletion in progress.
@@ -54,6 +55,8 @@ final class AppModel {
     private(set) var lastScanDate = UserDefaults.standard.object(forKey: "lastScanDate") as? Date
     private(set) var lastReclaimable = (UserDefaults.standard.object(forKey: "lastReclaimable") as? NSNumber)?.int64Value
     var deletion: DeletionRun?
+    /// Shows what a deletion could not remove.
+    var showDeletionDetails = false
 
     /// What each tickable path is, whichever screen it was ticked on.
     @ObservationIgnored private var tickable: [String: DeletionItem] = [:]
@@ -434,7 +437,11 @@ final class AppModel {
 
     /// Deletes every ticked item at once; no confirmation, by design.
     func deleteTicked() {
-        let items = tickedItems
+        delete(tickedItems)
+    }
+
+    /// Deletes `items` with the progress toast.
+    func delete(_ items: [DeletionItem]) {
         guard !items.isEmpty, deletion == nil else { return }
         deletion = DeletionRun(total: items.count, current: items[0].path)
         Task { await runDeletion(items) }
@@ -528,10 +535,18 @@ final class AppModel {
         volume = VolumeInfo.forPath()
         deletion?.done = report.outcomes.count
         deletion?.report = report
+        // A clean run's toast goes away by itself; one with failures waits for the user.
+        if report.failures.isEmpty {
+            let finished = report.finishedAt
+            Task {
+                try? await Task.sleep(for: .seconds(4))
+                if deletion?.report?.finishedAt == finished && !showDeletionDetails { withAnimation(.smooth) { deletion = nil } }
+            }
+        }
     }
 
     func dismissDeletion() {
-        deletion = nil
+        withAnimation(.smooth) { deletion = nil }
     }
 
     // MARK: Finder

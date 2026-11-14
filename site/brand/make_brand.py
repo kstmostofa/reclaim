@@ -85,7 +85,7 @@ def svg_mark(pie="currentColor", slice_="#5856D6", tile=None):
     view = "0 0 1024 1024" if tile else "232 232 560 560"
     back = f'<rect x="100" y="100" width="824" height="824" rx="185" fill="{tile}"/>' if tile else ""
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{view}">{back}'
-            f'<path d="{pie_path}" fill="{pie}"/><path d="{slice_path}" fill="{slice_}"/></svg>\n')
+            f'<path class="pie" d="{pie_path}" fill="{pie}"/><path class="slice" d="{slice_path}" fill="{slice_}"/></svg>\n')
 
 
 def og_image():

@@ -29,15 +29,18 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="assets/style.css">
-<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 
 </head>
 <body>
 <a class="skip" href="#content">Skip to content</a>
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+    <a class="brand" href="index.html" aria-label="Reclaim home"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="232 232 560 560"><path class="pie" d="M495.7 528.3H745.7A250 250 0 1 1 495.7 278.3Z" fill="currentColor"/><path class="slice" d="M528.3 495.7V245.7A250 250 0 0 1 778.3 495.7Z" fill="#5856D6"/></svg><span>Reclaim</span></a>
     <nav class="top-nav" aria-label="Main">
       <a href="guide.html">Docs</a>
       <a href="what-it-finds.html">What it finds</a>
@@ -57,6 +60,7 @@
       </button>
     </div>
   </div>
+  
 </header>
 <main id="content" class="not-found">
   <p class="eyebrow">404</p>
@@ -67,7 +71,7 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a class="brand" href="index.html" aria-label="Reclaim home"><img src="assets/favicon.svg" width="28" height="28" alt=""><span>Reclaim</span></a>
+      <a class="brand" href="index.html" aria-label="Reclaim home"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="232 232 560 560"><path class="pie" d="M495.7 528.3H745.7A250 250 0 1 1 495.7 278.3Z" fill="currentColor"/><path class="slice" d="M528.3 495.7V245.7A250 250 0 0 1 778.3 495.7Z" fill="#5856D6"/></svg><span>Reclaim</span></a>
       <p>Free, open-source Mac storage cleaner for developers. Free under the MIT License.</p>
     </div>
     <div class="footer-columns">
@@ -80,6 +84,7 @@
     <span>© 2026 Md. Mostafijur Rahman</span>
     <span>Icons in the style of <a href="https://lucide.dev">Lucide</a> (ISC)</span>
   </div>
+  <div class="footer-word" aria-hidden="true"><span>Reclaim</span></div>
 </footer>
 <div class="search-dialog" data-search hidden>
   <div class="search-backdrop" data-search-close></div>

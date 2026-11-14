@@ -235,19 +235,29 @@ def head(page: Page, extra_ld: list[dict]) -> str:
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="assets/style.css">
-<script>try{{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}}catch(e){{}}</script>
+<script>document.documentElement.classList.add("js");try{{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}}catch(e){{}}</script>
 {ld}
 </head>"""
 
 
+LOGO = (ROOT / "assets/logo.svg").read_text().strip()
+
+
+def mark(cls: str = "") -> str:
+    """The logo mark inline, so its pie follows the text colour in light and dark."""
+    return LOGO.replace("<svg ", f'<svg class="{cls}" aria-hidden="true" ', 1) if cls else \
+        LOGO.replace("<svg ", '<svg aria-hidden="true" ', 1)
+
+
 def logo() -> str:
-    return (f'<a class="brand" href="index.html" aria-label="{APP} home">'
-            f'<img src="assets/favicon.svg" width="28" height="28" alt="">'
-            f'<span>{APP}</span></a>')
+    return f'<a class="brand" href="index.html" aria-label="{APP} home">{mark()}<span>{APP}</span></a>'
 
 
-def site_header(active: str) -> str:
+def site_header(active: str, progress: bool = False) -> str:
     def link(href: str, label: str, key: str) -> str:
         current = ' aria-current="page"' if key == active else ""
         return f'<a href="{href}"{current}>{label}</a>'
@@ -275,6 +285,7 @@ def site_header(active: str) -> str:
       </button>
     </div>
   </div>
+  {'<div class="progress" aria-hidden="true"></div>' if progress else ''}
 </header>"""
 
 
@@ -296,6 +307,7 @@ def site_footer() -> str:
     <span>© {year} {AUTHOR}</span>
     <span>Icons in the style of <a href="https://lucide.dev">Lucide</a> (ISC)</span>
   </div>
+  <div class="footer-word" aria-hidden="true"><span>{APP}</span></div>
 </footer>
 <div class="search-dialog" data-search hidden>
   <div class="search-backdrop" data-search-close></div>
@@ -318,7 +330,9 @@ def doc_sidebar(current: Page, pages: dict[str, Page]) -> str:
             items += f'<li><a href="{pages[s].filename}"{mark}>{svg(pages[s].icon, 16)}{pages[s].nav_title}</a></li>'
 
         groups.append(f'<div class="sidebar-group"><h2>{section}</h2><ul>{items}</ul></div>')
-    return f'<nav class="doc-sidebar" aria-label="Documentation" data-menu>{"".join(groups)}</nav>'
+    cta = (f'<div class="sidebar-cta"><strong>Get {APP}</strong><p>Free and open source for macOS 14 and later.</p>'
+           f'<a class="button button-small" href="{DOWNLOAD}">{svg("download", 15)}Download</a></div>')
+    return f'<nav class="doc-sidebar" aria-label="Documentation" data-menu>{"".join(groups)}{cta}</nav>'
 
 
 def doc_toc(outline: list[tuple[int, str, str]]) -> str:
@@ -326,7 +340,8 @@ def doc_toc(outline: list[tuple[int, str, str]]) -> str:
         return ""
     items = "".join(f'<li class="toc-l{level}"><a href="#{ident}">{html.escape(text)}</a></li>'
                     for level, ident, text in outline)
-    return f'<aside class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul>{items}</ul></aside>'
+    top = f'<a class="toc-top" href="#content">{svg("arrow-up", 13)}Back to top</a>'
+    return f'<aside class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul>{items}</ul>{top}</aside>'
 
 
 def render_doc(page: Page, pages: dict[str, Page], order: list[str]) -> tuple[str, list[dict]]:
@@ -351,18 +366,33 @@ def render_doc(page: Page, pages: dict[str, Page], order: list[str]) -> tuple[st
         ld.append(faq)
 
     active = page.slug if page.slug in ("what-it-finds", "faq") else "docs"
-    out = head(page, ld) + "\n<body>\n" + site_header(active) + f"""
+    # Figures, tables, cards and callouts fade in as they scroll into view.
+    body = re.sub(r'<(figure|div)( class="(?:(table-wrap|cards|callout)[^"]*|[^"]*)")?(?=[ >])',
+                  lambda m: m.group(0) if m.group(1) == "div" and not m.group(3)
+                  else f'<{m.group(1)} class="reveal {m.group(2)[8:-1] if m.group(2) else ""}"'.replace(' "', '"'),
+                  body)
+    out = head(page, ld) + '\n<body class="doc-page">\n' + site_header(active, progress=True) + f"""
+<header class="doc-hero">
+  <div class="grid-bg"></div>
+  <div class="doc-hero-inner">
+    <div class="doc-hero-text">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">{APP}</a>{svg("chevron-right", 13)}<span>{section}</span>{svg("chevron-right", 13)}<span aria-current="page">{page.nav_title}</span></nav>
+      <div class="doc-hero-title"><span class="tile-icon">{svg(page.icon, 22)}</span><h1>{page.title}</h1></div>
+      <p class="lead">{page.meta.get("lead", page.description)}</p>
+    </div>
+  </div>
+</header>
 <div class="doc-layout">
   {doc_sidebar(page, pages)}
   <main class="doc-main" id="content">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">{APP}</a>{svg("chevron-right", 14)}<span>{section}</span>{svg("chevron-right", 14)}<span aria-current="page">{page.nav_title}</span></nav>
     <article class="prose">
-      <h1>{page.title}</h1>
-      <p class="lead">{page.meta.get("lead", page.description)}</p>
       {body}
     </article>
-    <div class="doc-meta"><a href="{REPO}/edit/main/site/pages/{page.slug}.html">{svg("code", 16)}Edit this page on GitHub</a></div>
-    {pager}
+    <section class="next-steps" aria-label="Keep reading">
+      <h2>Keep reading</h2>
+      {pager}
+    </section>
+    <div class="doc-meta"><a href="{REPO}/edit/main/site/pages/{page.slug}.html">{svg("code", 16)}Edit this page on GitHub</a><a href="{REPO}/issues">{svg("help", 16)}Something unclear? Open an issue</a></div>
   </main>
   {doc_toc(outline)}
 </div>

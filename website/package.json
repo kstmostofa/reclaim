@@ -1,12 +1,12 @@
 {
   "name": "reclaim-website",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "NEXT_PUBLIC_BASE_PATH= next dev",
+    "dev": "next dev",
     "build": "next build",
     "export": "next build && node scripts/publish.mjs",
-    "preview": "NEXT_PUBLIC_BASE_PATH= next build && serve out",
+    "preview": "next build && serve out",
     "types:check": "next typegen && tsc --noEmit"
   },
   "dependencies": {

@@ -48,7 +48,7 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease }}
-          className="mb-10 inline-flex h-9 items-center gap-2.5 rounded-full border border-fd-border bg-fd-card/60 py-1 pr-4 pl-1.5 text-sm text-fd-muted-foreground backdrop-blur transition-colors hover:text-fd-foreground"
+          className="glass mb-10 inline-flex h-9 items-center gap-2.5 rounded-full py-1 pr-4 pl-1.5 text-sm text-fd-muted-foreground transition-colors hover:text-fd-foreground"
         >
           <span className="rounded-full bg-brand px-2.5 py-0.5 text-sm font-semibold text-white">v{version}</span>
           Free and open source for macOS
@@ -76,11 +76,11 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.7, ease }}
           className="mt-10 flex flex-wrap justify-center gap-3"
         >
-          <a href={downloadUrl} className="inline-flex h-12 items-center gap-2 rounded-full bg-fd-foreground px-6 font-display text-lg font-semibold text-fd-background transition-opacity hover:opacity-85">
+          <a href={downloadUrl} className="glass-tint inline-flex h-12 items-center gap-2 rounded-full px-6 font-display text-lg font-semibold">
             <Download className="size-4" />
             Download for Mac
           </a>
-          <Link href="/docs" className="group inline-flex h-12 items-center gap-2 rounded-full border border-fd-border px-6 font-display text-lg font-semibold transition-colors hover:bg-fd-accent">
+          <Link href="/docs" className="glass-btn group inline-flex h-12 items-center gap-2 rounded-full px-6 font-display text-lg font-semibold">
             Read the docs
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>

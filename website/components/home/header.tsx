@@ -26,7 +26,12 @@ export function FloatingHeader() {
   const { resolvedTheme, setTheme } = useTheme();
   // The theme is only known after hydration; until then neither half of the switch is marked.
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    // Only Chromium can refract the backdrop through an SVG filter; the glass CSS keys off this class.
+    const brands = (navigator as Navigator & { userAgentData?: { brands: { brand: string }[] } }).userAgentData?.brands ?? [];
+    document.documentElement.classList.toggle('chromium', brands.some((b) => b.brand === 'Chromium'));
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -42,10 +47,8 @@ export function FloatingHeader() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          'pointer-events-auto w-full max-w-5xl rounded-full border transition-[background-color,box-shadow,border-color,max-width] duration-500',
-          'border-fd-border backdrop-blur-xl backdrop-saturate-150',
-          'shadow-[inset_0_1px_0_rgb(255_255_255/0.5),0_8px_30px_-14px_rgb(0_0_0/0.18)] dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.06),0_8px_30px_-14px_rgb(0_0_0/0.7)]',
-          scrolled ? 'max-w-4xl bg-fd-background/80' : 'bg-fd-background/45',
+          'glass refract pointer-events-auto w-full max-w-5xl rounded-full transition-[max-width] duration-500',
+          scrolled && 'max-w-4xl',
         )}
       >
         <nav className="flex h-14 items-center gap-2 pr-2 pl-5" aria-label="Main">
@@ -71,19 +74,19 @@ export function FloatingHeader() {
           <button
             type="button"
             onClick={() => setOpenSearch(true)}
-            className="hidden h-9 w-52 items-center gap-2 rounded-full border border-fd-border bg-fd-secondary/50 pr-1.5 pl-3 text-[16px] text-fd-muted-foreground transition-colors hover:bg-fd-accent hover:text-fd-foreground lg:flex"
+            className="glass-well hidden h-9 w-52 items-center gap-2 rounded-full pr-1.5 pl-3 text-[16px] text-fd-muted-foreground transition-colors hover:text-fd-foreground lg:flex"
           >
             <Search className="size-4" />
             <span className="flex-1 text-left">Search</span>
             <span className="flex gap-0.5">
-              <kbd className="rounded-md border border-fd-border bg-fd-background px-1.5 font-mono text-[11px] leading-5">⌘</kbd>
-              <kbd className="rounded-md border border-fd-border bg-fd-background px-1.5 font-mono text-[11px] leading-5">K</kbd>
+              <kbd className="glass-btn rounded-md px-1.5 font-mono text-[11px] leading-5">⌘</kbd>
+              <kbd className="glass-btn rounded-md px-1.5 font-mono text-[11px] leading-5">K</kbd>
             </span>
           </button>
           <button type="button" onClick={() => setOpenSearch(true)} aria-label="Search the docs" className={cn(iconButton, 'lg:hidden')}>
             <Search className="size-[18px]" />
           </button>
-          <div className="flex items-center rounded-full border border-fd-border p-0.5" role="group" aria-label="Theme">
+          <div className="glass-well flex items-center rounded-full p-0.5" role="group" aria-label="Theme">
             {([['light', Sun], ['dark', Moon]] as const).map(([mode, Icon]) => (
               <button
                 key={mode}
@@ -93,7 +96,7 @@ export function FloatingHeader() {
                 aria-pressed={mounted && resolvedTheme === mode}
                 className={cn(
                   'grid size-7 place-items-center rounded-full transition-colors',
-                  mounted && resolvedTheme === mode ? 'bg-fd-accent text-fd-foreground' : 'text-fd-muted-foreground hover:text-fd-foreground',
+                  mounted && resolvedTheme === mode ? 'glass-btn text-fd-foreground' : 'text-fd-muted-foreground hover:text-fd-foreground',
                 )}
               >
                 <Icon className="size-4" />
@@ -105,7 +108,7 @@ export function FloatingHeader() {
           </a>
           <a
             href={downloadUrl}
-            className="font-display ml-1 hidden h-10 items-center gap-2 rounded-full bg-fd-foreground px-4.5 text-[17px] font-semibold text-fd-background transition-opacity hover:opacity-85 sm:inline-flex"
+            className="glass-tint font-display ml-1 hidden h-10 items-center gap-2 rounded-full px-4.5 text-[17px] font-semibold sm:inline-flex"
           >
             <Download className="size-4" />
             Download
@@ -130,7 +133,7 @@ export function FloatingHeader() {
                     {l.label}
                   </Link>
                 ))}
-                <a href={downloadUrl} className="font-display mt-2 flex h-12 items-center justify-center gap-2 rounded-full bg-fd-foreground text-lg font-semibold text-fd-background">
+                <a href={downloadUrl} className="glass-tint font-display mt-2 flex h-12 items-center justify-center gap-2 rounded-full text-lg font-semibold">
                   <Download className="size-4" />
                   Download for Mac
                 </a>

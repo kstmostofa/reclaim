@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono, Khand } from 'next/font/google';
 import { Provider } from '@/components/provider';
+import { lensMap } from '@/lib/lens';
 import { appName, author, siteUrl, tagline } from '@/lib/shared';
 import './global.css';
 
@@ -36,6 +37,13 @@ export default function Layout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={`${inter.variable} ${mono.variable} ${khand.variable}`} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col font-sans antialiased">
+        {/* The Liquid Glass lens: bends what is behind the glass near its edges only, like a thick lens. */}
+        <svg width="0" height="0" className="absolute" aria-hidden="true">
+          <filter id="liquid-lens" x="0" y="0" width="1" height="1" primitiveUnits="objectBoundingBox" colorInterpolationFilters="sRGB">
+            <feImage href={lensMap} x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map" />
+            <feDisplacementMap in="SourceGraphic" in2="map" scale="0.05" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </svg>
         <Provider>{children}</Provider>
       </body>
     </html>

@@ -116,7 +116,7 @@ function Card({ className, icon: Icon, title, children, visual, href, linkText, 
       <div
         ref={ref}
         onPointerMove={onMove}
-        className="group relative h-full overflow-hidden rounded-3xl border border-fd-border bg-fd-card p-8 transition-colors hover:border-fd-foreground/15"
+        className="glass-card group relative h-full overflow-hidden rounded-3xl p-8"
       >
         <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 [background:radial-gradient(500px_circle_at_var(--mx)_var(--my),color-mix(in_srgb,var(--color-fd-foreground)_6%,transparent),transparent_50%)]" />
         <span className="mb-7 grid size-11 place-items-center rounded-xl border border-fd-border bg-fd-background">
@@ -280,7 +280,7 @@ export function Tour() {
           <p className="mx-auto mt-6 max-w-xl text-lg text-fd-muted-foreground">SwiftUI, light and dark, your own accent colour. Not a web page in a box.</p>
         </Reveal>
         <Reveal>
-          <div role="tablist" aria-label="Screens" className="mb-12 inline-flex flex-wrap justify-center gap-1 rounded-full border border-fd-border bg-fd-background p-1">
+          <div role="tablist" aria-label="Screens" className="glass mb-12 inline-flex flex-wrap justify-center gap-1 rounded-full p-1">
             {shots.map((s, i) => (
               <button
                 key={s.id}
@@ -289,7 +289,7 @@ export function Tour() {
                 onClick={() => { touched.current = true; setActive(i); }}
                 className={cn('font-display relative inline-flex h-10 items-center gap-2 rounded-full px-4 text-[17px] font-medium transition-colors', active === i ? 'text-fd-background' : 'text-fd-muted-foreground hover:text-fd-foreground')}
               >
-                {active === i && <motion.span layoutId="tour-pill" className="absolute inset-0 rounded-full bg-fd-foreground" transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }} />}
+                {active === i && <motion.span layoutId="tour-pill" className="glass-tint absolute inset-0 rounded-full" transition={{ type: 'spring', bounce: 0.2, duration: 0.55 }} />}
                 <s.icon className="relative size-4" />
                 <span className="relative">{s.label}</span>
               </button>
@@ -341,7 +341,7 @@ export function Faq() {
           <details key={f.q} className="group border-b border-fd-border">
             <summary className="font-display flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-[22px] leading-tight font-medium [&::-webkit-details-marker]:hidden">
               {f.q}
-              <span className="grid size-8 flex-none place-items-center rounded-full border border-fd-border text-fd-muted-foreground transition-transform duration-300 group-open:rotate-45">
+              <span className="glass-btn grid size-9 flex-none place-items-center rounded-full text-fd-muted-foreground transition-transform duration-300 group-open:rotate-45">
                 <Plus className="size-4" strokeWidth={2} />
               </span>
             </summary>
@@ -364,11 +364,11 @@ export function Cta() {
         <h2 className="display text-[clamp(3.5rem,9.5vw,8.5rem)]">Your disk, back.</h2>
         <p className="mx-auto mt-6 max-w-lg text-lg text-fd-muted-foreground">One download, one scan, and you'll see what your Mac has been hoarding.</p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <a href={downloadUrl} className="inline-flex h-12 items-center gap-2 rounded-full bg-fd-foreground px-6 font-display text-lg font-semibold text-fd-background transition-opacity hover:opacity-85">
+          <a href={downloadUrl} className="glass-tint inline-flex h-12 items-center gap-2 rounded-full px-6 font-display text-lg font-semibold">
             <Download className="size-4" />
             Download for Mac
           </a>
-          <a href={repoUrl} className="inline-flex h-12 items-center gap-2 rounded-full border border-fd-border px-6 font-display text-lg font-semibold transition-colors hover:bg-fd-accent">
+          <a href={repoUrl} className="glass-btn inline-flex h-12 items-center gap-2 rounded-full px-6 font-display text-lg font-semibold">
             <GitHubIcon className="size-4" />
             Star on GitHub
           </a>
@@ -397,7 +397,7 @@ export function Footer() {
           <p className="mt-5 max-w-xs text-[18px] leading-relaxed text-fd-muted-foreground">
             Free, open-source Mac storage cleaner for developers. MIT licensed.
           </p>
-          <a href={downloadUrl} className="font-display mt-7 inline-flex h-11 items-center gap-2 rounded-full bg-fd-foreground px-5 text-lg font-semibold text-fd-background transition-opacity hover:opacity-85">
+          <a href={downloadUrl} className="glass-tint font-display mt-7 inline-flex h-11 items-center gap-2 rounded-full px-5 text-lg font-semibold">
             <Download className="size-4" />
             Download for Mac
           </a>

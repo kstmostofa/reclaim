@@ -117,7 +117,7 @@ function Sweep({ progress, opacity }: { progress: MotionValue<number>; opacity: 
 
 function Label({ className, dot, text }: { className: string; dot: string; text: string }) {
   return (
-    <span className={`absolute inline-flex items-center gap-2 rounded-full border border-fd-border bg-fd-background/80 px-3 py-1.5 text-sm font-medium backdrop-blur ${className}`}>
+    <span className={`glass absolute inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium ${className}`}>
       <span className={`size-2 rounded-full ${dot}`} />
       {text}
     </span>

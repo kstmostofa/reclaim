@@ -8,4 +8,6 @@ rmSync(docs, { recursive: true, force: true });
 cpSync(out, docs, { recursive: true });
 // Tells GitHub Pages not to run Jekyll, which would hide the _next folder.
 writeFileSync(new URL('.nojekyll', docs), '');
+// The custom domain GitHub Pages serves the site on.
+writeFileSync(new URL('CNAME', docs), 'reclaim.mostofa.me\n');
 console.log('Published the site to docs/');

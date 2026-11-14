@@ -3,15 +3,16 @@ import { createGetUrl } from 'fumadocs-core/source';
 // Change these when the app is renamed or the site moves.
 export const appName = 'Reclaim';
 export const tagline = 'Free, open-source Mac storage cleaner for developers';
-export const version = '0.1.0';
+export const version = '1.0.0';
 export const author = 'Md. Mostafijur Rahman';
 export const gitConfig = { user: 'kstmostofa', repo: 'reclaim', branch: 'main' };
 export const repoUrl = `https://github.com/${gitConfig.user}/${gitConfig.repo}`;
 export const downloadUrl = `${repoUrl}/releases/latest`;
 
-/** GitHub Pages serves the site under /reclaim. Set BASE_PATH="" to preview at the root. */
-export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '/reclaim';
-export const siteUrl = `https://${gitConfig.user}.github.io${basePath}`;
+/** The site is served at the root of its own domain; set NEXT_PUBLIC_BASE_PATH to host it under a folder. */
+export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+export const domain = 'reclaim.mostofa.me';
+export const siteUrl = `https://${domain}${basePath}`;
 
 /** Prefixes public files (images, the search index) with the base path, which Next does not do for plain URLs. */
 export const asset = (path: string) => `${basePath}${path}`;

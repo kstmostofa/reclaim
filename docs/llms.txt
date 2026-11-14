@@ -1,0 +1,18 @@
+# Docs
+
+
+- **Get started**
+- [Introduction](/docs): Reclaim is a free, open-source Mac app that finds build caches, dependencies, app caches and Docker leftovers, explains what is safe to delete, and frees the space in one click.
+- [Install](/docs/install): Download Reclaim for Mac, open it through Privacy & Security the first time, and give it Full Disk Access. Plus updating, uninstalling and building from source.
+- [Scan and clean](/docs/guide): How to scan your Mac with Reclaim, read the Overview, review suggestions by safety level, and delete caches, node_modules and other junk in one click.
+
+- **Features**
+- [Disk Map and duplicates](/docs/explore): See where your Mac's disk space went with a size-sorted Disk Map, find large files, and remove duplicate files with APFS clones handled correctly.
+- [Docker and OrbStack](/docs/docker): Free disk space used by Docker Desktop, OrbStack and Colima. Reclaim removes build cache, unused images, stopped containers and volumes with Docker's own commands.
+- [System and the helper](/docs/system): Delete root-owned system caches, logs, sudo leftovers and local Time Machine snapshots on Mac with Reclaim's optional, locked-down helper.
+- [Menu bar and schedules](/docs/automation): Watch free space from the Mac menu bar, get low-space alerts, and run daily or weekly scans that can auto-clean Safe caches untouched for a day.
+
+- **Reference**
+- [Settings](/docs/settings): Every Reclaim setting explained, from Trash mode and scan scope to thresholds, excluded folders, the menu bar, schedules, auto-clean, low-space alerts and accent colour.
+- [What it finds](/docs/what-it-finds): Every folder Reclaim suggests deleting on a Mac, including .next, node_modules, vendor, DerivedData, Gradle, npm and pip caches, Docker and system junk.
+- [FAQ](/docs/faq): Answers about Reclaim for Mac, covering why there is no confirmation, protected folders, sizes compared with Finder, Full Disk Access, the root helper and privacy.

@@ -1,0 +1,120 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, 'SF Mono', Menlo, monospace;
+  --color-brand: #5856d6;
+  --color-brand-2: #7c7af0;
+  --color-safe: #16a34a;
+  --color-rebuild: #d97706;
+  --color-personal: #9333ea;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Fumadocs tokens: neutral, Indigo as the one accent, true black in dark mode. */
+:root {
+  --color-fd-primary: #5856d6;
+  --color-fd-primary-foreground: #ffffff;
+  --color-fd-ring: #5856d6;
+}
+.dark {
+  --color-fd-background: #000000;
+  --color-fd-card: #0a0a0b;
+  --color-fd-popover: #0c0c0e;
+  --color-fd-secondary: #111113;
+  --color-fd-muted: #111113;
+  --color-fd-accent: #17171a;
+  --color-fd-border: rgb(255 255 255 / 0.09);
+  --color-fd-primary: #8583f5;
+  --color-fd-primary-foreground: #000000;
+  --color-fd-ring: #8583f5;
+  --color-safe: #3ddc84;
+  --color-rebuild: #f5b544;
+  --color-personal: #c48cff;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}
+::selection {
+  background: color-mix(in srgb, var(--color-brand) 28%, transparent);
+}
+
+/* ------------------------------------------------------------------ Landing helpers */
+
+.display {
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--color-fd-muted-foreground);
+}
+
+/* Hairline grid that fades out, behind hero sections. */
+.hairlines {
+  background-image:
+    linear-gradient(to right, var(--color-fd-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-fd-border) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 30%, transparent 75%);
+}
+
+/* A single soft light from above. Monochrome on purpose. */
+.toplight {
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--color-fd-foreground) 5%, transparent), transparent);
+}
+.dark .toplight {
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--color-fd-foreground) 11%, transparent), transparent);
+}
+
+/* Faint film grain in dark mode. */
+.dark .grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Glass panels: a hairline, a top highlight, and depth. */
+.panel {
+  border: 1px solid var(--color-fd-border);
+  background: color-mix(in srgb, var(--color-fd-card) 92%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.04),
+    0 1px 2px rgb(0 0 0 / 0.04),
+    0 24px 60px -30px rgb(0 0 0 / 0.25);
+}
+.dark .panel {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 30px 80px -30px rgb(0 0 0 / 0.9);
+}
+
+.marquee-track {
+  animation: marquee 60s linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(calc(-50% - 20px));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

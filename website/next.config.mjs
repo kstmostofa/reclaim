@@ -1,0 +1,16 @@
+import { createMDX } from 'fumadocs-mdx/next';
+
+const withMDX = createMDX();
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '/reclaim';
+
+/** @type {import('next').NextConfig} */
+const config = {
+  output: 'export',
+  basePath: basePath || undefined,
+  trailingSlash: true,
+  images: { unoptimized: true },
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
+  reactStrictMode: true,
+};
+
+export default withMDX(config);

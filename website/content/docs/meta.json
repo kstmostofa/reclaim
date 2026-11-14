@@ -1,0 +1,18 @@
+{
+  "title": "Docs",
+  "pages": [
+    "---Get started---",
+    "index",
+    "install",
+    "guide",
+    "---Features---",
+    "explore",
+    "docker",
+    "system",
+    "automation",
+    "---Reference---",
+    "settings",
+    "what-it-finds",
+    "faq"
+  ]
+}

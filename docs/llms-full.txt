@@ -1,0 +1,655 @@
+# Menu bar and schedules (/docs/automation)
+
+## The menu bar [#the-menu-bar]
+
+<Screenshot src="menu-bar.png" dark="dark-menu-bar.png" narrow alt="The Reclaim menu-bar window with free space, a storage bar, the last scan and Scan Now and Clean Safe Items buttons." />
+
+- **Free space** and a small storage bar, with what the last scan found.
+- **Scan Now** starts a scan without opening the window.
+- **Clean Safe Items** deletes every Safe suggestion Reclaim can delete, then shows a notification with the space freed.
+- **Open Reclaim**, Settings and Quit.
+
+Hide it with [Show Reclaim in the menu bar](/docs/settings#automation). Scheduled scans and alerts keep running while Reclaim is open, even with its window closed.
+
+## Scheduled scans [#scheduled-scans]
+
+Choose **Every day** or **Every week** in [Automation › Scan automatically](/docs/settings#automation). A scan runs when one is due, including right after your Mac wakes, and by default only sends a notification such as *“12.4 GB can be reclaimed, 3.1 GB of it Safe.”*
+
+## Auto-clean [#auto-clean]
+
+Off by default, and the only time Reclaim deletes something nobody ticked at that moment. When **Delete Safe items untouched for a day** is on, each scheduled scan deletes:
+
+- only <Level of="safe" /> items, never Rebuild or Personal ones;
+- only items you can delete without the helper;
+- only items where nothing inside changed for 24 hours, so a project you are working in keeps its caches.
+
+It follows your Trash setting, is recorded in the history, and a notification tells you what was freed.
+
+## Low-space alerts [#low-space-alerts]
+
+Reclaim checks free space every few minutes and notifies you once when it drops below your threshold, 10 GB by default, and again only after it has recovered and dropped again.
+
+## Open at login [#open-at-login]
+
+Turn on **Open at login** in [Automation](/docs/settings#automation) so the menu bar and schedules are always running. If macOS asks you to approve it, Reclaim shows a button to **Login Items** in System Settings.
+
+## Notifications [#notifications]
+
+The first time you turn on a schedule or low-space alerts, macOS asks whether Reclaim may send notifications. You can change this later in **System Settings › Notifications**.
+
+# Docker and OrbStack (/docs/docker)
+
+## What you need [#what-you-need]
+
+The `docker` command and a running engine: **OrbStack**, **Docker Desktop**, **Colima** or another. Reclaim finds the command in the usual places, even when it is opened from Finder. Open **Containers** in the sidebar; if the engine is not running, start it and click **Refresh**.
+
+## What is listed [#what-is-listed]
+
+| Item | What it is | Removed with | Level |
+| --- | --- | --- | --- |
+| Build cache | Layers kept to speed up builds, not used by any image now. | `docker builder prune --all` | <Level of="safe" /> |
+| Dangling image | An untagged image left behind when a newer build took its tag. | `docker image rm` | <Level of="safe" /> |
+| Unused image | A tagged image no container uses. Pulled or built again when needed. | `docker image rm` | <Level of="rebuild" /> |
+| Stopped container | A container that is not running. Changes made inside it are lost. | `docker container rm` | <Level of="rebuild" /> |
+| Unused volume | A volume no container uses. These often hold databases. | `docker volume rm` | <Level of="personal" /> |
+
+Images, containers and volumes that are in use are never listed. Select a row to read what it is and what happens after removing it.
+
+## How removal works [#how-removal-works]
+
+<Callout type="success">
+Ticked items are removed with Docker's own commands, never forced, so Docker itself refuses anything a container is using. Reclaim never touches the engine's disk image directly.
+</Callout>
+
+Docker items share the Delete bar and the history with everything else. If Docker refuses an item, the summary shows Docker's reason and the item stays in the list.
+
+## About the sizes [#about-the-sizes]
+
+Sizes come from `docker system df`. For an image, Reclaim shows the space only that image uses, which is what removing it frees; layers shared with other images stay. Totals can differ slightly from Docker's own summary because Docker rounds each size it reports.
+
+# Disk Map and duplicates (/docs/explore)
+
+## Disk Map [#disk-map]
+
+<Screenshot src="disk-map.png" dark="dark-disk-map.png" alt="The Disk Map listing folders with size bars, sizes, their share of the parent folder and file counts." />
+
+The whole scan as folders and files, largest first. Each row has a bar for its share of the folder you are in, its size, the number of files inside and when anything in it last changed.
+
+- **Go deeper:** double-click a folder, or right-click it and choose **Open**.
+- **Go back:** click any folder in the trail at the top, or press <kbd>⌘</kbd> <kbd>↑</kbd>.
+- **Tick anything** that is not protected. Protected folders, such as the top level of the disk or your home folder, have a dimmed checkbox.
+- **Badges** mark folders a rule already suggests. A lock means a folder could not be read, so its size is a lower bound.
+- **Small files** under 1 MB are not listed one by one; their total appears below the list.
+
+## Large Files [#large-files]
+
+Files of 500 MB or more that no other suggestion covers. Files inside apps and photo libraries are left out, because deleting part of a bundle breaks it. Everything here is <Level of="personal" />: only you know whether you still need it. Change the size in [Scanning › Large files from](/docs/settings#scanning).
+
+## Duplicates [#duplicates]
+
+After a scan, open **Duplicates** and click **Find Duplicates**. Reclaim compares files of 1 MB or more and lists only files whose contents are identical, byte for byte.
+
+### How duplicates are found [#how-duplicates-are-found]
+
+<Steps>
+<Step>
+**By size.** Files with a unique size cannot have a twin, so they are dropped first.
+</Step>
+
+<Step>
+**By their edges.** The first and last 64 KB of the remaining files are compared.
+</Step>
+
+<Step>
+**By full contents.** Only the candidates left are read in full and compared by SHA-256. On a typical Mac this takes seconds.
+</Step>
+</Steps>
+
+### What it leaves out [#what-it-leaves-out]
+
+- Anything inside apps, libraries and other bundles.
+- Hidden folders such as `~/.vscode`, and installed packages such as `node_modules` and `site-packages`: copies there belong to tools, and deleting one can break them.
+- App and system data in `~/Library`, `/Library` and `/Users/Shared`.
+- Anything another suggestion already covers.
+
+### Hard links and APFS copies [#hard-links-and-apfs-copies]
+
+**Hard links** are one file with several names, so they never appear as duplicates. **APFS copies**, such as those made with Finder's Duplicate, can share storage with the original. Reclaim detects them from where their data sits on disk and marks them *Shares storage*. Deleting one frees almost nothing, so they don't count towards the reclaimable total.
+
+### Choosing which copy to keep [#choosing-which-copy-to-keep]
+
+Nothing is ticked for you. The **Keep** menu in the toolbar ticks all but one copy in every group shown:
+
+- **Keep Oldest Copy** or **Keep Newest Copy**, by modification date.
+- **Keep the Copy in a Folder…**: in groups with a copy in the folder you choose, that copy is kept.
+- **Untick All Copies**.
+
+Filter first to apply Keep to only some groups. Right-click a copy for **Keep Only This Copy**.
+
+<Callout type="warn">
+If every copy in a group is ticked, the group shows a warning: deleting them all leaves you with none.
+</Callout>
+
+# FAQ (/docs/faq)
+
+## Safety [#safety]
+
+### Why is there no "Are you sure?" [#why-is-there-no-are-you-sure]
+
+Because cleaning a developer Mac means deleting hundreds of items, and a confirmation for each one gets clicked through without reading. Instead, Reclaim explains every item before you tick it, ticks only Safe items for you, and refuses to delete protected folders at all. If you want a safety net, turn on [Move to Trash](/docs/settings#general).
+
+### Will Reclaim ever delete things on its own? [#will-reclaim-ever-delete-things-on-its-own]
+
+Only if you turn on auto-clean for scheduled scans, which is off by default. Even then it deletes only Safe items that nothing changed for 24 hours. See [how auto-clean works](/docs/automation#auto-clean).
+
+### Can I undo a deletion? [#can-i-undo-a-deletion]
+
+Not when deleting permanently, which is the default. With Move to Trash on, items go to the Trash and you can put them back from there until you empty it.
+
+### Is it safe to delete Safe items while I am working? [#is-it-safe-to-delete-safe-items-while-i-am-working]
+
+Usually. Quit an app before deleting its cache, and stop a dev server before deleting its project's build cache. Otherwise the app may recreate files mid-way or show errors until restarted.
+
+### Why was something not deleted? [#why-was-something-not-deleted]
+
+The summary after deleting gives the reason for each item. Most often the files belong to root, for example ones created with `sudo npm install`. Install the [helper](/docs/system) to delete those. Files macOS itself protects cannot be deleted by any app.
+
+### Is a helper that runs as root safe? [#is-a-helper-that-runs-as-root-safe]
+
+It deletes only inside system cache and log folders and your own home folder, never a protected folder, and refuses tricks with `..` and symlinks. It only answers the exact copy of Reclaim that installed it. The source is public, and you can remove it any time from System.
+
+## Protected folders [#protected-folders]
+
+These are never deleted as a whole, however the path is written: with different capital letters, through a symlink, or as `/System/Volumes/Data/…`. Everything inside them, apart from the system folders, can still be deleted.
+
+- The disk root, and every folder directly in it, such as `/Applications`, `/Library`, `/Users` and `/opt`.
+- Everything in `/System`, `/usr` (except `/usr/local`), `/bin` and `/sbin`.
+- The folders directly in `/private`, and system folders such as `/Library/Caches` and `/opt/homebrew`.
+- Every user's home folder, and every mounted volume in `/Volumes`.
+- In your home: Desktop, Documents, Downloads, Movies, Music, Pictures, Public, Applications, the Trash, Library, and Library's main folders such as Application Support, Caches, Containers and Preferences.
+
+Separately, macOS itself stops any app from changing its system files.
+
+## Sizes [#sizes]
+
+### Why do Reclaim's sizes differ from Finder's? [#why-do-reclaims-sizes-differ-from-finders]
+
+Reclaim shows the space files actually take on disk; Finder often shows how long files are. They differ for sparse files such as virtual-machine disks, which can claim 64 GB while using a few, and for small files, which still occupy at least one disk block. Hard-linked files are counted once.
+
+### Why doesn't free space go up by exactly what I deleted? [#why-doesnt-free-space-go-up-by-exactly-what-i-deleted]
+
+Files that were APFS copies of each other shared their storage; local Time Machine snapshots still hold the deleted data until macOS removes them; and macOS counts "purgeable" space as free. The figure settles within a few minutes.
+
+### Why doesn't the scan total match the used space? [#why-doesnt-the-scan-total-match-the-used-space]
+
+Folders Reclaim cannot read are missing from the total (give it [Full Disk Access](/docs/install#give-it-full-disk-access)), and the disk also holds snapshots and file-system data that are not files.
+
+## Permissions [#permissions]
+
+### Why are my Desktop, Documents and Downloads missing from the scan? [#why-are-my-desktop-documents-and-downloads-missing-from-the-scan]
+
+Reclaim does not have Full Disk Access yet. Without it, macOS shows a permission dialog for each of those folders and holds the scan until you answer, so Reclaim skips them instead. [Turn on Full Disk Access](/docs/install#give-it-full-disk-access) and scan again.
+
+### Why does it need Full Disk Access? [#why-does-it-need-full-disk-access]
+
+macOS hides other apps' data, Mail, Messages and parts of your Library from apps by default. Without access, those folders are not measured or suggested. Reclaim works without it, but sees less.
+
+### Why isn't it in the Mac App Store? [#why-isnt-it-in-the-mac-app-store]
+
+App Store apps run in a sandbox that cannot read or delete files across the disk, which is the whole point of Reclaim.
+
+### Why does macOS block it the first time? [#why-does-macos-block-it-the-first-time]
+
+The app is not notarized, which requires a paid Apple developer membership. Follow [Open it the first time](/docs/install#open-it-the-first-time), or build it from source.
+
+## Privacy [#privacy]
+
+### Does Reclaim send anything over the network? [#does-reclaim-send-anything-over-the-network]
+
+No. It has no account, no analytics and no update check. The scan and your file list stay on your Mac. Its only files are its settings and the [deletion history](/docs/guide#history).
+
+# Scan and clean (/docs/guide)
+
+## Scanning [#scanning]
+
+Click **Scan** on the Overview, or press <kbd>⌘</kbd> <kbd>R</kbd>. Reclaim reads every folder it is allowed to and shows a live count of files and bytes. A full Mac takes about a minute; click **Stop** at any time.
+
+- **Whole disk by default.** To scan only your home folder, change [Scanning › Scan](/docs/settings#scanning).
+- **Real sizes.** Reclaim counts the space files actually use. A 32 GB disk image holding 1 GB counts as 1 GB, and a file with several hard links counts once.
+- **One disk only.** External drives and other volumes are never scanned.
+- **Without Full Disk Access**, Desktop, Documents, Downloads, iCloud Drive and other apps' data are skipped, so macOS doesn't pause the scan to ask about each one. [Turn it on](/docs/install#give-it-full-disk-access).
+
+## The Overview [#the-overview]
+
+<Screenshot src="overview.png" alt="Overview with a storage bar, the last scan's summary and the top categories." />
+
+- **Storage bar:** used space, the part Reclaim suggests deleting in your accent colour, and free space.
+- **Last scan:** how much you could reclaim, how much of it is Safe, and how long the scan took.
+- **Top categories:** each kind of suggestion with its size. Click one to open it.
+
+## Reviewing suggestions [#reviewing-suggestions]
+
+The sidebar has one entry per kind of suggestion, with its total size. [What it finds](/docs/what-it-finds) lists every rule. Each list shows a checkbox, the item's name and folder, its size, its safety level and when anything inside it last changed.
+
+- **Sort** by clicking a column header, and **filter** with the search field (<kbd>⌘</kbd> <kbd>F</kbd>).
+- **Select All Safe** ticks every Safe item in the list; **Deselect All** unticks the list.
+- **Right-click** rows to tick or untick several at once, or to reveal one in Finder.
+- **The inspector** on the right explains the selected item: what it is, why it is suggested, what happens after deleting it, and where it is.
+
+<Callout type="warn">
+An orange warning next to an app's cache means that app is running; quit it before deleting its files. A lock means the item belongs to root, and deleting it needs the [helper](/docs/system).
+</Callout>
+
+## Safety levels [#safety-levels]
+
+| Level | Meaning | Ticked for you |
+| --- | --- | --- |
+| <Level of="safe" /> | Rebuilds itself; nothing for you to do. Build caches, app caches, logs, emulator snapshots, the Trash. | Yes |
+| <Level of="rebuild" /> | Comes back after a reinstall or download, such as `npm install` or `composer install`. | No |
+| <Level of="personal" /> | Your data, reported so you can decide: old downloads, large files, duplicates, emulator user data. | No |
+
+To stop Reclaim ticking Safe items after each scan, turn off [Tick Safe items after each scan](/docs/settings#general).
+
+## Deleting [#deleting]
+
+Whenever something is ticked, a bar at the bottom shows how many items and how much space, such as **Delete 23 items · 31.4 GB**. Ticks carry across every list, the Disk Map, Duplicates and Containers, and an item inside a ticked folder is never counted twice.
+
+<Callout type="warn" title="There is no confirmation">
+The button, or <kbd>⌘</kbd> <kbd>⌫</kbd>, deletes ticked items immediately and permanently. For a safety net, turn on [Move to Trash instead of deleting permanently](/docs/settings#general); space is then freed only when you empty the Trash.
+</Callout>
+
+A sheet shows progress, then a summary of what was freed and anything that could not be removed, with the reason:
+
+- **Belongs to another user**, such as root: files created with `sudo` or by the system. The [helper](/docs/system) can delete these.
+- **It no longer exists:** something else removed it after the scan.
+- **Protected:** one of the folders Reclaim never deletes as a whole. See the [FAQ](/docs/faq#protected-folders).
+
+Lists and the Disk Map update straight away; no rescan is needed.
+
+## History [#history]
+
+Every run is recorded: when, what was deleted or moved to the Trash, its size and anything that failed. The log is kept at `~/Library/Application Support/Reclaim/history.jsonl`.
+
+## Keyboard shortcuts [#keyboard-shortcuts]
+
+| Shortcut | Action |
+| --- | --- |
+| <kbd>⌘</kbd> <kbd>R</kbd> | Scan |
+| <kbd>⌘</kbd> <kbd>⌫</kbd> | Delete ticked items, with no confirmation |
+| <kbd>⌘</kbd> <kbd>F</kbd> | Filter the current list |
+| <kbd>⌘</kbd> <kbd>↑</kbd> | Enclosing folder in the Disk Map |
+| <kbd>⌘</kbd> <kbd>,</kbd> | Settings |
+
+# Introduction (/docs)
+
+Developer Macs fill up quietly: `.next` and DerivedData folders, `node_modules` in every old project, Gradle and npm caches, emulator images, Docker build cache. Reclaim scans the whole disk, tells you what each of those is and what happens if you delete it, and removes what you tick in one click.
+
+<Cards>
+<Card title="Install" href="/docs/install" description="Download, open it the first time, and give it Full Disk Access." />
+
+<Card title="Scan and clean" href="/docs/guide" description="Your first scan, the safety levels, and deleting." />
+
+<Card title="What it finds" href="/docs/what-it-finds" description="Every rule, with its safety level." />
+
+<Card title="FAQ" href="/docs/faq" description="Safety, permissions, sizes and privacy." />
+</Cards>
+
+## What makes it different [#what-makes-it-different]
+
+- **It explains everything.** Every suggestion says what it is, why it is listed and what happens after you delete it.
+- **Three safety levels.** <Level of="safe" /> items rebuild themselves and are ticked for you. <Level of="rebuild" /> and <Level of="personal" /> items wait for your decision.
+- **No nagging.** Tick, click, done, with a summary of anything that could not be removed.
+- **Hard limits.** System folders, your home folder and folders like Documents are never deleted as a whole, however the path is written.
+- **Private.** No account, no analytics, no network access. The source is on GitHub.
+
+## Requirements [#requirements]
+
+macOS 14 Sonoma or later, on Apple silicon or Intel.
+
+# Install (/docs/install)
+
+## Download [#download]
+
+<Steps>
+<Step>
+### Get the app [#get-the-app]
+
+Open the [latest release](https://github.com/kstmostofa/reclaim/releases/latest) and download `Reclaim.zip`, plus `Reclaim.zip.sha256` if you want to check it.
+</Step>
+
+<Step>
+### Check the download (optional) [#check-the-download-optional]
+
+In Terminal, in the folder you downloaded to:
+
+```sh
+shasum -a 256 -c Reclaim.zip.sha256
+```
+
+It should print `Reclaim.zip: OK`.
+</Step>
+
+<Step>
+### Move it to Applications [#move-it-to-applications]
+
+Double-click `Reclaim.zip` and drag **Reclaim** into your **Applications** folder.
+</Step>
+</Steps>
+
+## Open it the first time [#open-it-the-first-time]
+
+Reclaim is not notarized by Apple, because notarization needs a paid developer membership, so macOS blocks it the first time. You do this once per version.
+
+<Steps>
+<Step>
+### Try to open it [#try-to-open-it]
+
+Double-click Reclaim in Applications. macOS says it cannot verify the app. Click **Done**.
+</Step>
+
+<Step>
+### Open Privacy & Security [#open-privacy--security]
+
+Go to **System Settings › Privacy & Security** and scroll to the Security section.
+</Step>
+
+<Step>
+### Allow it [#allow-it]
+
+Next to the message about Reclaim, click **Open Anyway** and confirm with your password or Touch ID.
+</Step>
+</Steps>
+
+<Callout>
+The source is public, so you can also [build it yourself](#build-from-source) instead of trusting a download.
+</Callout>
+
+## Give it Full Disk Access [#give-it-full-disk-access]
+
+Without it, macOS asks for permission the first time any app opens Desktop, Documents, Downloads, iCloud Drive or another app's data, and the app has to wait for your answer. To keep scans from stalling, Reclaim skips those folders until it has Full Disk Access, and the Overview says so, with a button to the right settings page.
+
+<Steps>
+<Step>
+### Open the setting [#open-the-setting]
+
+Go to **System Settings › Privacy & Security › Full Disk Access**.
+</Step>
+
+<Step>
+### Add Reclaim [#add-reclaim]
+
+Click **+**, choose **Reclaim** in Applications, and make sure its switch is on.
+</Step>
+
+<Step>
+### Scan again [#scan-again]
+
+Quit and reopen Reclaim, then scan.
+</Step>
+</Steps>
+
+No app can grant this to itself, and Reclaim never asks again once it is on.
+
+<Callout>
+Your Music, TV and Photos libraries are always skipped, even with Full Disk Access, because macOS protects them with permissions of their own. Reclaim never suggests anything inside them.
+</Callout>
+
+## Updating [#updating]
+
+Download the new release and replace the old app in Applications. Because each build is signed separately, macOS may ask you to repeat **Open Anyway**, you may need to switch Full Disk Access off and on again, and the [helper](/docs/system#after-updating-reclaim), if you use it, asks to be paired again.
+
+## Uninstalling [#uninstalling]
+
+<Steps>
+<Step>
+### Remove the helper [#remove-the-helper]
+
+If you installed it: open **System** in the sidebar and click **Remove Helper…**.
+</Step>
+
+<Step>
+### Remove the app [#remove-the-app]
+
+Quit Reclaim and move it from Applications to the Trash.
+</Step>
+
+<Step>
+### Remove its settings and history (optional) [#remove-its-settings-and-history-optional]
+
+```sh
+rm ~/Library/Preferences/io.github.kstmostofa.reclaim.plist
+rm -r ~/Library/Application\ Support/Reclaim
+```
+</Step>
+
+<Step>
+### Tidy up permissions [#tidy-up-permissions]
+
+Remove it from **Full Disk Access** and, if you turned it on, from **Login Items** in System Settings.
+</Step>
+</Steps>
+
+## Build from source [#build-from-source]
+
+You need Xcode and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
+
+```sh
+brew install xcodegen
+git clone https://github.com/kstmostofa/reclaim.git
+cd reclaim
+xcodegen generate
+open Reclaim.xcodeproj
+```
+
+The engine's tests run with `swift test` in `Packages/ReclaimCore`. They only ever create and delete files in temporary folders.
+
+# Settings (/docs/settings)
+
+Open Settings with **Reclaim › Settings…** or <kbd>⌘</kbd> <kbd>,</kbd>. Changes apply at once unless noted.
+
+## General [#general]
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| Move to Trash instead of deleting permanently | Ticked items go to the Trash, so you can put them back. Space is freed only when you empty it. Items that need the helper are left alone in this mode. | Off |
+| Tick Safe items after each scan | Safe items are ticked as soon as a scan finishes. Rebuild and Personal items never are. | On |
+| Restore Default Settings | Resets every setting on every tab. | — |
+
+## Scanning [#scanning]
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| Scan | The whole disk, or only your home folder. The whole disk also finds system caches and leftovers outside your home. | Whole disk |
+| Large files from | The size from which a file appears in Large Files. The list updates as you change it. | 500 MB |
+| Old downloads after | How long a file in Downloads must be unchanged before it is suggested. | 90 days |
+| Compare duplicates from | The smallest file Duplicates compares. | 1 MB |
+| Never scan these folders | Folders skipped completely: nothing in them is measured, suggested or deletable. | None |
+
+Scope, the downloads age and excluded folders take effect at the next scan.
+
+## Automation [#automation]
+
+<Screenshot src="settings-automation.png" dark="dark-settings-automation.png" narrow alt="Automation settings: menu bar, open at login, scheduled scans, auto-clean and low-space alerts." />
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| Show Reclaim in the menu bar | Free space, the last scan, Scan Now and Clean Safe Items in the menu bar. | On |
+| Open at login | Starts Reclaim when you log in, so the menu bar and schedules are always on. | Off |
+| Scan automatically | Never, every day or every week, while Reclaim is open. | Never |
+| Delete Safe items untouched for a day | After each scheduled scan, deletes Safe items nothing changed for 24 hours. [Details](/docs/automation#auto-clean). | Off |
+| Warn when free space is low | A notification once each time free space drops below the threshold. | On |
+| Warn below | The free-space threshold for that warning. | 10 GB |
+
+## Appearance [#appearance]
+
+<Screenshot src="settings-appearance.png" dark="dark-settings-appearance.png" narrow alt="Appearance settings: system, light or dark, accent colour swatches, custom colour and a preview." />
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| Appearance | Follow the system, or always light or dark. | System |
+| Accent color | The colour of buttons, selections and the reclaimable part of the storage bar. Twelve presets. | Indigo |
+| Custom color | Pick any colour; Reclaim switches to it. | — |
+
+# System and the helper (/docs/system)
+
+Some caches, logs and leftovers belong to root, the system's administrator account. Reclaim can't delete them on its own; its optional helper can.
+
+## What the helper handles [#what-the-helper-handles]
+
+- **System caches** in `/Library/Caches`.
+- **System logs** in `/Library/Logs` and `/private/var/log`.
+- **Root-owned files in your home folder**, such as those left by `sudo npm install`.
+- **Local Time Machine snapshots**.
+
+Items that need the helper show a lock until it is installed, and Safe ones are only ticked for you once it is.
+
+## Installing [#installing]
+
+<Steps>
+<Step>
+### Open System [#open-system]
+
+Click **System** in the sidebar, then **Install Helper…**.
+</Step>
+
+<Step>
+### Enter your password [#enter-your-password]
+
+macOS asks in its own dialog. Reclaim never sees it.
+</Step>
+</Steps>
+
+The helper is copied to `/Library/PrivilegedHelperTools` and started by macOS whenever Reclaim needs it. After that, deleting works as usual: anything Reclaim may not delete is passed to the helper automatically when deleting permanently. In Move to Trash mode, such items are left alone.
+
+## What keeps it safe [#what-keeps-it-safe]
+
+<Cards>
+<Card title="Fixed folders only" description="System cache and log folders and your own home folder, after resolving symlinks. Never a protected folder." />
+
+<Card title="No path tricks" description="Paths with .. are refused, and so is a folder swapped for a link at the last moment." />
+
+<Card title="One app only" description="Paired with the exact build of Reclaim that installed it. Any other program is refused." />
+
+<Card title="Open source" href="https://github.com/kstmostofa/reclaim" description="The helper is small, and its rules are tested. Read it on GitHub." />
+</Cards>
+
+## After updating Reclaim [#after-updating-reclaim]
+
+The pairing names one exact build, so after an update the helper refuses the new version. **System** then shows **Pair Again…**, which asks for your password once more. A paid Apple developer certificate would remove this step.
+
+## Local Time Machine snapshots [#local-time-machine-snapshots]
+
+Time Machine keeps snapshots on your Mac's disk between backups, and they hold on to the space of files you deleted since. System lists them; with the helper installed you can tick and delete them. Backups on your backup disk are not affected, and macOS also removes local snapshots on its own when space runs low.
+
+## Removing the helper [#removing-the-helper]
+
+Click **Remove Helper…** in System and enter your password. Everything else in Reclaim keeps working without it.
+
+# What it finds (/docs/what-it-finds)
+
+Every suggestion comes from one of these rules. A rule looks only at a folder's name, where it is and the files beside it; once a folder matches, nothing inside it is listed again. `~` means your home folder.
+
+## Build caches [#build-caches]
+
+Output your project's tooling recreates on the next build or dev-server start. That first build is slower.
+
+| What | Matched when | Level |
+| --- | --- | --- |
+| Next.js build cache | `.next` beside a `package.json` | <Level of="safe" /> |
+| Nuxt build cache | `.nuxt` beside a `package.json` | <Level of="safe" /> |
+| SvelteKit build cache | `.svelte-kit` beside a `package.json` | <Level of="safe" /> |
+| Turborepo cache | any `.turbo` folder | <Level of="safe" /> |
+| Parcel cache | any `.parcel-cache` folder | <Level of="safe" /> |
+| Dart tool cache | `.dart_tool` beside a `pubspec.yaml` | <Level of="safe" /> |
+| Python bytecode cache | any `__pycache__` folder | <Level of="safe" /> |
+| Rust build output | `target` beside a `Cargo.toml` | <Level of="safe" /> |
+| Gradle project cache | `.gradle` beside a Gradle build or settings file | <Level of="safe" /> |
+| Android build intermediates | `build/intermediates`; built APKs in `build/outputs` are kept | <Level of="safe" /> |
+| Xcode DerivedData | each project folder in `~/Library/Developer/Xcode/DerivedData` | <Level of="safe" /> |
+
+## Dependencies [#dependencies]
+
+Packages your project installed. Run the install command again before using the project.
+
+| What | Matched when | To get it back | Level |
+| --- | --- | --- | --- |
+| Node packages | `node_modules` beside a `package.json` | `npm install`, `pnpm install` or `yarn` | <Level of="rebuild" /> |
+| Composer packages | `vendor` beside a `composer.json` | `composer install` | <Level of="rebuild" /> |
+| CocoaPods | `Pods` beside a `Podfile` | `pod install` | <Level of="rebuild" /> |
+| Python virtual environment | `venv`, `.venv` or `env` containing `pyvenv.cfg` | `python -m venv`, then reinstall requirements | <Level of="rebuild" /> |
+
+<Callout>
+Packages that tools installed for themselves are skipped: anything in a hidden folder in your home (such as `~/.vscode/extensions` or `~/.composer`), in `~/Library`, or in system and Homebrew locations. Deleting those would break the tool, and there is no project to reinstall into.
+</Callout>
+
+## Package caches [#package-caches]
+
+Downloads shared by every project, kept so they need not be fetched again. Deleting them only costs a re-download the next time a project needs them.
+
+| What | Location | Level |
+| --- | --- | --- |
+| npm cache | `~/.npm/_cacache` | <Level of="safe" /> |
+| pnpm store | `~/Library/pnpm/store` | <Level of="safe" /> |
+| Yarn cache | `~/Library/Caches/Yarn` | <Level of="safe" /> |
+| pip cache | `~/Library/Caches/pip` | <Level of="safe" /> |
+| Composer cache | `~/Library/Caches/composer`, `~/.composer/cache` | <Level of="safe" /> |
+| Gradle caches and wrapper downloads | `~/.gradle/caches`, `~/.gradle/wrapper/dists` | <Level of="safe" /> |
+| Homebrew downloads | `~/Library/Caches/Homebrew` | <Level of="safe" /> |
+| CocoaPods cache | `~/Library/Caches/CocoaPods` | <Level of="safe" /> |
+| Cargo downloads and sources | `~/.cargo/registry/cache`, `~/.cargo/registry/src` | <Level of="safe" /> |
+| Go build cache | `~/Library/Caches/go-build` | <Level of="safe" /> |
+| Dart and Flutter packages | `~/.pub-cache`; run `flutter pub get` afterwards | <Level of="rebuild" /> |
+| Playwright browsers | `~/Library/Caches/ms-playwright`; run `npx playwright install` afterwards | <Level of="rebuild" /> |
+
+## App caches and logs [#app-caches-and-logs]
+
+| What | Location | Level |
+| --- | --- | --- |
+| App cache | each folder in `~/Library/Caches`. The app rebuilds it and may start slower once. | <Level of="safe" /> |
+| Logs | each item in `~/Library/Logs`, including crash reports | <Level of="safe" /> |
+
+If the app a cache belongs to is running, the item shows a warning. Quit the app first.
+
+## Mobile tooling [#mobile-tooling]
+
+| What | Matched when | After deleting | Level |
+| --- | --- | --- | --- |
+| Android emulator snapshots | `snapshots` inside an emulator folder | The emulator cold-boots once | <Level of="safe" /> |
+| Android emulator user data | `userdata-qemu.img` in an emulator folder | The emulator starts as if factory reset | <Level of="personal" /> |
+| iOS device support | each version in `~/Library/Developer/Xcode/iOS DeviceSupport` | Copied again when that device is connected | <Level of="rebuild" /> |
+| Simulator caches | `~/Library/Developer/CoreSimulator/Caches` | Recreated when needed | <Level of="safe" /> |
+
+## App leftovers [#app-leftovers]
+
+Folders in `~/Library/Containers` and `~/Library/Application Support` named after an app's identifier (such as `com.docker.docker`) when no installed app has that identifier. Apple's own folders are never included, and an extension's folder counts as its app's. <Level of="personal" />
+
+## Trash and old downloads [#trash-and-old-downloads]
+
+| What | Matched when | Level |
+| --- | --- | --- |
+| In the Trash | each item in your Trash; deleting it is the same as emptying the Trash | <Level of="safe" /> |
+| Old download | each item in `~/Downloads` not changed for 90 days (adjustable) | <Level of="personal" /> |
+
+## Large files [#large-files]
+
+Files of 500 MB or more (adjustable) that no rule above covers, outside apps and photo libraries. <Level of="personal" />
+
+## Docker [#docker]
+
+From Docker's own disk-usage report, when an engine is running. See [Docker and OrbStack](/docs/docker).
+
+## System junk [#system-junk]
+
+Most of these belong to root, so deleting them needs the [helper](/docs/system). Items macOS protects are skipped even then.
+
+| What | Location | Level |
+| --- | --- | --- |
+| System cache | each folder in `/Library/Caches` | <Level of="safe" /> |
+| System logs | each item in `/Library/Logs` and `/private/var/log` | <Level of="safe" /> |
+
+## Never suggested or deleted [#never-suggested-or-deleted]
+
+- Anything inside an app, framework, photo or music library, or other bundle.
+- Folders you list under [Never scan these folders](/docs/settings#scanning).
+- Your Music, TV and Photos libraries, which macOS protects with permissions of their own.
+- Protected folders, which cannot be deleted as a whole from anywhere in the app. See the [FAQ](/docs/faq#protected-folders).

@@ -1,0 +1,29 @@
+# Docker and OrbStack (/docs/docker)
+
+## What you need [#what-you-need]
+
+The `docker` command and a running engine: **OrbStack**, **Docker Desktop**, **Colima** or another. Reclaim finds the command in the usual places, even when it is opened from Finder. Open **Containers** in the sidebar; if the engine is not running, start it and click **Refresh**.
+
+## What is listed [#what-is-listed]
+
+| Item | What it is | Removed with | Level |
+| --- | --- | --- | --- |
+| Build cache | Layers kept to speed up builds, not used by any image now. | `docker builder prune --all` | <Level of="safe" /> |
+| Dangling image | An untagged image left behind when a newer build took its tag. | `docker image rm` | <Level of="safe" /> |
+| Unused image | A tagged image no container uses. Pulled or built again when needed. | `docker image rm` | <Level of="rebuild" /> |
+| Stopped container | A container that is not running. Changes made inside it are lost. | `docker container rm` | <Level of="rebuild" /> |
+| Unused volume | A volume no container uses. These often hold databases. | `docker volume rm` | <Level of="personal" /> |
+
+Images, containers and volumes that are in use are never listed. Select a row to read what it is and what happens after removing it.
+
+## How removal works [#how-removal-works]
+
+<Callout type="success">
+Ticked items are removed with Docker's own commands, never forced, so Docker itself refuses anything a container is using. Reclaim never touches the engine's disk image directly.
+</Callout>
+
+Docker items share the Delete bar and the history with everything else. If Docker refuses an item, the summary shows Docker's reason and the item stays in the list.
+
+## About the sizes [#about-the-sizes]
+
+Sizes come from `docker system df`. For an image, Reclaim shows the space only that image uses, which is what removing it frees; layers shared with other images stay. Totals can differ slightly from Docker's own summary because Docker rounds each size it reports.

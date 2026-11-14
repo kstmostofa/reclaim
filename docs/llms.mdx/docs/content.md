@@ -1,0 +1,25 @@
+# Introduction (/docs)
+
+Developer Macs fill up quietly: `.next` and DerivedData folders, `node_modules` in every old project, Gradle and npm caches, emulator images, Docker build cache. Reclaim scans the whole disk, tells you what each of those is and what happens if you delete it, and removes what you tick in one click.
+
+<Cards>
+<Card title="Install" href="/docs/install" description="Download, open it the first time, and give it Full Disk Access." />
+
+<Card title="Scan and clean" href="/docs/guide" description="Your first scan, the safety levels, and deleting." />
+
+<Card title="What it finds" href="/docs/what-it-finds" description="Every rule, with its safety level." />
+
+<Card title="FAQ" href="/docs/faq" description="Safety, permissions, sizes and privacy." />
+</Cards>
+
+## What makes it different [#what-makes-it-different]
+
+- **It explains everything.** Every suggestion says what it is, why it is listed and what happens after you delete it.
+- **Three safety levels.** <Level of="safe" /> items rebuild themselves and are ticked for you. <Level of="rebuild" /> and <Level of="personal" /> items wait for your decision.
+- **No nagging.** Tick, click, done, with a summary of anything that could not be removed.
+- **Hard limits.** System folders, your home folder and folders like Documents are never deleted as a whole, however the path is written.
+- **Private.** No account, no analytics, no network access. The source is on GitHub.
+
+## Requirements [#requirements]
+
+macOS 14 Sonoma or later, on Apple silicon or Intel.

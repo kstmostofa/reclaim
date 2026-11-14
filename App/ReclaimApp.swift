@@ -124,6 +124,14 @@ struct ContentView: View {
         .task {
             // `-autoScan YES` on the command line starts a scan at launch; used for screenshots.
             if UserDefaults.standard.bool(forKey: "autoScan") && model.phase == .idle { model.startScan() }
+            // `-helperSelfTest <path>` asks the installed helper to delete that path and /etc/hosts, and logs the
+            // answers; used to check a real install without clicking through the app.
+            if let target = UserDefaults.standard.string(forKey: "helperSelfTest") {
+                let status = await model.helper.status()
+                FileHandle.standardError.write(Data("helper status: \(status)\n".utf8))
+                let results = (try? await model.helper.remove(paths: [target, "/etc/hosts"])) ?? [:]
+                FileHandle.standardError.write(Data("helper results: \(results)\n".utf8))
+            }
             // `-openSettings YES` opens Settings at launch, for the same reason.
             if UserDefaults.standard.bool(forKey: "openSettings") { openSettings() }
         }

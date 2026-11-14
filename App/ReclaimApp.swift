@@ -18,9 +18,10 @@ struct ReclaimApp: App {
                 .environment(model)
                 .environment(settings)
                 .tint(settings.accentColor)
-                .frame(minWidth: 900, minHeight: 560)
+                .frame(minWidth: 980, minHeight: 560)
                 .onAppear { settings.applyAppearance() }
         }
+        .defaultSize(width: 1200, height: 760)
         .commands {
             CommandGroup(after: .newItem) {
                 Button("Scan") { model.startScan() }
@@ -52,6 +53,21 @@ struct ContentView: View {
     @Environment(AppSettings.self) private var settings
     /// `-section duplicates` (or diskMap, largeFiles) opens that screen at launch; used for screenshots.
     @State private var selection: SidebarItem? = ContentView.launchSection()
+    @AppStorage("showInspector") private var showInspector = true
+
+    /// The inspector belongs to the suggestion lists. It is a column of the window rather than of the detail
+    /// view, because an inspector inside a split view's detail pushes the whole window sideways as it opens.
+    private var inspectorShown: Binding<Bool> {
+        Binding(
+            get: {
+                switch selection {
+                case .category, .largeFiles: showInspector
+                default: false
+                }
+            },
+            set: { showInspector = $0 }
+        )
+    }
     @Environment(\.openSettings) private var openSettings
 
     private static func launchSection() -> SidebarItem {
@@ -90,6 +106,10 @@ struct ContentView: View {
                     ActionBar()
                 }
             }
+        }
+        .inspector(isPresented: inspectorShown) {
+            InspectorView(item: model.inspected)
+                .inspectorColumnWidth(min: 240, ideal: 280, max: 400)
         }
         .sheet(isPresented: .constant(model.deletion != nil)) {
             DeletionSheet()

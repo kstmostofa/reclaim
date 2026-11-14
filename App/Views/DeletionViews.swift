@@ -12,6 +12,8 @@ struct ActionBar: View {
             Text(settings.moveToTrash ? "Ticked items move to the Trash." : "Ticked items are deleted permanently.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .layoutPriority(-1)
             Spacer()
             Button("Untick All") { model.untickAll() }
             Button {
@@ -19,6 +21,7 @@ struct ActionBar: View {
             } label: {
                 Text("\(settings.moveToTrash ? "Move" : "Delete") \(count) \(count == 1 ? "item" : "items") · \(Format.size(model.tickedSize))")
                     .monospacedDigit()
+                    .fixedSize()
             }
             .buttonStyle(.borderedProminent)
             .tint(settings.moveToTrash ? settings.accentColor : .red)

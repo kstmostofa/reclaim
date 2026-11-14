@@ -43,6 +43,8 @@ final class AppModel {
     private(set) var lastScanSkippedPrivateFolders = false
     /// Paths ticked for deletion.
     var ticked: Set<String> = []
+    /// The suggestion shown in the inspector.
+    var inspected: Suggestion?
     var deletion: DeletionRun?
 
     /// What each tickable path is, whichever screen it was ticked on.

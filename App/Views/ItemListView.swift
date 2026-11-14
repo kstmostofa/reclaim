@@ -11,7 +11,10 @@ struct ItemListView: View {
     @State private var sortOrder = [KeyPathComparator(\Suggestion.size, order: .reverse)]
     @State private var search = ""
     @State private var selection = Set<Suggestion.ID>()
-    @State private var showInspector = true
+    /// One setting for every list, so switching category keeps the inspector as it was.
+    @AppStorage("showInspector") private var showInspector = true
+    /// `-debugToggleInspector YES` flips the inspector every 3 s; used to check its animation in screenshots.
+    private let debugToggle = UserDefaults.standard.bool(forKey: "debugToggleInspector")
 
     private var rows: [Suggestion] {
         let all = items
@@ -54,24 +57,24 @@ struct ItemListView: View {
                     }
                 }
             }
-            .width(min: 180, ideal: 250)
+            .width(min: 120, ideal: 250)
 
             TableColumn("Size", value: \.size) { item in
                 Text(Format.size(item.size)).monospacedDigit()
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .width(min: 64, ideal: 72)
+            .width(min: 72, ideal: 80)
 
             TableColumn("Safety", value: \.level) { item in
                 SafetyBadge(level: item.level)
             }
-            .width(min: 70, ideal: 80)
+            .width(min: 64, ideal: 76)
 
             TableColumn("Modified", value: \.modified) { item in
                 Text(item.modified, format: .dateTime.year().month().day())
                     .foregroundStyle(.secondary)
             }
-            .width(min: 76, ideal: 90)
+            .width(min: 70, ideal: 90)
         }
         .contextMenu(forSelectionType: Suggestion.ID.self) { ids in
             Button("Tick") { model.ticked.formUnion(ids) }
@@ -96,9 +99,14 @@ struct ItemListView: View {
                 }
             }
         }
-        .inspector(isPresented: $showInspector) {
-            InspectorView(item: rows.first { selection.contains($0.id) })
-                .inspectorColumnWidth(min: 240, ideal: 280, max: 400)
+        // The inspector itself is a column of the window (see ContentView); this list only says what is selected.
+        .onChange(of: selection, initial: true) { model.inspected = rows.first { selection.contains($0.id) } }
+        .onDisappear { model.inspected = nil }
+        .task {
+            while debugToggle && !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(3))
+                showInspector.toggle()
+            }
         }
         .overlay {
             if items.isEmpty {
